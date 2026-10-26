@@ -1,10 +1,10 @@
 # Ghazal: connect the dataset and run the tests
 
-This guide is a team review checklist for connecting the 12-case synthetic dataset. The original prototype is preserved on the `gazal-initial-code` branch, not yet merged into `main`. The 12-case integration and final setup remain unverified; the examples below are not completed implementation.
+This guide is a team review checklist for connecting the 12-case synthetic dataset. The original prototype is preserved on the `ghazal-initial-code` branch, not yet merged into `main`. The 12-case integration and final setup remain unverified; the examples below are not completed implementation.
 
 ## 1. Get the latest files
 
-In VS Code, open the Byte-into-the-future repository and use Source Control → Pull. Make changes on a new working branch based on `gazal-initial-code`, leaving the baseline untouched. If the repository is not yet local, clone it with:
+In VS Code, open the Byte-into-the-future repository and use Source Control → Pull. Make changes on a new working branch based on `ghazal-initial-code`, leaving the baseline untouched. If the repository is not yet local, clone it with:
 
 ```text
 https://github.com/nyashachamp/Byte-into-the-future.git
@@ -158,4 +158,4 @@ Count successful detection over the 8 positive cases. Count false positives over
 
 Once the connection works, upload your source and add the actual commands to the root README for installing dependencies, starting the agents/dashboard, and running the 12-case harness. Record any required model settings or environment-variable names without committing secret values.
 
-The original prototype and draft startup instructions are present on `gazal-initial-code`; they have not been verified as a clean install or against the full 12-case dataset. On `main`, the fixture validator remains the documented executable check. Verify commands and record actual results on the new refinement branch.
+The original prototype and draft startup instructions are present on `ghazal-initial-code`; they have not been verified as a clean install or against the full 12-case dataset. On `main`, the fixture validator remains the documented executable check. Verify commands and record actual results on the new refinement branch.

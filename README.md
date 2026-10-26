@@ -85,7 +85,7 @@ Detect a misconfigured government cloud-storage resource in synthetic data, iden
 | Area | Repository evidence / remaining work |
 |---|---|
 | Project concept and agent design | Drafts included in `docs/`; team review and validation remain |
-| Initial agents and dashboard prototype | Original Python/Streamlit source is staged in [`src/gazal-project/`](src/gazal-project/) for team review; implementation is not finalized and IBM integrations have not been validated |
+| Initial agents and dashboard prototype | Original Python/Streamlit source is staged in [`src/ghazal-project/`](src/ghazal-project/) for team review; implementation is not finalized and IBM integrations have not been validated |
 | Initial system test without dataset | Reported by development; reproducible evidence and team sign-off are pending |
 | Synthetic dataset | [12-case v1 fixture](data/samples/README.md) included; consistency validator passed; team review pending |
 | Dataset-based testing and validation | Test plan, evaluator answers, and fixture validator included; dashboard integration and actual results pending |
@@ -116,7 +116,7 @@ See [Milestones and progress](docs/milestones.md) for the detailed evidence chec
 
 ## Installation
 
-The original prototype files are in [`src/gazal-project/`](src/gazal-project/). Its original README contains preliminary commands, but installation, dependencies, IBM integrations, and the full dataset workflow still need developer verification on a separate refinement branch. This is a baseline, not a finished team release.
+The original prototype files are in [`src/ghazal-project/`](src/ghazal-project/). Its original README contains preliminary commands, but installation, dependencies, IBM integrations, and the full dataset workflow still need developer verification on a separate refinement branch. This is a baseline, not a finished team release.
 
 ## Data and safety rules
 
