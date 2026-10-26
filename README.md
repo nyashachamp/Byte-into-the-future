@@ -85,8 +85,8 @@ Detect a misconfigured government cloud-storage resource in synthetic data, iden
 | Area | Repository evidence / remaining work |
 |---|---|
 | Project concept and agent design | Drafts included in `docs/`; team review and validation remain |
-| AI agents and dashboard | Gazal's supplied local Python/Streamlit prototype is committed in `src/gazal-project/` on `gazal-initial-code`; IBM integrations not yet validated |
-| Initial system test without dataset | Reported complete; test output not yet included |
+| Initial agents and dashboard prototype | Original Python/Streamlit source is staged in [`src/gazal-project/`](src/gazal-project/) for team review; implementation is not finalized and IBM integrations have not been validated |
+| Initial system test without dataset | Reported by development; reproducible evidence and team sign-off are pending |
 | Synthetic dataset | [12-case v1 fixture](data/samples/README.md) included; consistency validator passed; team review pending |
 | Dataset-based testing and validation | Test plan, evaluator answers, and fixture validator included; dashboard integration and actual results pending |
 | IBM Bob use | Required by the documented project brief; usage evidence missing |
@@ -106,7 +106,7 @@ See [Milestones and progress](docs/milestones.md) for the detailed evidence chec
 │   ├── week-4-deliverables.md  Architecture, workflow, tools (guide slides 17–19)
 │   ├── milestones.md           Deliverables and progress tracker
 │   └── original/               Original Word documents
-├── src/                 Includes `gazal-project/` with Gazal's local prototype and Ubuntu setup
+├── src/                 Includes original prototype source staged for team review
 ├── data/
 │   ├── samples/         12-case synthetic dataset and integration guide
 │   ├── results/         Planned: test outputs (not yet present)
@@ -116,7 +116,7 @@ See [Milestones and progress](docs/milestones.md) for the detailed evidence chec
 
 ## Installation
 
-The local synthetic-data prototype is available in [`src/gazal-project/`](src/gazal-project/). For Ubuntu setup and run commands, follow [`src/gazal-project/INSTALLATION.md`](src/gazal-project/INSTALLATION.md). Local testing does not require IBM BOB credits. Gazal should review the instructions and confirm whether any separate IBM-connected components still need to be added.
+The original prototype files are in [`src/gazal-project/`](src/gazal-project/). Its original README contains preliminary commands, but installation, dependencies, IBM integrations, and the full dataset workflow still need developer verification on a separate refinement branch. This is a baseline, not a finished team release.
 
 ## Data and safety rules
 
@@ -126,10 +126,7 @@ The local synthetic-data prototype is available in [`src/gazal-project/`](src/ga
 
 ## Team
 
-| Member | Role |
-|---|---|
-| Nyasha | Team lead: project coordination, cybersecurity criteria, user problem, documentation |
-| Ghazal | Development: AI agents, orchestration, dashboard, prototype integration |
+**Byte into the Future is a collaborative team project.** This branch preserves an initial contribution for review and development, not a finalized individual or team release. New development work should occur on a separate refinement branch and be reviewed by the team.
 
 ## Documentation
 
