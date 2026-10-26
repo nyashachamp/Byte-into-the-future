@@ -1,9 +1,14 @@
-# Source Code
+# Team Source Code
 
-This folder holds the team's VS Code project: the AI agents, orchestration, data-processing components, integration code, and dashboard.
+This directory is the integration location for **Byte into the Future**, a collaborative team project.
 
-**Ghazal:** copy your existing project here as is. See `CONTRIBUTING.md` for step-by-step instructions. Once it's in, we can review the files together and only reorganize if it genuinely helps.
+The initial Python/Streamlit prototype is preserved on the separate [`gazal-initial-code` branch](https://github.com/nyashachamp/Byte-into-the-future/tree/gazal-initial-code/src/gazal-project). It has **not** been merged into `main`, finalized, or accepted as the complete team implementation.
 
-## Start here
+## Development handoff
 
-Ghazal: follow the [step-by-step dataset connection and testing guide](../docs/ghazal-dataset-testing-guide.md) to connect your existing agents and dashboard, configure mock actions, and record actual results.
+- Preserve the baseline branch unchanged for comparison.
+- Create a new refinement branch from `gazal-initial-code` for installation checks, integration changes, and testing.
+- Document dependencies, validated startup steps, dataset integration, actual results, and remaining IBM tooling requirements.
+- Open a pull request for team review; do not merge until the team approves the changes.
+
+See the [dataset testing guide](../docs/ghazal-dataset-testing-guide.md) and [milestone checklist](../docs/milestones.md). Do not commit credentials or virtual-environment files.
