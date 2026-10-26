@@ -1,10 +1,10 @@
 # Ghazal: connect the dataset and run the tests
 
-This guide connects your existing agents and dashboard to the 12-case synthetic dataset. Your source code has not been uploaded yet, so the function names below are examples to adapt to your project.
+This guide is a team review checklist for connecting the 12-case synthetic dataset. The original prototype is preserved on the `gazal-initial-code` branch, not yet merged into `main`. The 12-case integration and final setup remain unverified; the examples below are not completed implementation.
 
 ## 1. Get the latest files
 
-In VS Code, open your local Byte-into-the-future repository and use Source Control → Pull. If you have not downloaded the repository, use Clone Repository with:
+In VS Code, open the Byte-into-the-future repository and use Source Control → Pull. Make changes on a new working branch based on `gazal-initial-code`, leaving the baseline untouched. If the repository is not yet local, clone it with:
 
 ```text
 https://github.com/nyashachamp/Byte-into-the-future.git
@@ -158,4 +158,4 @@ Count successful detection over the 8 positive cases. Count false positives over
 
 Once the connection works, upload your source and add the actual commands to the root README for installing dependencies, starting the agents/dashboard, and running the 12-case harness. Record any required model settings or environment-variable names without committing secret values.
 
-There is currently no universal command to launch your prototype or run all agent tests because its implementation is not yet in this repository. The only ready-to-run command in this guide is the fixture validator. The integration steps above show what your adapter and mock tools need to do.
+The original prototype and draft startup instructions are present on `gazal-initial-code`; they have not been verified as a clean install or against the full 12-case dataset. On `main`, the fixture validator remains the documented executable check. Verify commands and record actual results on the new refinement branch.
