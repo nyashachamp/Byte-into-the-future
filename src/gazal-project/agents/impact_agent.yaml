@@ -1,0 +1,14 @@
+name: dependency_impact_agent
+purpose: Connect a finding to the affected simulated government service.
+inputs:
+  - data/assets.json
+  - data/dependencies.json
+  - configuration_deviations
+outputs:
+  - affected_public_service
+  - dependency_context
+permissions:
+  - read_synthetic_files
+forbidden_actions:
+  - access_live_networks
+  - infer_real_citizen_impact

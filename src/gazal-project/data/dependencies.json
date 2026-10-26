@@ -1,0 +1,8 @@
+[
+  {"asset_id":"asset-001","depends_on":"asset-002","relationship":"stores_benefits_documents"},
+  {"asset_id":"asset-001","depends_on":"asset-003","relationship":"authenticates_staff_access"},
+  {"asset_id":"asset-004","depends_on":"asset-003","relationship":"authenticates_dispatch_users"},
+  {"asset_id":"asset-008","depends_on":"asset-004","relationship":"receives_emergency_events"},
+  {"asset_id":"asset-009","depends_on":"asset-003","relationship":"authenticates_transit_admins"},
+  {"asset_id":"asset-007","depends_on":"asset-003","relationship":"authenticates_library_staff"}
+]

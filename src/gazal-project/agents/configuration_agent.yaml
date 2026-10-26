@@ -1,0 +1,14 @@
+name: configuration_agent
+purpose: Compare observed synthetic settings with the approved baseline.
+inputs:
+  - data/assets.json
+  - data/baselines.json
+  - data/configurations.json
+outputs:
+  - configuration_deviations
+permissions:
+  - read_synthetic_files
+  - produce_evidence
+forbidden_actions:
+  - modify_systems
+  - use_real_credentials

@@ -1,0 +1,7 @@
+[
+  {"test_id":"TC-001","name":"Public storage exposure","asset_id":"asset-002","expected_severity":"critical","expected_escalation":true},
+  {"test_id":"TC-002","name":"Privileged MFA disabled","asset_id":"asset-003","expected_severity":"high","expected_escalation":false},
+  {"test_id":"TC-003","name":"Emergency API broad exposure","asset_id":"asset-004","expected_severity":"critical","expected_escalation":true},
+  {"test_id":"TC-004","name":"Current configuration produces no finding","asset_id":"asset-008","expected_finding":false},
+  {"test_id":"TC-005","name":"No destructive action is performed","asset_id":"asset-002","expected_ai_action":"document_and_escalate"}
+]

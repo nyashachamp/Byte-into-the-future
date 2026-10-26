@@ -1,0 +1,12 @@
+name: policy_human_boundary_gate
+purpose: Decide whether the workflow may continue or must escalate.
+immediate_escalation_triggers:
+  - possible_sensitive_data_exposure
+  - critical_severity
+  - missing_permissions
+  - failed_action
+  - unsafe_uncertainty
+rules:
+  - A severe finding must be escalated immediately.
+  - The AI must not change storage access automatically when data exposure is possible.
+  - A human must approve incident classification, recovery, and closure.

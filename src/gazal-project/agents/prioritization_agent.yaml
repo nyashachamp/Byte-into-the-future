@@ -1,0 +1,21 @@
+name: prioritization_agent
+purpose: Produce a transparent preliminary risk score.
+inputs:
+  - configuration_deviations
+  - affected_public_service
+scoring:
+  factors:
+    exposure: 1_to_3
+    asset_criticality: 1_to_3
+    service_impact: 1_to_3
+    confidence: 1_to_3
+  thresholds:
+    low: 4
+    medium: 7
+    high: 10
+    critical: 12
+permissions:
+  - calculate_score
+  - explain_score
+forbidden_actions:
+  - declare_final_incident_status

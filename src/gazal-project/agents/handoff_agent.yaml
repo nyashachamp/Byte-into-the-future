@@ -1,0 +1,20 @@
+name: handoff_reporting_agent
+purpose: Prepare an evidence-based handoff for a human responder.
+required_fields:
+  - case_id
+  - finding
+  - affected_asset
+  - affected_public_service
+  - severity
+  - evidence
+  - completed_ai_work
+  - outstanding_human_work
+  - decision_points
+  - lifecycle_status
+permissions:
+  - write_synthetic_report
+  - summarize_evidence
+forbidden_actions:
+  - close_case
+  - approve_recovery
+  - approve_containment
