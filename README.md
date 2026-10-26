@@ -85,7 +85,7 @@ Detect a misconfigured government cloud-storage resource in synthetic data, iden
 | Area | Repository evidence / remaining work |
 |---|---|
 | Project concept and agent design | Drafts included in `docs/`; team review and validation remain |
-| AI agents, dashboard, and integration | Reported complete by Ghazal; source code not yet uploaded |
+| AI agents and dashboard | Gazal's supplied local Python/Streamlit prototype is committed in `src/gazal-project/` on `gazal-initial-code`; IBM integrations not yet validated |
 | Initial system test without dataset | Reported complete; test output not yet included |
 | Synthetic dataset | [12-case v1 fixture](data/samples/README.md) included; consistency validator passed; team review pending |
 | Dataset-based testing and validation | Test plan, evaluator answers, and fixture validator included; dashboard integration and actual results pending |
@@ -106,7 +106,7 @@ See [Milestones and progress](docs/milestones.md) for the detailed evidence chec
 │   ├── week-4-deliverables.md  Architecture, workflow, tools (guide slides 17–19)
 │   ├── milestones.md           Deliverables and progress tracker
 │   └── original/               Original Word documents
-├── src/                 README only; Ghazal's project upload pending
+├── src/                 Includes `gazal-project/` with Gazal's local prototype and Ubuntu setup
 ├── data/
 │   ├── samples/         12-case synthetic dataset and integration guide
 │   ├── results/         Planned: test outputs (not yet present)
@@ -116,7 +116,7 @@ See [Milestones and progress](docs/milestones.md) for the detailed evidence chec
 
 ## Installation
 
-_To be completed once the VS Code project is added to `src/`. Ghazal: please fill in the setup steps, required Python version, how to install dependencies, how to configure `.env`, and how to start the agents and dashboard._
+The local synthetic-data prototype is available in [`src/gazal-project/`](src/gazal-project/). For Ubuntu setup and run commands, follow [`src/gazal-project/INSTALLATION.md`](src/gazal-project/INSTALLATION.md). Local testing does not require IBM BOB credits. Gazal should review the instructions and confirm whether any separate IBM-connected components still need to be added.
 
 ## Data and safety rules
 
