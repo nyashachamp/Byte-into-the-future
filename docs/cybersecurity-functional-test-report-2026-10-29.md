@@ -116,3 +116,17 @@ The Ubuntu VM became unresponsive, required shutdown/restart, and once reached t
 - [Unit tests](../src/source-code/tests/test_pipeline.py)
 
 *Prepared from verified session screenshots and repository source review. No source code was modified while preparing this report.*
+
+---
+
+## QA addendum — November 3, 2026: Post-correction independent testing status
+
+**Observation:** Ghazal's corrections addressing F-01 (exception approved-value validation) and F-02 (unknown/null priority severity) were pushed to the `source-code` development branch on October 30, 2026, before Nyasha's independent post-correction regression testing was completed. The technical development report was subsequently merged into this branch through [pull request #4](https://github.com/nyashachamp/Byte-into-the-future/pull/4) on November 2, 2026.
+
+**Developer-reported results:** The [technical development report](technical-development-report%20(1).md) states that the synthetic dataset validator passed and that eight automated pytest tests passed. These are developer-reported local results, not independently reproduced post-correction QA results.
+
+**Independent QA status as of November 3, 2026:** **PENDING — not signed off.** The original October 27–29 local synthetic results (12/12 scenarios and four pytest tests) are pre-correction baseline evidence only. They must not be relabeled as post-correction validation. At the time of this addendum, independent Ubuntu regression execution of the corrected version has not been documented.
+
+**Next action:** Preserve the earlier Ubuntu installation and evidence, establish the exact corrected commit under test in a separate directory, rerun the dataset validator and revised automated suite, check F-01 negative and valid-exception behaviors, verify F-02 C11 UNKNOWN versus C01 NONE, and rerun C01–C12 as needed. Record observed PASS/FAIL outputs and new screenshots beginning at 55. Do not change Ghazal's application code during QA.
+
+**Process note:** Committing code before independent testing is an ordinary development workflow; this observation records the verification boundary, not an allegation of improper conduct. A push, merge, or developer test report does not constitute independent QA approval or IBM Cloud deployment acceptance.
