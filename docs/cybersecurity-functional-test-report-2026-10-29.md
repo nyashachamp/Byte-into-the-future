@@ -130,3 +130,40 @@ The Ubuntu VM became unresponsive, required shutdown/restart, and once reached t
 **Next action:** Preserve the earlier Ubuntu installation and evidence, establish the exact corrected commit under test in a separate directory, rerun the dataset validator and revised automated suite, check F-01 negative and valid-exception behaviors, verify F-02 C11 UNKNOWN versus C01 NONE, and rerun C01–C12 as needed. Record observed PASS/FAIL outputs and new screenshots beginning at 55. Do not change Ghazal's application code during QA.
 
 **Process note:** Committing code before independent testing is an ordinary development workflow; this observation records the verification boundary, not an allegation of improper conduct. A push, merge, or developer test report does not constitute independent QA approval or IBM Cloud deployment acceptance.
+
+---
+
+## QA update — November 3, 2026: Independent post-correction Ubuntu execution
+
+**Tester:** Nyasha Champ, independent local QA. **Environment:** Ubuntu 24.04 in VirtualBox; Python 3.12.3; pytest 8.4.2; corrected `source-code` archive extracted separately from the October 27 baseline. The existing baseline virtual environment was reused. The precise Git commit SHA inside the downloaded ZIP has not been established locally; this is a source-archive test, not a cryptographically verified commit checkout.
+
+### Observed post-correction checks
+
+- **Dataset consistency validator — PASS.** `python3 tests/validate_synthetic_dataset.py` returned `PASS: 12 fixture cases` with consistent references, strict input types, baselines, scores, notification rules, and authorization expectations. The validator itself expressly excludes dashboard integration and end-to-end behavior.
+- **Updated automated pytest suite — PASS (8/8).** From `src/source-code`, using the baseline venv's Python and `PYTHONPATH=.`, independent output was `8 passed in 0.09s`.
+- **F-01 focused controls — PASS for tested pipeline conditions.** Source review showed the observed configuration is compared with `approved_value` before an exception becomes active; the automated tests passed for a deliberately mismatched C02 exception (confirmed CFG-PUBLIC finding; no action attempt) and the valid C02 exception (compliant; no finding; score 0). C02 dashboard and JSON showed compliant/none/0/no action. The dashboard's JSON does not expose the exception record itself.
+- **F-02 focused controls — PASS for tested pipeline and dashboard conditions.** The C11 automated check covered null priority, unknown severity, no action/attempts, and required human handoff. The C01 check covered score 0 and severity none. Streamlit screenshots showed C11 severity UNKNOWN/priority Unknown with no action and required handoff, and C01 severity NONE/score 0 with no action.
+- **C03 dashboard check — PASS.** Streamlit displayed confirmed, score 30, MEDIUM, authorized simulated `enable_audit_logging`, one attempt, verification Passed, and `verified_awaiting_human_closure`.
+
+### Batch pipeline result — PASS (12/12 for displayed assessment/severity/outcome)
+
+The independent CLI batch used `PYTHONPATH=. <baseline-venv-python> -m src.main` from the corrected `src/source-code` directory. The full JSON was saved locally as `~/Downloads/QA-C01-C12-2026-11-03.json` using `tee`. A screenshot of the printed summary was reviewed. Its 12 case IDs, assessments, and outcomes were compared with `tests/fixtures/public-service-risk-v1.expected.json`; severities were consistent with the expected test behaviors and corrected unknown classification.
+
+| Case | Assessment | Severity | Outcome | Selected-field verdict |
+|---|---|---|---|---|
+| C01 | compliant | none | no_action | PASS |
+| C02 | compliant | none | no_action | PASS |
+| C03 | confirmed | medium | verified_awaiting_human_closure | PASS |
+| C04 | confirmed | high | verified_awaiting_human_closure | PASS |
+| C05 | confirmed | critical | handoff | PASS |
+| C06 | confirmed | medium | awaiting_approval | PASS |
+| C07 | confirmed | medium | handoff | PASS |
+| C08 | confirmed | medium | verified_awaiting_human_closure | PASS |
+| C09 | invalid_input | unknown | request_data | PASS |
+| C10 | invalid_input | unknown | request_data | PASS |
+| C11 | confirmed | unknown | handoff | PASS |
+| C12 | confirmed | medium | awaiting_approval | PASS |
+
+**Scope and limitations:** This result verifies the 12 local synthetic pipeline summaries, not every field in every case, every Streamlit screen, independent hosted agents, notifications actually delivered to people, production controls, or IBM Cloud/watsonx execution. The automated tests contain some additional action and verification assertions for specific cases. Only C01, C02, C03, and C11 were visually rechecked in the post-correction dashboard session. The screenshots were provided during QA but have **not been uploaded or verified in GitHub's evidence directory**; the next free evidence filename remains 55. The prior 01–54 baseline screenshots are retained unchanged.
+
+**Updated gate assessment (as of the observed November 3 session):** Local synthetic dataset, eight automated tests, focused F-01/F-02 checks, and 12-case CLI assessment/severity/outcome checks: **PASS within stated scope**. Full dashboard revalidation, screenshot archiving, reproducible commit identity, IBM Cloud deployment/integration and production-security acceptance: **PENDING / NOT TESTED**. No final IBM acceptance or independent approval of deployment is implied.
