@@ -78,3 +78,105 @@ def test_dataset_copy_is_in_sync():
         "tools/risk_tool_pkg/data/public-service-risk-v1.json is out of sync with "
         "data/samples/public-service-risk-v1.json — re-copy it before importing the tool."
     )
+
+
+# ---------------------------------------------------------------------------
+# M1 sync guards — four specialist packages
+# ---------------------------------------------------------------------------
+# For each of the four new specialist packages, verify:
+#   (a) agents/<module>.py is byte-for-byte identical to the canonical source
+#       in src/source-code/src/agents/<module>.py.
+#   (b) pipeline.py is byte-for-byte identical to the monolithic pipeline at
+#       tools/risk_tool_pkg/pipeline.py (NOT the delegating pipeline).
+# ---------------------------------------------------------------------------
+
+_SPECIALIST_PACKAGES = [
+    ("investigator_pkg", "investigator"),
+    ("analyst_pkg",      "analyst"),
+    ("response_pkg",     "response_agent"),
+    ("verifier_pkg",     "verifier"),
+]
+
+
+def test_investigator_pkg_agent_module_in_sync():
+    """tools/investigator_pkg/agents/investigator.py must be byte-identical to canonical source."""
+    pkg   = ROOT / "tools" / "investigator_pkg" / "agents" / "investigator.py"
+    canon = ROOT / "src" / "source-code" / "src" / "agents" / "investigator.py"
+    assert pkg.exists(),   f"Not found: {pkg}"
+    assert canon.exists(), f"Not found: {canon}"
+    assert pkg.read_bytes() == canon.read_bytes(), (
+        "tools/investigator_pkg/agents/investigator.py is out of sync with "
+        "src/source-code/src/agents/investigator.py"
+    )
+
+
+def test_analyst_pkg_agent_module_in_sync():
+    """tools/analyst_pkg/agents/analyst.py must be byte-identical to canonical source."""
+    pkg   = ROOT / "tools" / "analyst_pkg" / "agents" / "analyst.py"
+    canon = ROOT / "src" / "source-code" / "src" / "agents" / "analyst.py"
+    assert pkg.exists(),   f"Not found: {pkg}"
+    assert canon.exists(), f"Not found: {canon}"
+    assert pkg.read_bytes() == canon.read_bytes(), (
+        "tools/analyst_pkg/agents/analyst.py is out of sync with "
+        "src/source-code/src/agents/analyst.py"
+    )
+
+
+def test_response_pkg_agent_module_in_sync():
+    """tools/response_pkg/agents/response_agent.py must be byte-identical to canonical source."""
+    pkg   = ROOT / "tools" / "response_pkg" / "agents" / "response_agent.py"
+    canon = ROOT / "src" / "source-code" / "src" / "agents" / "response_agent.py"
+    assert pkg.exists(),   f"Not found: {pkg}"
+    assert canon.exists(), f"Not found: {canon}"
+    assert pkg.read_bytes() == canon.read_bytes(), (
+        "tools/response_pkg/agents/response_agent.py is out of sync with "
+        "src/source-code/src/agents/response_agent.py"
+    )
+
+
+def test_verifier_pkg_agent_module_in_sync():
+    """tools/verifier_pkg/agents/verifier.py must be byte-identical to canonical source."""
+    pkg   = ROOT / "tools" / "verifier_pkg" / "agents" / "verifier.py"
+    canon = ROOT / "src" / "source-code" / "src" / "agents" / "verifier.py"
+    assert pkg.exists(),   f"Not found: {pkg}"
+    assert canon.exists(), f"Not found: {canon}"
+    assert pkg.read_bytes() == canon.read_bytes(), (
+        "tools/verifier_pkg/agents/verifier.py is out of sync with "
+        "src/source-code/src/agents/verifier.py"
+    )
+
+
+def test_investigator_pkg_pipeline_in_sync():
+    """tools/investigator_pkg/pipeline.py must be byte-identical to the monolithic pipeline."""
+    pkg = ROOT / "tools" / "investigator_pkg" / "pipeline.py"
+    assert pkg.exists(), f"Not found: {pkg}"
+    assert pkg.read_bytes() == _PIPELINE_MONOLITHIC.read_bytes(), (
+        "tools/investigator_pkg/pipeline.py is out of sync with tools/risk_tool_pkg/pipeline.py"
+    )
+
+
+def test_analyst_pkg_pipeline_in_sync():
+    """tools/analyst_pkg/pipeline.py must be byte-identical to the monolithic pipeline."""
+    pkg = ROOT / "tools" / "analyst_pkg" / "pipeline.py"
+    assert pkg.exists(), f"Not found: {pkg}"
+    assert pkg.read_bytes() == _PIPELINE_MONOLITHIC.read_bytes(), (
+        "tools/analyst_pkg/pipeline.py is out of sync with tools/risk_tool_pkg/pipeline.py"
+    )
+
+
+def test_response_pkg_pipeline_in_sync():
+    """tools/response_pkg/pipeline.py must be byte-identical to the monolithic pipeline."""
+    pkg = ROOT / "tools" / "response_pkg" / "pipeline.py"
+    assert pkg.exists(), f"Not found: {pkg}"
+    assert pkg.read_bytes() == _PIPELINE_MONOLITHIC.read_bytes(), (
+        "tools/response_pkg/pipeline.py is out of sync with tools/risk_tool_pkg/pipeline.py"
+    )
+
+
+def test_verifier_pkg_pipeline_in_sync():
+    """tools/verifier_pkg/pipeline.py must be byte-identical to the monolithic pipeline."""
+    pkg = ROOT / "tools" / "verifier_pkg" / "pipeline.py"
+    assert pkg.exists(), f"Not found: {pkg}"
+    assert pkg.read_bytes() == _PIPELINE_MONOLITHIC.read_bytes(), (
+        "tools/verifier_pkg/pipeline.py is out of sync with tools/risk_tool_pkg/pipeline.py"
+    )

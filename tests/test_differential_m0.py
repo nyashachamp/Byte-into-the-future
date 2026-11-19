@@ -142,56 +142,77 @@ for case_id in ALL_CASE_IDS:
         differences[case_id] = case_diffs
 
 # ---------------------------------------------------------------------------
-# Report
+# Report  (runs only when executed as a script, not when imported by pytest)
 # ---------------------------------------------------------------------------
 
 SEPARATOR = "=" * 72
 
-print(SEPARATOR)
-print("DIFFERENTIAL REGRESSION — M0 Pipeline Comparison")
-print("  MONOLITH  : tools/risk_tool_pkg/pipeline.py")
-print("  REFACTORED: src/source-code/src/pipeline.py")
-print(f"  DATASET   : {DATASET.relative_to(ROOT)}")
-print(SEPARATOR)
-print()
 
-if not differences:
-    print(f"RESULT: PASS — all {len(ALL_CASE_IDS)} cases match exactly across all fields.")
-    print()
-    print("Case-by-case summary:")
-    for case_id in ALL_CASE_IDS:
-        mono = monolith_results[case_id]
-        refact = refactored_results[case_id]
-        # Confirm JSON-serialised dicts are identical
-        mono_json = json.dumps(mono, sort_keys=True)
-        refact_json = json.dumps(refact, sort_keys=True)
-        status = "MATCH" if mono_json == refact_json else "DIFFER"
-        print(
-            f"  {case_id}  {status}"
-            f"  assessment={mono['assessment']!r:<14}"
-            f"  outcome={mono['outcome']!r:<35}"
-            f"  events={len(mono['events'])}"
-        )
-    print()
-    print("Fields verified per case:")
-    for f in ALL_FIELDS:
-        print(f"  {f}")
-    sys.exit(0)
-
-else:
-    print(f"RESULT: FAIL — differences found in {len(differences)} / {len(ALL_CASE_IDS)} cases.")
-    print()
-    for case_id, diffs in differences.items():
-        print(f"--- {case_id} ---")
-        for d in diffs:
-            print(d)
-        print()
-    # Also print a full JSON dump of both outputs for the failing cases
+def _report_and_exit() -> None:
     print(SEPARATOR)
-    print("Full serialised output for differing cases:")
-    for case_id in differences:
-        print(f"\n--- {case_id} MONOLITH ---")
-        print(json.dumps(monolith_results.get(case_id), indent=2))
-        print(f"\n--- {case_id} REFACTORED ---")
-        print(json.dumps(refactored_results.get(case_id), indent=2))
-    sys.exit(1)
+    print("DIFFERENTIAL REGRESSION — M0 Pipeline Comparison")
+    print("  MONOLITH  : tools/risk_tool_pkg/pipeline.py")
+    print("  REFACTORED: src/source-code/src/pipeline.py")
+    print(f"  DATASET   : {DATASET.relative_to(ROOT)}")
+    print(SEPARATOR)
+    print()
+
+    if not differences:
+        print(f"RESULT: PASS — all {len(ALL_CASE_IDS)} cases match exactly across all fields.")
+        print()
+        print("Case-by-case summary:")
+        for case_id in ALL_CASE_IDS:
+            mono   = monolith_results[case_id]
+            refact = refactored_results[case_id]
+            mono_json   = json.dumps(mono,   sort_keys=True)
+            refact_json = json.dumps(refact, sort_keys=True)
+            status = "MATCH" if mono_json == refact_json else "DIFFER"
+            print(
+                f"  {case_id}  {status}"
+                f"  assessment={mono['assessment']!r:<14}"
+                f"  outcome={mono['outcome']!r:<35}"
+                f"  events={len(mono['events'])}"
+            )
+        print()
+        print("Fields verified per case:")
+        for f in ALL_FIELDS:
+            print(f"  {f}")
+        sys.exit(0)
+
+    else:
+        print(f"RESULT: FAIL — differences found in {len(differences)} / {len(ALL_CASE_IDS)} cases.")
+        print()
+        for case_id, diffs in differences.items():
+            print(f"--- {case_id} ---")
+            for d in diffs:
+                print(d)
+            print()
+        print(SEPARATOR)
+        print("Full serialised output for differing cases:")
+        for case_id in differences:
+            print(f"\n--- {case_id} MONOLITH ---")
+            print(json.dumps(monolith_results.get(case_id), indent=2))
+            print(f"\n--- {case_id} REFACTORED ---")
+            print(json.dumps(refactored_results.get(case_id), indent=2))
+        sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
+# pytest-compatible test: wraps the same diff data as a single test function
+# ---------------------------------------------------------------------------
+
+def test_differential_m0_all_cases_match():
+    """All 12 cases must produce byte-identical output from both pipeline implementations."""
+    if differences:
+        lines = []
+        for case_id, diffs in differences.items():
+            lines.append(f"--- {case_id} ---")
+            lines.extend(diffs)
+        raise AssertionError(
+            f"Differential regression FAILED — {len(differences)} case(s) differ:\n"
+            + "\n".join(lines)
+        )
+
+
+if __name__ == "__main__":
+    _report_and_exit()
