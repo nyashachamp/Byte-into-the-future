@@ -1,12 +1,29 @@
-"""Deterministic synthetic-dataset pipeline with an in-memory action simulator."""
+"""Deterministic synthetic-dataset pipeline with an in-memory action simulator.
+
+The analyze() function delegates each stage of its logic to the four specialist
+agent modules in src/agents/:
+
+    investigator   – Security Investigator   (input validation, baseline comparison)
+    analyst        – Risk & Dependency Analyst (service mapping, score, notify_first)
+    response_agent – Response Agent           (authorization gate, sandbox action, retry)
+    verifier       – Verification & Handoff   (independent state check, outcome, handoff)
+
+The CaseResult dataclass and the public analyze() signature are unchanged so that
+the Streamlit dashboard, CLI entry-point, and all existing tests continue to work
+without modification.
+"""
 
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import datetime
 import json
 from pathlib import Path
 from typing import Any, Iterable
+
+from .agents import investigator as _investigator
+from .agents import analyst as _analyst
+from .agents import response_agent as _response_agent
+from .agents import verifier as _verifier
 
 
 @dataclass
@@ -47,40 +64,6 @@ def load_dataset(dataset_path: str | Path) -> dict[str, Any]:
     return json.loads(Path(dataset_path).read_text(encoding="utf-8"))
 
 
-def _expired(value: str, clock: str) -> bool:
-    return datetime.fromisoformat(value.replace("Z", "+00:00")) < datetime.fromisoformat(clock.replace("Z", "+00:00"))
-
-
-def _snapshot_errors(snapshot: dict[str, Any], required: Iterable[str]) -> list[str]:
-    errors: list[str] = []
-    for field in required:
-        if field not in snapshot:
-            errors.append(f"missing required field: {field}")
-        elif type(snapshot[field]) is not bool:
-            errors.append(f"field must be a JSON boolean: {field}")
-    return errors
-
-
-def _add_event(events: list[dict[str, Any]], name: str, detail: str) -> None:
-    events.append({"sequence": len(events) + 1, "event": name, "detail": detail})
-
-
-def _severity(score: int | None, assessment: str) -> str:
-    if assessment == "invalid_input":
-        return "unknown"
-    if score is None:
-        return "unknown"
-    if score == 0:
-        return "none"
-    if score >= 80:
-        return "critical"
-    if score >= 60:
-        return "high"
-    if score >= 30:
-        return "medium"
-    return "low"
-
-
 def analyze(dataset_path: str | Path, case_ids: Iterable[str] | None = None) -> list[CaseResult]:
     """Run selected cases independently; no state is carried between cases."""
     dataset = load_dataset(dataset_path)
@@ -95,134 +78,177 @@ def analyze(dataset_path: str | Path, case_ids: Iterable[str] | None = None) -> 
     for case in dataset["cases"]:
         if selected is not None and case["id"] not in selected:
             continue
+
         asset = assets[case["asset_id"]]
         baseline = baselines[case["baseline_id"]]
-        service_ids = list(asset.get("service_ids", []))
-        linked_services = [services[item] for item in service_ids]
-        service_name = ", ".join(item["name"] for item in linked_services) or "Unknown service impact"
-        errors = _snapshot_errors(case["snapshot"], baseline["required_fields"])
-        rules: list[dict[str, Any]] = []
-        evidence: list[str] = []
-        events: list[dict[str, Any]] = []
-        action = "none"
-        attempts = 0
-        action_result = "not_run"
-        verification = "not_run"
-        handoff = False
-        human_work = ["Review evidence and approve final case closure."]
 
-        if errors:
-            assessment, score, outcome = "invalid_input", None, "request_data"
-            evidence = errors
-            human_work.insert(0, "Provide a corrected snapshot with strict boolean fields.")
-        else:
-            
-            active_exceptions = set()
+        # ------------------------------------------------------------------
+        # Stage 1 – Security Investigator
+        # ------------------------------------------------------------------
+        inv = _investigator.investigate(
+            case=case,
+            asset=asset,
+            baseline=baseline,
+            exceptions=dataset["exceptions"],
+            clock=clock,
+        )
 
-            for exception in dataset["exceptions"]:
-                if (
-                    exception["id"] not in set(case.get("exception_ids", []))
-                    or exception["asset_id"] != case["asset_id"]
-                    or _expired(exception["expires_at"], clock)
-                ):
-                    continue
+        # ------------------------------------------------------------------
+        # Short-circuit: invalid input
+        # ------------------------------------------------------------------
+        if inv["assessment"] == "invalid_input":
+            service_ids = list(asset.get("service_ids", []))
+            linked_services = [services[sid] for sid in service_ids]
+            service_name = (
+                ", ".join(item["name"] for item in linked_services) or "Unknown service impact"
+            )
+            human_work = [
+                "Provide a corrected snapshot with strict boolean fields.",
+                "Review evidence and approve final case closure.",
+            ]
+            results.append(CaseResult(
+                case_id=case["id"], title=case["title"],
+                asset_id=case["asset_id"], asset_name=asset["type"],
+                affected_public_service=service_name, service_ids=service_ids,
+                assessment="invalid_input",
+                finding="Invalid input",
+                finding_rule_ids=[],
+                severity="unknown", score=None, confidence=0.0,
+                evidence=inv["errors"],
+                baseline_evidence=[
+                    f"{key} required {value}"
+                    for key, value in baseline["required_fields"].items()
+                ],
+                action_taken="none", action_attempts=0, action_result="not_run",
+                verification_result="not_run",
+                outcome="request_data",
+                escalation_required=False,
+                handoff_required=False,
+                human_intervention=human_work,
+                completed_ai_work=[
+                    "Loaded one isolated case from public-service-risk-v1",
+                    "Validated the snapshot without coercing types",
+                    "Compared observed settings with the approved baseline",
+                    "Mapped the asset to its simulated public service",
+                ],
+                outstanding_human_work=human_work,
+                decision_points=["Human approval is required before closure or any unapproved correction."],
+                events=[],
+                lifecycle_status="awaiting_corrected_data",
+            ))
+            continue
 
-                matching_rule = next(
-                    (
-                        rule
-                        for rule in baseline["rules"]
-                        if rule["id"] == exception["rule_id"]
-                    ),
-                    None,
-                )
+        # ------------------------------------------------------------------
+        # Short-circuit: compliant
+        # ------------------------------------------------------------------
+        if inv["assessment"] == "compliant":
+            service_ids = list(asset.get("service_ids", []))
+            linked_services = [services[sid] for sid in service_ids]
+            service_name = (
+                ", ".join(item["name"] for item in linked_services) or "Unknown service impact"
+            )
+            human_work = ["Review evidence and approve final case closure."]
+            results.append(CaseResult(
+                case_id=case["id"], title=case["title"],
+                asset_id=case["asset_id"], asset_name=asset["type"],
+                affected_public_service=service_name, service_ids=service_ids,
+                assessment="compliant",
+                finding="No baseline deviation",
+                finding_rule_ids=[],
+                severity="none", score=0, confidence=1.0,
+                evidence=[],
+                baseline_evidence=[
+                    f"{key} required {value}"
+                    for key, value in baseline["required_fields"].items()
+                ],
+                action_taken="none", action_attempts=0, action_result="not_run",
+                verification_result="not_run",
+                outcome="no_action",
+                escalation_required=False,
+                handoff_required=False,
+                human_intervention=human_work,
+                completed_ai_work=[
+                    "Loaded one isolated case from public-service-risk-v1",
+                    "Validated the snapshot without coercing types",
+                    "Compared observed settings with the approved baseline",
+                    "Mapped the asset to its simulated public service",
+                ],
+                outstanding_human_work=human_work,
+                decision_points=["Human approval is required before closure or any unapproved correction."],
+                events=[],
+                lifecycle_status="awaiting_human_review",
+            ))
+            continue
 
-                if matching_rule is not None:
-                    observed_value = case["snapshot"].get(matching_rule["field"])
+        # ------------------------------------------------------------------
+        # Stage 2 – Risk & Dependency Analyst
+        # ------------------------------------------------------------------
+        an = _analyst.analyse_impact(
+            inv=inv,
+            services=services,
+            asset=asset,
+            policy=policy,
+        )
 
-                    if observed_value == exception["approved_value"]:
-                        active_exceptions.add(exception["rule_id"])
-                        
-                        
-            
-            for rule in baseline["rules"]:
-                if case["snapshot"][rule["field"]] != rule["expected"] and rule["id"] not in active_exceptions:
-                    rules.append(rule)
-                    evidence.append(f"{rule['id']}: {rule['field']} expected {rule['expected']}, observed {case['snapshot'][rule['field']]}")
+        # ------------------------------------------------------------------
+        # Stage 3 – Response Agent
+        # ------------------------------------------------------------------
+        resp = _response_agent.execute_response(
+            inv=inv,
+            an=an,
+            case=case,
+            policy=policy,
+            clock=clock,
+        )
 
-            if not rules:
-                assessment, score, outcome = "compliant", 0, "no_action"
-            else:
-                assessment = "confirmed"
-                score = None if not linked_services else min(100, max(rule["weight"] for rule in rules) + 10 * max(item["criticality"] for item in linked_services))
-                public_restricted = asset["classification"] == "restricted_synthetic" and any(rule["id"] == "CFG-PUBLIC" for rule in rules)
-                notify_first = public_restricted or (score is not None and score >= 60)
-                authorized = (
-                    "enable_audit_logging" in case["authorization"].get("allowed_actions", [])
-                    and case["authorization"].get("sandbox_only") is True
-                    and not _expired(case["authorization"]["expires_at"], clock)
-                )
-                # A high-priority logging correction may proceed after the
-                # notification event. Restricted public exposure never does.
-                can_action = len(rules) == 1 and rules[0]["id"] == "CFG-LOGGING" and "enable_audit_logging" in policy["allowlisted_simulated_actions"] and authorized and not public_restricted
-                if notify_first:
-                    _add_event(events, "notification", "Immediate human notification required before action.")
-                if can_action:
-                    action = "enable_audit_logging"
-                    behavior = case["simulation"]["tool_behavior"]
-                    state = dict(case["snapshot"])
-                    for attempt in range(1, min(2, case["simulation"].get("max_attempts", 1)) + 1):
-                        attempts = attempt
-                        _add_event(events, "action_attempt", f"Attempt {attempt}: {action}")
-                        if behavior == "transient_then_success" and attempt == 1:
-                            action_result = "transient_failure"
-                            _add_event(events, "tool_result", "Temporary simulated tool failure.")
-                            continue
-                        action_result = "success"
-                        if behavior != "success_without_change":
-                            state["audit_logging_enabled"] = True
-                        _add_event(events, "tool_result", "Tool reported success.")
-                        break
-                    verification = "passed" if state.get("audit_logging_enabled") is True else "failed"
-                    _add_event(events, "verification", f"Independent verification {verification}.")
-                    if verification == "passed":
-                        outcome = "verified_awaiting_human_closure"
-                    else:
-                        outcome, handoff = "handoff", True
-                        human_work.insert(0, "Investigate the unchanged state; do not retry automatically.")
-                else:
-                    if public_restricted or not authorized or not linked_services:
-                        handoff = True
-                        outcome = "handoff" if public_restricted or not linked_services else "awaiting_approval"
-                    else:
-                        outcome = "awaiting_approval"
-                    human_work.insert(0, "Approve or reject the proposed correction before any action.")
-                    if public_restricted:
-                        human_work[0] = "Incident response must review the public exposure; no automatic correction is permitted."
+        # ------------------------------------------------------------------
+        # Stage 4 – Verification & Handoff
+        # ------------------------------------------------------------------
+        vr = _verifier.verify_and_prepare_handoff(
+            inv=inv,
+            an=an,
+            resp=resp,
+            case=case,
+        )
 
-        if assessment == "compliant":
-            lifecycle = "awaiting_human_review"
-        elif outcome == "verified_awaiting_human_closure":
-            lifecycle = "awaiting_human_closure"
-        elif outcome == "request_data":
-            lifecycle = "awaiting_corrected_data"
-        elif outcome == "awaiting_approval":
-            lifecycle = "awaiting_human_approval"
-        else:
-            lifecycle = "human_handoff_required"
-        finding = ", ".join(rule["field"] for rule in rules) if rules else ("No baseline deviation" if assessment == "compliant" else "Invalid input")
-        completed = ["Loaded one isolated case from public-service-risk-v1", "Validated the snapshot without coercing types", "Compared observed settings with the approved baseline", "Mapped the asset to its simulated public service"]
-        if action != "none":
-            completed += ["Applied the policy gate", "Read post-action state independently"]
+        # ------------------------------------------------------------------
+        # Assemble CaseResult (identical fields to the original pipeline)
+        # ------------------------------------------------------------------
+        rules_violated = inv["rules_violated"]
+        finding = ", ".join(rule["field"] for rule in rules_violated)
+        finding_rule_ids = [rule["id"] for rule in rules_violated]
+        score = an["score"]
+        handoff_required = vr["handoff_required"]
+
         results.append(CaseResult(
-            case_id=case["id"], title=case["title"], asset_id=case["asset_id"], asset_name=asset["type"],
-            affected_public_service=service_name, service_ids=service_ids, assessment=assessment, finding=finding,
-            finding_rule_ids=[rule["id"] for rule in rules] if not errors else [], severity=_severity(score, assessment),
-            score=score, confidence=1.0 if not errors else 0.0, evidence=evidence,
-            baseline_evidence=[f"{key} required {value}" for key, value in baseline["required_fields"].items()],
-            action_taken=action, action_attempts=attempts, action_result=action_result,
-            verification_result=verification, outcome=outcome, escalation_required=handoff or (score is not None and score >= 60),
-            handoff_required=handoff, human_intervention=human_work, completed_ai_work=completed,
-            outstanding_human_work=human_work, decision_points=["Human approval is required before closure or any unapproved correction."],
-            events=events, lifecycle_status=lifecycle,
+            case_id=case["id"], title=case["title"],
+            asset_id=case["asset_id"], asset_name=asset["type"],
+            affected_public_service=an["affected_public_service"],
+            service_ids=an["service_ids"],
+            assessment=inv["assessment"],
+            finding=finding,
+            finding_rule_ids=finding_rule_ids,
+            severity=an["severity"],
+            score=score,
+            confidence=inv["confidence"],
+            evidence=inv["evidence"],
+            baseline_evidence=[
+                f"{key} required {value}"
+                for key, value in baseline["required_fields"].items()
+            ],
+            action_taken=resp["action_taken"],
+            action_attempts=resp["action_attempts"],
+            action_result=resp["action_result"],
+            verification_result=vr["verification_result"],
+            outcome=vr["outcome"],
+            escalation_required=handoff_required or (score is not None and score >= 60),
+            handoff_required=handoff_required,
+            human_intervention=vr["human_intervention"],
+            completed_ai_work=vr["completed_ai_work"],
+            outstanding_human_work=vr["human_intervention"],
+            decision_points=["Human approval is required before closure or any unapproved correction."],
+            events=vr["events"],
+            lifecycle_status=vr["lifecycle_status"],
         ))
+
     return results
