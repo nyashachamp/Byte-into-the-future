@@ -1,3 +1,16 @@
+# SUPERSEDED — canonical implementation: agents/risk_analyst_agent.yaml
+#
+# This file was an early design stub describing the dependency-impact role.
+# It is preserved here as a design artefact only.  It is NOT imported into
+# watsonx Orchestrate.  The deployable native agent spec is:
+#
+#   agents/risk_analyst_agent.yaml   (name: risk_analyst)
+#
+# That agent uses the analyse_impact @tool from tools/analyst_pkg/
+# and contains the full ADK-compliant YAML required for WXO import.
+#
+# --- original stub below (read-only reference) ---
+
 name: dependency_impact_agent
 purpose: Connect a finding to the affected simulated government service.
 inputs:

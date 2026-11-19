@@ -1,3 +1,16 @@
+# SUPERSEDED — canonical implementation: agents/verification_handoff_agent.yaml
+#
+# This file was an early design stub describing the handoff reporting role.
+# It is preserved here as a design artefact only.  It is NOT imported into
+# watsonx Orchestrate.  The deployable native agent spec is:
+#
+#   agents/verification_handoff_agent.yaml   (name: verification_handoff_agent)
+#
+# That agent uses the verify_and_handoff @tool from tools/verifier_pkg/
+# and contains the full ADK-compliant YAML required for WXO import.
+#
+# --- original stub below (read-only reference) ---
+
 name: handoff_reporting_agent
 purpose: Prepare an evidence-based handoff for a human responder.
 required_fields:

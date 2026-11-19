@@ -1,3 +1,18 @@
+# SUPERSEDED — canonical implementation: agents/response_agent.yaml
+#
+# This file was an early design stub describing the policy/authorization gate.
+# It is preserved here as a design artefact only.  It is NOT imported into
+# watsonx Orchestrate.  The deployable native agent spec is:
+#
+#   agents/response_agent.yaml   (name: response_agent)
+#
+# That agent uses the execute_response @tool from tools/response_pkg/
+# and contains the full ADK-compliant YAML required for WXO import.
+# All six authorization invariants are enforced inside execute_response.py
+# and cannot be bypassed by any other agent or the Orchestrator.
+#
+# --- original stub below (read-only reference) ---
+
 name: policy_human_boundary_gate
 purpose: Decide whether the workflow may continue or must escalate.
 immediate_escalation_triggers:
