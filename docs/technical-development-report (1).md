@@ -1,3 +1,7 @@
+> **Historical implementation report — phase notice (2026-11-20):** The report below records an *earlier* deterministic local Python/Streamlit development phase. Its pending IBM integration statements reflect that period and must not be mistaken for the newest branch status. Later native agent imports/configuration and the C03 formal evaluation failure are tracked in [current system status](current-system-status-2026-11-20.md) and [validation progress](validation-progress-2026-11-20.md). The report's original text is preserved as a project-history artifact.
+
+---
+
 # Public Service Risk Dashboard — Technical Development Report
 
 ## Project overview
