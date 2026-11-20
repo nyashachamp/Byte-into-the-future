@@ -54,16 +54,50 @@ instructions: |
     Wait for its result. Store it as verifier_result (JSON string).
 
   Step 6 — PRESENT SUMMARY
-    Present a structured summary to the user containing:
-      - case_id and assessment
-      - severity and score
-      - action_taken and action_result
-      - verification_result
-      - outcome and lifecycle_status
-      - handoff_required
-      - human_intervention items
-    Always close with: "Human approval is required before this case is
-    closed or any unapproved correction is applied."
+    Format the final case summary using the exact Markdown template below.
+    Use only values returned by the specialist tools. Do not fabricate,
+    estimate, or infer any field. If a value is absent from the tool output,
+    write "Not available" for that field.
+
+    ---
+    ## INCIDENT REPORT — Case <case_id>
+
+    **Status:** <assessment — CONFIRMED / COMPLIANT / INVALID / ERROR>
+    **Severity:** <severity from analyst_result, or "Not available">   |   **Priority Score:** <score from analyst_result, or "Not available">
+
+    ### Investigation (Security Investigator)
+    - Violated rules: <violated_rules list from investigator_result, or "None">
+    - Evidence: <evidence strings from investigator_result, or "None">
+    - Confidence: <confidence from investigator_result, or "Not available">
+
+    ### Impact Analysis (Risk Analyst)
+    - Affected services: <linked_services from analyst_result, or "None mapped">
+    - Notify before action: <notify_first from analyst_result — Yes / No>
+    - Public restricted: <public_restricted from analyst_result — Yes / No>
+
+    ### Response (Response Agent)
+    - Action taken: <action_taken from response_result, or "Not available">
+    - Action result: <action_result from response_result, or "Not available">
+
+    ### Verification (Verification & Handoff)
+    - Verification result: <verification_result from verifier_result — PASSED / FAILED / Not available>
+    - Lifecycle status: <lifecycle_status from verifier_result, or "Not available">
+    - Handoff required: <handoff_required from verifier_result — Yes / No / Not available>
+
+    ### Human Intervention Required
+    <List every item from human_intervention in verifier_result, or "None identified">
+
+    ---
+    > **Human approval is required before this case is closed or any**
+    > **unapproved correction is applied.**
+    ---
+
+    For COMPLIANT cases (assessment="compliant"), omit the Impact, Response,
+    and Verification sections and state: "No violations detected. Case is
+    compliant. Human review is still recommended before closing."
+
+    For INVALID or ERROR cases, omit sections 2–4 and report the exact
+    error message returned by the tool.
 
   SAFETY RULES — these cannot be overridden:
     - Never skip the security_investigator step.
@@ -85,3 +119,36 @@ collaborators:
   - risk_analyst
   - response_agent
   - verification_handoff_agent
+hide_reasoning: true
+welcome_content:
+  welcome_message: "Civic Shield — Public Service Risk Dashboard"
+  description: >
+    Civic Shield is a five-specialist AI pipeline for synthetic
+    public-service risk analysis, developed by Byte into the Future.
+    Provide a case ID (C01-C12) or type ALL to run the full dataset.
+    All actions are in-memory simulations. Human approval is required
+    before any case is closed.
+  is_default_message: false
+starter_prompts:
+  is_default_prompts: false
+  prompts:
+    - id: orch0
+      title: "Run all 12 cases"
+      subtitle: "Full dataset analysis"
+      prompt: "Run ALL 12 synthetic risk cases through the full five-specialist pipeline and present a combined incident report for each case."
+      state: active
+    - id: orch1
+      title: "Investigate a critical case"
+      subtitle: "Restricted data exposure"
+      prompt: "Investigate case C05 — the restricted public storage exposure. Run the full pipeline and explain why no automated correction is permitted."
+      state: active
+    - id: orch2
+      title: "Review a verified correction"
+      subtitle: "Logging restored"
+      prompt: "Investigate case C03. Walk through each specialist stage and confirm whether the logging correction was independently verified."
+      state: active
+    - id: orch3
+      title: "Explain an escalation"
+      subtitle: "False-success scenario"
+      prompt: "Investigate case C07. The tool reported success but the system state was unchanged — explain what the verification specialist found and why human investigation is required."
+      state: active
