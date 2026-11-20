@@ -1,7 +1,9 @@
+> **Evidence scope (updated 2026-11-20):** These 54 images document **earlier local Ubuntu/Python/Streamlit testing**, not the later native five-agent watsonx Orchestrate formal evaluation or a published Live deployment. These original screenshots are present in the recovery branch as well. See [current status](../current-system-status-2026-11-20.md) and [Orchestrate validation progress](../validation-progress-2026-11-20.md) for later evidence and the original C03 failure. Historical material below is retained for traceability.
+
 # Ubuntu VM testing screenshot evidence — October 27–28, 2026
 
 **Tester:** Nyasha Champ (independent testing).  
-**Status:** All **54 PNG screenshots** (01–54) are present on the `source-code` branch. Installation and C01–C05 are documented by 01–35; C06–C12 by 36–54.  
+**Status:** All **54 PNG screenshots** (01–54) are present on the `source-code` and `recovery-five-agent-2026-11-19` branches. Installation and C01–C05 are documented by 01–35; C06–C12 by 36–54.  
 **Source:** Terminal and Firefox screenshots supplied during testing. No application code or dataset modified.
 
 | # | Evidence file |
