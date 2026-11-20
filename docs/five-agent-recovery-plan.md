@@ -1,3 +1,7 @@
+> **Historical planning document — status notice (2026-11-20):** This plan was written *before* the native five-agent configuration/tool packages were added and imported. Sections below retain their original proposal language for auditability, including statements that files did not yet exist **at the time of writing**. The recovery branch now contains these files and the team lead observed five-agent imports and four collaborator assignments. That does not establish Live publication or formal test success. For current evidence, read [current system status](current-system-status-2026-11-20.md) and [validation progress](validation-progress-2026-11-20.md).
+
+---
+
 # Five-Agent Recovery Plan
 
 **Branch:** `recovery-five-agent-2026-11-19`  
