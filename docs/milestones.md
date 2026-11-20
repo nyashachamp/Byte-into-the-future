@@ -1,74 +1,59 @@
-# Milestones and Progress
+# Milestones and submission readiness
 
-**Next IBM milestone deadline recorded by the team: October 23, 2026**  
-**Repository review: October 26, 2026**
+**Project:** Byte into the Future — Public Service Risk Dashboard / Civic Shield  
+**Maintained checkpoint:** 20 November 2026 (Pacific)  
+**IBM submission deadline recorded by team:** 22 November 2026  
+**Working documentation branch:** `recovery-five-agent-2026-11-19`
 
-This checklist compares the files in the repository with the team's documented deliverables. The original IBM assignment guide and submission slides are not included, so full alignment with the official rubric and deadline has not been independently verified.
+This is the current milestone tracker. Earlier design/deliverable snapshots remain in Git history and linked historical reports. Never infer successful formal Orchestrate testing from local Python/Streamlit results.
 
-## Status meanings
+## Status definitions
 
-- **Included — draft:** the document exists; approval, validation, or submission may still be needed.
-- **Reported complete — evidence missing:** the team reports work is complete, but supporting code or results are not uploaded.
-- **Partial:** some supporting material exists; specific gaps remain.
-- **Missing:** the required artifact or evidence is absent from this repository; it may exist elsewhere.
+- **Documented / observed:** file, screenshot or report was directly available.
+- **Developer-reported:** stated by development workstream; independently recheck when necessary.
+- **Pending validation:** additional evidence needed before describing the milestone as passed.
+- **Not established:** the feature or integration has not been verified; do not claim it.
 
-## IBM SkillsBuild deliverables
+## Milestone tracker
 
-| Deliverable | Included evidence | Status | Still needed |
-|---|---|---|---|
-| Problem statement and empathy map | [Project concept §3–4](project-concept.md) | Included — draft | Team review; validate empathy-map hypotheses with user or mentor feedback |
-| AI Agent Architecture — slide 17 | [Week 4 §1](week-4-deliverables.md) | Included — draft | Review against implementation and update the actual submission slide |
-| AI Agent Workflow — slide 18 | [Week 4 §2](week-4-deliverables.md) | Included — draft | Confirm approval conditions, retry limits, escalation triggers, and closure authority; update submission slide |
-| Tools & Integrations — slide 19 | [Week 4 §3](week-4-deliverables.md) | Included — draft | Confirm actual tools and service access; distinguish optional services in submission slide |
-| MVP scope — slide 22 | [Week 4 §4](week-4-deliverables.md), [concept §12](project-concept.md) | Included — draft | Demonstrate successful authorized sandbox handling and critical-case human escalation |
-| GitHub repository | README, contributing guide, configuration template, ignore rules, documentation | Included | Upload implementation and evidence listed below |
-| Initial working prototype | [Original prototype files](https://github.com/nyashachamp/Byte-into-the-future/tree/gazal-initial-code/src/gazal-project) are staged on `gazal-initial-code`; IBM Bob integration is not verified | Branch available — review pending | Review code without altering the baseline, confirm installation and integrations, document reproducible tests before merging |
-| Compliant dataset | [12-case synthetic dataset and guide](../data/samples/README.md), baseline, assets/services, mock authorizations, and evaluator-only expected outcomes | Included — v1 development fixture; consistency check passed | Team review of scenario, baseline/scoring/policy; adapt to prototype input and verify assignment requirements |
-| Project documentation | Concept, Week 4 design, README, contributing guide, test plan | Partial | Installation, confirmed integrations, final decisions, test results, and submission-ready slide deck |
-| Three-minute YouTube video | No link included | Missing; previously recorded as not started | Record demonstration, verify duration/accessibility, and add YouTube link |
+| Milestone | Current evidence | Status / next gate |
+|---|---|---|
+| Project/problem statement, stakeholders and design | [Concept](project-concept.md); [Week 4 design](week-4-deliverables.md) | Documented design, with historical assumptions |
+| Synthetic dataset and evaluator fixture | [12-case fixture](../data/samples/README.md); [expected results](../tests/fixtures/public-service-risk-v1.expected.json) | Files present; final-version repeatability check still valuable |
+| Local Python analysis and Streamlit dashboard | [Implementation](../src/source-code/README.md) and [Oct 29 functional report](cybersecurity-functional-test-report-2026-10-29.md) | Earlier **12/12 local synthetic-case outcomes** documented |
+| Original local evidence | [54 screenshot manifest](testing-evidence/README.md) | Present on recovery branch; **not** five-agent Live evidence |
+| F-01 exception handling and F-02 unknown severity | [Earlier technical report](technical-development-report%20(1).md) | Documented remediation in prior work; verify final accepted code/version |
+| Native five-agent configuration | [Root agent YAML](../agents/); [status checkpoint](current-system-status-2026-11-20.md) | IBM Bob import success and four collaborators observed; formal acceptance pending |
+| C03 Draft Preview | [Validation record](validation-progress-2026-11-20.md) | Generated synthetic report, not formal PASS |
+| C03 formal evaluation | [Validation record](validation-progress-2026-11-20.md) | **FAILED 0/1 at 09:16 Pacific on Nov 20**; preserve history |
+| C03 matcher update | [Validation record](validation-progress-2026-11-20.md) | Exact -> Fuzzy saved **in test only**; rerun result unverified |
+| C05 / C07 / C11 native-agent safety cases | [Validation queue](validation-progress-2026-11-20.md) | Pending independent formal evidence |
+| Other eight native-agent cases | [Validation queue](validation-progress-2026-11-20.md) | Pending independent regression |
+| Published Live version | [Issue #5](https://github.com/nyashachamp/Byte-into-the-future/issues/5) | Version/live acceptance not verified |
+| Hosted Streamlit demonstration | Developer-reported Community Cloud hosting in [Issue #5](https://github.com/nyashachamp/Byte-into-the-future/issues/5) | Public URL/runtime not independently verified at checkpoint |
+| Direct dashboard-to-Orchestrate integration | Prior technical audit documents separate interfaces | **Not established**; describe limitation clearly |
+| Authoritative final code / merge review | `main` older baseline; recovery branch more recent | Decide approved submission branch and review integration; no unreviewed merge |
+| Pitch deck, demo video, official submission | [Final checklist](submission-checklist-2026-11-22.md) | Links and receipt pending |
 
-## Technical progress and evidence
+## Prioritized actions before submission
 
-| Item | Owner | Repository status | Evidence needed to mark complete |
-|---|---|---|---|
-| Initial agent definitions and local Python pipeline | Development workstream | Files staged on `gazal-initial-code`; implementation not finalized | Team review of agent behavior, integration expectations, and reproducible runs |
-| Dashboard interface | Development workstream | Prototype source staged on `gazal-initial-code`; review pending | Team-reviewed demo and results |
-| Agents connected to dashboard | Development workstream | Integration reported, not independently validated | End-to-end test evidence and any IBM integration proof |
-| Initial system test without dataset | Development workstream | Reported complete — verification pending | Dated command, environment, output, and result |
-| Original VS Code project staged in GitHub | Development workstream | Uploaded to `gazal-initial-code` only | Review the baseline, preserve it, and do not merge until ready |
-| Installation instructions | Development workstream | Draft setup documentation present on the staging branch | Verify supported environments and commands on a clean install; refine on a new branch |
-| IBM Bob use | Ghazal; Nyasha documents evidence | Missing | Description of actual use and suitable screenshots, logs, or demonstration references |
-| Synthetic dataset | Shared | Included — 12 cases, schema documentation, provenance, and expected outcomes | Team review and prototype input adapter |
-| Dataset-based testing | Shared | Fixture consistency validator passed; dashboard execution evidence missing | Run the prototype against cases; save actual outputs and comparisons in `data/results/` |
-| Acceptance-criteria validation | Shared | Criteria drafted; results missing | Detection/false-positive metrics, priority rationale, escalation evidence, handoff completeness, and approval/verification checks |
-| Submission slides | Nyasha / shared | Missing from repository | Completed deck or accessible link mapped to required guide sections |
-| Video | Nyasha / shared | Missing | Three-minute YouTube link |
+1. Record a **distinct C03 formal rerun**, preserving the original failure and the changed evaluation matcher.
+2. Test C05 (critical escalation), C07 (false-success), and C11 (unknown dependency) in native Orchestrate; then remaining cases.
+3. Verify published agent version and the scope of any live run.
+4. Confirm reproducible local app commands and final accepted branch; avoid overwriting IBM Bob local work.
+5. Check dashboard/demo accessibility, pitch deck, video, and official rubric.
+6. Finalize README links and submission record only when evidence exists.
 
-`data/samples/` now contains the v1 fixture and guide. The initial prototype is staged only on `gazal-initial-code`. No verified dataset-based dashboard outputs have been committed to `main`. A folder name or README does not establish that implementation, data, or testing is complete.
+## Distinguish the two system paths
 
-## Completion checklist
+The deterministic Python/Streamlit application in `src/source-code/` is not proof that the native agent deployment in `agents/` is end-to-end operational. Native-agent collaborator configuration was observed, but an independently passed full multi-agent regression and Live publication were not established by this checkpoint.
 
-- [x] Establish repository and include project/design drafts.
-- [x] Include contribution instructions, data rules, configuration template, and test plan.
-- [x] Preserve the original prototype files in a separate GitHub branch (`gazal-initial-code`); review and merge remain pending.
-- [ ] Development workstream: verify and refine installation and launch instructions on a new working branch.
-- [ ] Confirm IBM Bob access and document its actual use.
-- [ ] Confirm which watsonx services and IBM Cloud resources are available and adopted.
-- [ ] Choose the public-service scenario, baseline, and prioritization rubric.
-- [x] Upload documented synthetic data and evaluator-only expected outcomes (v1; consistency check passed).
-- [ ] Review v1 scenario, baseline/scoring/policy and adapt it to the prototype.
-- [ ] Define allowed actions, human-approval conditions, retry limits, escalation triggers, and human closure authority.
-- [ ] Assign remaining security-rule, dataset, QA, slide, and video tasks.
-- [ ] Run dataset-based tests and record results against acceptance criteria.
-- [ ] Include example verified resolution and complete unresolved-case handoff.
-- [ ] Review the actual IBM guide and finish the required submission slides.
-- [ ] Add the three-minute YouTube video link.
-- [ ] Confirm deadline, submission location, and that all linked artifacts are accessible.
+## Historical references
 
-## Documentation conventions
+- [October local testing and findings](cybersecurity-functional-test-report-2026-10-29.md) — includes C01–C12 and original findings.
+- [Historical technical development report](technical-development-report%20(1).md) — local implementation phase, written before later Orchestrate work.
+- [Historical five-agent recovery plan](five-agent-recovery-plan.md) — design phases, not the definitive present-day acceptance status.
+- [Original Word documents](original/) — source copies, not authoritative latest status.
+- [Current system status](current-system-status-2026-11-20.md) and [validation log](validation-progress-2026-11-20.md) — authoritative checkpoint for this documentation pass.
 
-Use **Ghazal** consistently. The maintained design uses five modules: Orchestrator, Security Investigator, Risk & Dependency Analyst, Response Agent, and Verification & Handoff. Policy gates apply across them; the dashboard and case store are supporting components.
-
-IBM watsonx Orchestrate is optional, watsonx.ai / Granite and IBM Cloud are candidates, and adoption/access remain to be confirmed. IBM Bob is required according to the team's documented brief; evidence of use remains outstanding.
-
-The Markdown documents are maintained for current use. Word files in `original/` are historical source copies and may contain earlier names or designs. Update this checklist when new evidence is committed; do not mark reported work as verified solely from a progress statement.
+**Security note:** A previously shared IBM API key needs rotation/revocation confirmation. Do not place it or personal contact details in the public repository.
