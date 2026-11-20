@@ -25,7 +25,7 @@ This page helps an evaluator distinguish the original design, tested determinist
 | [Test directory](../tests/README.md) | Automated tests and validation fixture | Does not itself prove live Orchestrate execution |
 | [Local functional test report, Oct 29](cybersecurity-functional-test-report-2026-10-29.md) | 12 synthetic local-case observations, limitations, findings | Historical Ubuntu/Streamlit local scope |
 | [Historical screenshot index](testing-evidence/README.md) | 54 archived local test screenshots | Not proof of five-native-agent Live deployment |
-| [Technical development report](technical-development-report%20(1).md) | Earlier implementation and local test phase | **Historical snapshot**, not latest status |
+| [Technical development report](technical-development-report%20%281%29.md) | Earlier implementation and local test phase | **Historical snapshot**, not latest status |
 | [Five-agent recovery plan](five-agent-recovery-plan.md) | Design rationale, phases, data contracts and safeguards | **Historical plan**; later code/configuration exists |
 | [Ubuntu installation/testing log](ubuntu-local-installation-log-2026-10-27.md) | Local environment and reproducibility narrative | Historical local phase |
 
