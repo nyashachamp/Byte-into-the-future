@@ -22,7 +22,7 @@ This is the current milestone tracker. Earlier design/deliverable snapshots rema
 | Synthetic dataset and evaluator fixture | [12-case fixture](../data/samples/README.md); [expected results](../tests/fixtures/public-service-risk-v1.expected.json) | Files present; final-version repeatability check still valuable |
 | Local Python analysis and Streamlit dashboard | [Implementation](../src/source-code/README.md) and [Oct 29 functional report](cybersecurity-functional-test-report-2026-10-29.md) | Earlier **12/12 local synthetic-case outcomes** documented |
 | Original local evidence | [54 screenshot manifest](testing-evidence/README.md) | Present on recovery branch; **not** five-agent Live evidence |
-| F-01 exception handling and F-02 unknown severity | [Earlier technical report](technical-development-report%20(1).md) | Documented remediation in prior work; verify final accepted code/version |
+| F-01 exception handling and F-02 unknown severity | [Earlier technical report](technical-development-report%20%281%29.md) | Documented remediation in prior work; verify final accepted code/version |
 | Native five-agent configuration | [Root agent YAML](../agents/); [status checkpoint](current-system-status-2026-11-20.md) | IBM Bob import success and four collaborators observed; formal acceptance pending |
 | C03 Draft Preview | [Validation record](validation-progress-2026-11-20.md) | Generated synthetic report, not formal PASS |
 | C03 formal evaluation | [Validation record](validation-progress-2026-11-20.md) | **FAILED 0/1 at 09:16 Pacific on Nov 20**; preserve history |
@@ -51,7 +51,7 @@ The deterministic Python/Streamlit application in `src/source-code/` is not proo
 ## Historical references
 
 - [October local testing and findings](cybersecurity-functional-test-report-2026-10-29.md) — includes C01–C12 and original findings.
-- [Historical technical development report](technical-development-report%20(1).md) — local implementation phase, written before later Orchestrate work.
+- [Historical technical development report](technical-development-report%20%281%29.md) — local implementation phase, written before later Orchestrate work.
 - [Historical five-agent recovery plan](five-agent-recovery-plan.md) — design phases, not the definitive present-day acceptance status.
 - [Original Word documents](original/) — source copies, not authoritative latest status.
 - [Current system status](current-system-status-2026-11-20.md) and [validation log](validation-progress-2026-11-20.md) — authoritative checkpoint for this documentation pass.
