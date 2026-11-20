@@ -69,6 +69,12 @@ The Save as test dialog showed recorded test conditions for collaboration/tool i
 - Do not treat Fuzzy parameter matching as equivalent to an exact match or authorization-control proof.
 - Continue recording *failures as well as passes*. Do not merge to `main` or state final acceptance until evidence supports it.
 
+## Repository documentation cross-check (20 Nov; no test rerun implied)
+
+- The recovery branch contains the analyst tool entry file at `tools/analyst_pkg/analyse_impact.py`. Earlier informal notes used `analyze_impact.py`. The correct repository path is recorded here for navigation; **deployed tool naming/metadata and the runtime mismatch cause remain unverified**.
+- The [repository overview](../README.md), [current status](current-system-status-2026-11-20.md), [documentation index](README.md), and [submission checklist](submission-checklist-2026-11-22.md) now distinguish earlier local test evidence from native formal evaluations.
+- This is a **documentation-only cross-check**. It does not change the original 09:16 failed result, the Fuzzy matcher, deployed agents or application code.
+
 ## Next record update
 
 Record the rerun's actual outcome and metrics, then C05/C07/C11 and all twelve regressions. Record any validated change to code, agent definitions, tool metadata, and its deployment/version separately.
