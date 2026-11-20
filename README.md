@@ -1,140 +1,138 @@
-# Public Service Risk Dashboard
+# Public Service Risk Dashboard (Civic Shield)
 
-**Team Byte into the Future** | IBM SkillsBuild AI Experiential Learning Lab | Track #4: Government & Public Services
+**Team Byte into the Future** · **IBM SkillsBuild AI Experiential Learning Lab** · **Track #4: Government & Public Services**
 
-A proposed multi-agent AI system designed to help government IT and cybersecurity teams detect security misconfigurations, understand how affected systems connect to essential public services, prioritize risks by citizen impact, and hand unresolved work to human responders with a complete, evidence-based case packet.
+A synthetic cybersecurity proof of concept that helps analysts identify security configuration deviations, understand dependencies on public services, prioritize cases, simulate **policy-authorized** response steps, verify outcomes, and prepare auditable human handoffs.
 
-> **Design principle:** the AI handles permitted, low-risk analysis and documentation. Humans keep authority over critical actions, incident classification, recovery approval, and closure.
+> **Safety principle:** AI-assisted analysis and simulated actions do **not** replace human approval for critical actions or final case closure. No real government infrastructure or citizen records are used.
 
----
+**Project checkpoint:** 20 November 2026 · **Submission target:** 22 November 2026  
+**Implementation under review:** `recovery-five-agent-2026-11-19` — [browse the recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19).  
+**Branch note:** `main` is an earlier design/data baseline, **not** the current five-agent implementation. Formal review and integration are pending; do not assume all recovery code is published or accepted.
 
-## The problem
+## Start here
 
-Government security teams face alert overload, fragmented tools, hidden misconfigurations, and incomplete context when work changes hands. Our guiding question:
-
-*How might we use agentic AI to help government agencies proactively identify security misconfigurations, assess vulnerabilities and incidents, understand technical dependencies, prioritize threats to essential public services, and complete authorized response work before handing unresolved tasks to human cybersecurity professionals?*
-
-**Primary users:** government SOC analysts, IT operations staff, incident responders, and security managers.
-**Example setting:** a simulated county government running public-facing applications, internal identity services, and emergency-related systems.
-
-## Proposed agent architecture
-
-| Agent / module | Responsibility | Key decision |
-|---|---|---|
-| Orchestrator | Tracks case state, plans tasks, routes work, preserves audit history | What should happen next? |
-| Security Investigator | Validates configuration findings against approved baselines | Is this a confirmed finding? |
-| Risk & Dependency Analyst | Maps affected assets to public services and estimates impact | What needs attention first? |
-| Response Agent | Proposes or executes only explicitly authorized sandbox actions | Is this action permitted and safe? |
-| Verification & Handoff | Independently checks results and prepares the analyst handoff | Resolved, retry safely, or escalate? |
-
-### Data flow
-
-```
-Input / Perception      Synthetic alerts, configuration snapshots, asset inventory, service-dependency map
-        ↓
-Orchestrator / Planning Assigns agents, tracks workflow state, enforces authorization gates
-        ↓
-Memory / Knowledge      Approved baselines, response procedures, validated prior cases, audit trail
-        ↓
-Tools / Interfaces      Python validation functions, simulated APIs, SQL records, optional model service
-        ↓
-Execution               Read-only investigation, prioritization, authorized sandbox actions, handoff creation
-        ↓
-Verification / Feedback Deterministic tests; results and analyst corrections recorded for future cases
-```
-
-## Workflow
-
-1. Receive a simulated alert or configuration finding and create a case record.
-2. Validate evidence and compare the configuration with an approved baseline.
-3. Assess severity, dependencies, and likely impact on public-service continuity.
-4. Choose next action: gather evidence, recommend remediation, perform an authorized sandbox step, or escalate.
-5. Check authorization and safety before any action. **Critical findings trigger immediate human notification.**
-6. Execute the permitted action and independently verify the result.
-7. If verification fails, retry only within bounded rules; otherwise stop and escalate with evidence.
-8. Record outcome, analyst feedback, remaining tasks, and case status.
-
-## Technologies
-
-These are proposed tools, not a verified inventory of implemented integrations. IBM Bob use still needs supporting evidence.
-
-| Tool | Purpose |
+| Want to understand… | Follow this link |
 |---|---|
-| IBM Bob | Required IBM development workflow |
-| IBM watsonx Orchestrate (optional) | Potential workflow orchestration; access and adoption to be confirmed |
-| IBM watsonx.ai / Granite (candidate) | Language reasoning, summarization, planning support |
-| IBM Cloud (candidate) | Hosting and IBM service access; availability to be confirmed |
-| Python | Baseline comparisons, simulated actions, validation, scoring |
-| Synthetic JSON / CSV | Alerts, configurations, assets, service dependencies |
-| SQLite | Case status, event logs, audit trail |
-| Dashboard | Risk ranking, evidence, approval requests, handoffs |
-| VS Code + GitHub | Development and team collaboration |
+| What is really implemented and what remains unverified? | [Current system status](docs/current-system-status-2026-11-20.md) |
+| Architecture, implementation and evidence navigation | [Documentation guide](docs/README.md) |
+| Five-agent testing, including a failed formal evaluation | [Validation progress](docs/validation-progress-2026-11-20.md) |
+| Earlier local synthetic test results and 54 screenshots | [Functional test report](docs/cybersecurity-functional-test-report-2026-10-29.md) · [Screenshot index](docs/testing-evidence/README.md) |
+| Submission readiness | [Milestones](docs/milestones.md) · [Final checklist](docs/submission-checklist-2026-11-22.md) |
+| Outstanding engineering audit and remediation | [GitHub Issue #5](https://github.com/nyashachamp/Byte-into-the-future/issues/5) |
 
-## MVP demonstration
+## The public-service problem
 
-Detect a misconfigured government cloud-storage resource in synthetic data, identify the affected public service, prioritize the finding, recommend or simulate an authorized correction, verify the state, and generate a structured human handoff when unresolved.
+Government cybersecurity and IT teams contend with alert overload, configuration drift, incomplete service-dependency context, and fragmented incident handoffs. A misconfiguration's technical severity alone may not convey whether it affects a benefits portal, identity service, or other essential public function.
 
-| Priority | Acceptance check |
-|---|---|
-| 1. Detect & validate | A known misconfiguration is flagged with evidence and a baseline reference |
-| 2. Prioritize by service impact | The dashboard explains why the affected public service changes priority |
-| 3. Verify & hand off | A successful sandbox action is verified; a failed or unsafe action produces a complete handoff |
+**Design challenge:** How might agentic AI help government teams validate configuration findings, prioritize them by public-service impact, and perform only permitted response work while preserving human oversight?
 
-## Development status
+**Primary users:** SOC analysts, IT operations staff, incident responders, and security managers.  
+**Example environment:** A fictional county-government environment represented with a 12-case synthetic dataset.
 
-| Area | Repository evidence / remaining work |
-|---|---|
-| Project concept and agent design | Drafts included in `docs/`; team review and validation remain |
-| Initial agents and dashboard prototype | Original prototype files are on the [`gazal-initial-code`](https://github.com/nyashachamp/Byte-into-the-future/tree/gazal-initial-code/src/gazal-project) branch, not merged into `main`; integration and team review remain pending |
-| Initial system test without dataset | Reported by the development workstream; reproducible test output and team sign-off are pending |
-| Synthetic dataset | [12-case v1 fixture](data/samples/README.md) included; consistency validator passed; team review pending |
-| Dataset-based testing and validation | Test plan, evaluator answers, and fixture validator included; dashboard integration and actual results pending |
-| IBM Bob use | Required by the documented project brief; usage evidence missing |
-| Video | No three-minute YouTube video link included |
+## What the prototype does
 
-See [Milestones and progress](docs/milestones.md) for the detailed evidence checklist.
+1. Loads a synthetic alert/configuration snapshot and checks the input types.
+2. Compares observed settings against approved baselines and exceptions.
+3. Evaluates asset-to-public-service dependencies and priority.
+4. Applies policy/authorization gates before any simulated action.
+5. Independently checks the simulated post-action state and records events.
+6. Leaves critical, uncertain, unauthorized, or unresolved cases for human review and handoff.
 
-## Repository structure
+**Representative cases:** C03 tests permitted synthetic audit-logging correction; C05 tests critical public-read exposure and escalation without an automatic fix; C07 tests a false success report; C11 tests missing service-dependency information.
 
-```
-├── README.md            You are here
-├── CONTRIBUTING.md      Team workflow and how to add code safely
-├── .gitignore           Keeps keys, credentials, and large files out
-├── .env.example         Template for local secrets (copy to .env, never commit .env)
-├── docs/
-│   ├── project-concept.md      Full integrated project concept
-│   ├── week-4-deliverables.md  Architecture, workflow, tools (guide slides 17–19)
-│   ├── milestones.md           Deliverables and progress tracker
-│   └── original/               Original Word documents
-├── src/                 Team source area; unmerged prototype on gazal-initial-code branch
-├── data/
-│   ├── samples/         12-case synthetic dataset and integration guide
-│   ├── results/         Planned: test outputs (not yet present)
-│   └── README.md        Data rules and documentation
-└── tests/               Test plan, evaluator fixtures, and consistency validator
+## Implementation architecture
+
+```text
+       Synthetic case / analyst request
+                     |
+         Orchestrator (watsonx)
+                     |
+      +--------------+--------------+
+      |              |              |
+ Security        Risk &           Response       Verification
+ Investigator    Dependency       Agent          & Handoff
+                 Analyst                         Agent
+      |              |              |              |
+  investigate      analyse       execute         verify
+     case          impact        response       and handoff
+       \______________|______________|____________/
+                     |
+        Synthetic Python tools / data
 ```
 
-## Installation
+The recovery branch contains native YAML definitions for **one supervisor and four specialists**, each specialist with a dedicated Python tool package. IBM Bob reported their import, and the team lead observed all four collaborators in the watsonx Orchestrate builder on November 20.
 
-_The initial prototype is staged on the separate `gazal-initial-code` branch. The team has not verified final installation, dependencies, IBM integration, or end-to-end dataset tests. Those items belong in the proposed refinement branch and must be reviewed before a merge to `main`._
+**Evidence boundary:** imported/configured agents are **not** proof of a fully successful formal multi-agent test, published Live version, or direct dashboard-to-Orchestrate connectivity.
 
-## Data and safety rules
+The preserved `src/source-code/` Python pipeline and Streamlit dashboard provide a **separate deterministic implementation** of the risk-analysis lifecycle. Earlier reported dashboard hosting used Streamlit Community Cloud; the live application URL and availability are not independently verified in this checkpoint. There is no verified Code Engine deployment.
 
-- Synthetic or properly authorized public data only. No real citizen data, personal information, or live government systems.
-- No real credentials in the repo. API keys and IBM Cloud credentials live in a local `.env` file, which Git ignores.
-- No live production changes. All actions run in a sandbox and are logged.
+## Test and verification snapshot
 
-## Team
+| Area | Evidence as of 2026-11-20 |
+|---|---|
+| Local synthetic Python/Streamlit workflow | 12/12 case behaviors documented in Oct 29 local report; not native-agent formal passes |
+| Automated pipeline, fixture and regression tests | Test files and prior results documented; rerun on final integrated version still required |
+| Five-agent import / collaborator configuration | Observed in IBM Bob and watsonx builder |
+| C03 Draft Preview | Generated a coherent **simulated** case report and human-closure state |
+| **First C03 formal evaluation** | **FAILED** at 09:16 Pacific (0/1; tool-call precision/recall 0.88; routing F1 1.00) |
+| Saved C03 test adjustment | `investigator_result` matcher changed **Exact → Fuzzy**; this changed test criteria, **not** runtime behavior |
+| C03 evaluation rerun / C05 / C07 / C11 / remaining cases | Results not yet independently confirmed in this checkpoint |
+| Published Live agent and dashboard integration | Not independently verified |
 
-**Byte into the Future is a collaborative team project.** The prototype is a work in progress and no individual implementation is described here as the final team product. Contributions are reviewed through Git history, pull requests, and the team milestone checklist. Technical review and approval remain shared responsibilities.
+The formal failure is preserved and explained in the [validation log](docs/validation-progress-2026-11-20.md). Do not conflate a local 12-case pass with acceptance of the newer five-agent Orchestrate workflow.
 
-## Documentation
+## Repository map (recovery branch)
 
-- [Consolidated security baselines and agent test catalog](docs/baseline-test-catalog.md)
+```text
+agents/                 Native agent configurations, including the preserved original agent
+tools/                  Specialist watsonx tool packages and original risk-analysis tool
+src/source-code/        Python pipeline, CLI, Streamlit dashboard, and local tests
+data/samples/           12 synthetic public-service-risk scenarios
+tests/                  Dataset fixtures, unit/integration helpers and validation scripts
+scripts/                Import and maintenance PowerShell utilities
+docs/                   Status, audit, plans, reports and historical evidence
+CONTRIBUTING.md         Team contribution and security guidelines
+.env.example            Non-secret configuration template
+```
 
-- [Project concept](docs/project-concept.md)
-- [Week 4 deliverables: architecture, workflow, tools](docs/week-4-deliverables.md)
-- [Milestones and progress](docs/milestones.md)
-- [Contributing guide](CONTRIBUTING.md)
+Some tool packages intentionally contain synchronized copies of pipeline code and fixtures for import packaging. The original `src/source-code/agents/` describes logical workflow roles; the root `agents/` holds native watsonx definitions. These are **different artifacts**, not interchangeable evidence of deployment.
 
-The Markdown files are the maintained project documentation. Word documents in `docs/original/` are historical source copies and may contain earlier names or designs.
+## Running the deterministic prototype locally
+
+The following is a **local Python/Streamlit path**, not a watsonx Orchestrate deployment procedure. Use an isolated virtual environment and Python 3.10+; install requirements from the repository root:
+
+```bash
+python -m venv .venv
+# Activate .venv using your OS-specific command.
+python -m pip install -r src/source-code/requirements.txt
+python -m pip install pytest
+python tests/validate_synthetic_dataset.py
+cd src/source-code
+python -m pytest -q
+python -m src.main
+python -m streamlit run src/dashboard.py
+```
+
+Commands are supplied for reproducibility and should be rerun on the final accepted branch before being treated as a fresh validation. For the original local test sequence, see the [Ubuntu installation log](docs/ubuntu-local-installation-log-2026-10-27.md).
+
+The native watsonx agent tools require separately configured IBM access, deployment, and validation. **Do not run the maintenance/deletion scripts without reviewing their effects and confirming the target environment.**
+
+## Demo and deliverables
+
+- **Dashboard:** Streamlit Community Cloud hosting was reported by the developer; a current verified public URL is **not yet listed**.
+- **Agent demonstration / walkthrough video:** Link to be added after verified production of the demo.
+- **Final pitch deck:** Link to be added after final review and accessibility check.
+- **Submission:** Confirm only after the official submission receipt is available.
+
+See the [submission checklist](docs/submission-checklist-2026-11-22.md). Missing links are displayed as pending rather than fabricated.
+
+## Security, limitations and team contribution
+
+- Synthetic/public-authorized data only; no live public-service infrastructure, citizen data, or actual incident remediation.
+- No credentials, tokens, private contact details, or unredacted evidence in public GitHub.
+- Human approval/closure remains separate from simulated automated steps.
+- This is a collaborative team project. Use commit/PR history and verified evidence to attribute individual contributions rather than implying that one person built every component.
+- This is a **proof of concept**, not a production security product or validated autonomous incident-response service.
+
+For original design rationale and older records, see the [documentation guide](docs/README.md).
