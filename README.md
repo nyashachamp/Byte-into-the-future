@@ -6,15 +6,17 @@ A synthetic cybersecurity proof of concept that helps analysts identify security
 
 > **Safety principle:** AI-assisted analysis and simulated actions do **not** replace human approval for critical actions or final case closure. No real government infrastructure or citizen records are used.
 
-**Project checkpoint:** 20 November 2026 · **Submission target:** 22 November 2026  
-**Implementation under review:** `recovery-five-agent-2026-11-19` — [browse the recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19).  
-**Branch note:** `main` is an earlier design/data baseline, **not** the current five-agent implementation. Formal review and integration are pending; do not assume all recovery code is published or accepted.
+**Project closeout checkpoint:** 21 November 2026 · **Submission target:** 22 November 2026  
+**Current application and agent source branch:** `recovery-five-agent-2026-11-19` — [browse the recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19).  
+**Local demo:** The team lead reports the final Streamlit MVP and presentation video are complete. [Read the final closeout](docs/final-project-closeout-2026-11-21.md) for what is versioned, what was demonstrated locally, and which cloud/runtime claims remain unverified.  
+**Branch note:** Default `main` is an earlier baseline, **not** the latest five-agent implementation. The newest Claude Agent Run interface remains local pending source synchronization; do not assume the GitHub dashboard includes that change.
 
 ## Start here
 
 | Want to understand… | Follow this link |
 |---|---|
-| What is really implemented and what remains unverified? | [Current system status](docs/current-system-status-2026-11-20.md) |
+| **Final build/demo closeout and GitHub audit (Nov 21)** | **[Final project closeout](docs/final-project-closeout-2026-11-21.md)** |
+| Earlier implementation and validation checkpoint (Nov 20) | [Prior system status](docs/current-system-status-2026-11-20.md) |
 | Architecture, implementation and evidence navigation | [Documentation guide](docs/README.md) |
 | Five-agent testing, including a failed formal evaluation | [Validation progress](docs/validation-progress-2026-11-20.md) |
 | Earlier local synthetic test results and 54 screenshots | [Functional test report](docs/cybersecurity-functional-test-report-2026-10-29.md) · [Screenshot index](docs/testing-evidence/README.md) |
@@ -61,13 +63,15 @@ Government cybersecurity and IT teams contend with alert overload, configuration
         Synthetic Python tools / data
 ```
 
-The recovery branch contains native YAML definitions for **one supervisor and four specialists**, each specialist with a dedicated Python tool package. IBM Bob reported their import, and the team lead observed all four collaborators in the watsonx Orchestrate builder on November 20.
+The recovery branch contains native YAML definitions for **one supervisor and four specialists**, each specialist with a dedicated Python tool package. The finalized source routes the supervisor through the deterministic `civic_shield_pipeline` tool (with `collaborators: []` to close the direct-delegation bypass); Bob reported the import and subsequent verification of the installed configuration.
 
-**Evidence boundary:** imported/configured agents are **not** proof of a fully successful formal multi-agent test, published Live version, or direct dashboard-to-Orchestrate connectivity.
+**Evidence boundary:** imported/configured agents and verified GitHub source are **not** independent proof of a fresh post-fix 12/12 cloud run, published Live version, or verified dashboard-to-Orchestrate connectivity. See the [Nov 21 closeout](docs/final-project-closeout-2026-11-21.md).
 
 The preserved `src/source-code/` Python pipeline and Streamlit dashboard provide a **separate deterministic implementation** of the risk-analysis lifecycle. Earlier reported dashboard hosting used Streamlit Community Cloud; the live application URL and availability are not independently verified in this checkpoint. There is no verified Code Engine deployment.
 
 ## Test and verification snapshot
+
+The table below is the **historical 20 November checkpoint**, retained to preserve earlier failures and how they were found. Later deterministic-flow fixes and reported validation are documented in the [21 November closeout](docs/final-project-closeout-2026-11-21.md). The team reports a successful final local Streamlit demonstration; do not confuse that with new accepted cloud traces.
 
 | Area | Evidence as of 2026-11-20 |
 |---|---|
@@ -123,10 +127,10 @@ The native watsonx agent tools require separately configured IBM access, deploym
 
 ## Demo and deliverables
 
-- **Dashboard:** Streamlit Community Cloud hosting was reported by the developer; a current verified public URL is **not yet listed**.
-- **Agent demonstration / walkthrough video:** Link to be added after verified production of the demo.
-- **Final pitch deck:** Link to be added after final review and accessibility check.
-- **Submission:** Confirm only after the official submission receipt is available.
+- **Dashboard:** Final local Streamlit MVP demonstration reported completed by the team lead; no IBM Code Engine deployment is claimed.
+- **Agent demonstration / walkthrough video:** Team lead reports video recorded and presentation delivered locally; public video URL to be added when provided and verified.
+- **Final pitch deck:** Team lead reports presentation completed; public/submission-accessible link is not yet recorded in this repository.
+- **Submission:** Confirm only after the official IBM portal receipt is available.
 
 See the [submission checklist](docs/submission-checklist-2026-11-22.md). Missing links are displayed as pending rather than fabricated.
 
