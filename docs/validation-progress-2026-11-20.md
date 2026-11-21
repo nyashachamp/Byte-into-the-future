@@ -355,3 +355,23 @@ The user supplied an IBM Bob correction summary claiming:
 - No publication to Live and no GitHub `main` modification reported. Rollback file locations are Bob-reported **local** artifacts and were not uploaded to GitHub.
 
 **Acceptance status remains 10/12 from the last independently inspected Draft Preview traces, with two C09/C10 output-integrity defects pending corrected cloud evidence.**
+
+## Technical closeout reported by Bob — local verification complete; cloud acceptance limited
+
+**Latest team-lead-provided Bob status (21 November 2026):** Bob declares targeted regression validation complete and requests no further local code changes. **Evidence level: reported remote configuration export and offline/tool-layer checks; new post-import Draft Preview execution traces were not provided or reviewed.** Earlier C09/C10 cloud output-integrity failures must remain in historical acceptance evidence.
+
+**Deployment reported:** `orchestrator_agent` in `eu-gb-22d6bac0` was re-exported with `collaborators: []`, tools `[civic_shield_pipeline, i__get_flow_status_intrinsic_tool__]`, four specialists present and unchanged. Bob reports the registered `civic_shield_pipeline` was already current; **no flow re-import took place during the closeout**. A read-only environment report is not equivalent to new executed flow traces.
+
+**Local validation reported:**
+- `tests/test_agent_yaml.py`: **54 passed**.
+- `tools/flow_pkg/test_civic_shield_pipeline_offline.py`: **25 passed, 12 skipped** (auth-gated Live/ADK-runtime checks; skipped tests are not passing tests).
+- `scripts/safety_invariant_check.py`: **33 safety checks passed**.
+- Pytest total **79 passed, 12 skipped, 0 failed**, plus **33 separate safety checks**. Do not sum the 33 safety checks into the pytest count or present 12 skips as verified.
+- C09 and C10 deterministic tool-layer: `assessment=invalid_input`, distinct investigator errors (missing `audit_logging_enabled`; nonboolean `public_read`), `action_taken=none`, `action_attempts=0`, and reported `handoff_required=true`.
+- C03 deterministic successful verification and human-only closure; C05 no remediation with `public_restricted` guard. These are **reported local results**, not fresh post-import cloud traces.
+
+**Outstanding evidence boundary:** Do not say "12/12 fully cloud-verified after the correction" or "final Orchestrate acceptance complete." The previously inspected case traces showed **10/12 accepted**; C09/C10 need fresh end-node Flow Inspector JSON to establish corrected **cloud** outputs and all-stage execution. The latest Bob report itself states that Live Draft Preview traces require an authenticated browser session and relies on deterministic tool-layer verification. Given submission urgency, document the limitation and proceed to the deck/demo instead of looping through open-ended local debugging; optionally capture C09/C10 fresh browser traces if readily available.
+
+**Local source synchronization pending:** Bob lists `agents/orchestrator_agent.yaml`, `tests/test_agent_yaml.py`, `tools/verifier_pkg/agents/verifier.py` as **three local files ready to commit** on `recovery-five-agent-2026-11-19`. Earlier local changes also included `tools/flow_pkg/civic_shield_pipeline.py` and tests; before staging a final source commit, confirm all needed files are included, review `git status` and `git diff`, and keep local rollback exports, tokens, and tenant/account metadata out of the public repository. No source commit or push was executed by this documentation update.
+
+**Submission gate:** Freeze feature development; finalize source branch, honest testing/limitations statement, sanitized demo evidence, pitch deck, links/permissions and submission receipt. Preserve old failed evaluations and actual trace history.
