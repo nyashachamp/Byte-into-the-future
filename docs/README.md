@@ -11,7 +11,7 @@ This page helps an evaluator distinguish the original design, tested determinist
 
 1. [Repository overview](../README.md) — problem, architecture, run instructions, scope, and links.
 2. [Current system status](current-system-status-2026-11-20.md) — implemented/configured/observed/evaluated/not verified.
-3. [Validation progress](validation-progress-2026-11-20.md) — original C03 formal failure, matcher change, and pending multi-agent rerun.
+3. [Validation progress](validation-progress-2026-11-20.md) — original C03 failed evaluation, qualified 09:44 pass under Fuzzy criteria, and C05 trace-proven false-positive formal grade (workflow failed).
 4. [Milestones and evidence checklist](milestones.md) — remaining submission tasks.
 5. [Submission checklist](submission-checklist-2026-11-22.md) — final deliverable verification.
 
