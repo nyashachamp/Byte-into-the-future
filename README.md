@@ -9,7 +9,7 @@ A synthetic cybersecurity proof of concept that helps analysts identify security
 **Project closeout checkpoint:** 21 November 2026 · **Submission target:** 22 November 2026  
 **Current application and agent source branch:** `recovery-five-agent-2026-11-19` — [browse the recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19).  
 **Local demo:** The team lead reports the final Streamlit MVP and presentation video are complete. [Read the final closeout](docs/final-project-closeout-2026-11-21.md) for what is versioned, what was demonstrated locally, and which cloud/runtime claims remain unverified.  
-**Branch note:** Default `main` is an earlier baseline, **not** the latest five-agent implementation. The newest Claude Agent Run interface remains local pending source synchronization; do not assume the GitHub dashboard includes that change.
+**Branch note:** Default `main` is an earlier baseline, **not** the latest five-agent implementation. The Claude Agent Run interface is included on the recovery branch as of commit `f613bdb`.
 
 ## Start here
 

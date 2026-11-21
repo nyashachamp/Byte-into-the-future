@@ -12,7 +12,7 @@
 - [x] Team lead confirms the completed cybersecurity dashboard operated locally in Streamlit during video recording.
 - [x] Team lead confirms the final three-minute demonstration and presentation production are complete.
 - [x] Twelve synthetic cases and five-agent source architecture remain versioned and intact in the recovery branch.
-- [ ] Synchronize the actual finished Claude `Agent Run` dashboard changes from the local workspace to GitHub after checking the targeted diff. This does **not** undo the completed local demo.
+- [x] Synchronize the actual finished Claude `Agent Run` dashboard changes from the local workspace to GitHub after checking the targeted diff. Done in `f613bdb`. This does **not** undo the completed local demo.
 - [x] Record the team-lead-supplied demonstration URL: [YouTube — Civic Shield demo](https://youtu.be/-Cnd7L0FpTo) (November 21, 2026).
 - [ ] Independently confirm video playback, viewer permissions and duration; metadata could not be inspected at closeout.
 - [ ] Add the accessible final pitch-deck URL when available.
@@ -26,7 +26,7 @@
 - [x] A 12-case synthetic dataset and evaluator fixture are available.
 - [x] Earlier local Python/Streamlit functional testing and 54 screenshots are documented.
 - [x] Recovery branch contains a configured five-agent topology and specialist tools.
-- [x] Identify the authoritative source branch: `recovery-five-agent-2026-11-19` (default `main` remains an older baseline); exact final local dashboard sync is a separate pending item.
+- [x] Identify the authoritative source branch: `recovery-five-agent-2026-11-19` (default `main` remains an older baseline); final local dashboard source synchronized in `f613bdb`.
 - [ ] Verify a clean reproduction of the intended submission version and include exact launch instructions.
 - [ ] Inspect published files/screenshots for accidentally exposed credentials or personal data and complete any required key rotation.
 

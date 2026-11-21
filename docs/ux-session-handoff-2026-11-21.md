@@ -8,7 +8,7 @@
 **Synchronized base commit:** `814ce60` — *Redesign Civic Shield as a dark security operations command center*  
 **Source:** `Civic-Shield-UX-Session-Handoff-2026-11-21.docx` supplied by the project owner.
 
-> **Important repository status:** This document records work reported in the 2026-11-21 Claude session. The additional **Agent Run** changes to `src/source-code/src/dashboard.py` were **uncommitted on the user's laptop at the time of handoff**, and are **not** included by adding this document. The existing remote dashboard is the earlier command-center redesign at `814ce60`. Do not mistake this development log for deployment or verification of the additional code.
+> **Important repository status:** This document records work reported in the 2026-11-21 Claude session. The additional **Agent Run** changes to `src/source-code/src/dashboard.py` were uncommitted on the user's laptop at the time of handoff. **Update (2026-11-21, 14:39 PT):** they have since been committed in `f613bdb` on `recovery-five-agent-2026-11-19`. This development log is still not evidence of deployment or of a watsonx Orchestrate execution.
 
 ## 1. Objective and boundaries
 
@@ -146,11 +146,11 @@ Once the project owner approves the **actual edited source**, commit the intende
 
 | Path or category | Status in Claude handoff |
 | --- | --- |
-| `src/source-code/src/dashboard.py` | Fast-forwarded to `814ce60`, then locally edited, **uncommitted** |
+| `src/source-code/src/dashboard.py` | Fast-forwarded to `814ce60`, then locally edited; later committed in `f613bdb` |
 | `docs/ux-session-handoff-2026-11-21.md` | New session documentation (this GitHub copy) |
 | `data/samples/public-service-risk-v1.json` | Content unchanged |
 | `tools/*_pkg/data/` | Content unchanged after normalizing line endings |
 | Agent YAMLs, pipeline, policies, tests, scripts, evidence, backups | No substantive edits reported |
 | Presentation deck | Not edited |
 
-This file preserves the specific actions and test results stated in the supplied Claude handoff. **It does not contain Claude's uncommitted source-code changes**, which must be transferred from the working laptop before they can be reviewed and committed to the repository.
+This file preserves the specific actions and test results stated in the supplied Claude handoff. The source-code changes it describes are in commit `f613bdb`, not in this file.

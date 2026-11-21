@@ -20,7 +20,7 @@ This page distinguishes the completed local Civic Shield MVP/demo, the five-agen
 
 | Resource | Purpose | Evidence scope |
 |---|---|---|
-| [Core Python implementation](../src/source-code/README.md) | Deterministic pipeline, CLI, Streamlit dashboard | Source available in recovery branch; final Claude Agent Run enhancement is reported on laptop but not yet synced to GitHub |
+| [Core Python implementation](../src/source-code/README.md) | Deterministic pipeline, CLI, Streamlit dashboard | Source available in recovery branch; final Claude Agent Run enhancement committed in `f613bdb` |
 | [Native agent YAML](../agents/) | One orchestrator, four specialists, preserved original single agent | Flow-only supervisor source verified; Bob-reported import/re-export; current Live runtime not independently verified |
 | [Specialist tool packages](../tools/) | Investigator, analyst, response, verifier; preserved original tool | Code present; separate formal end-to-end acceptance outstanding |
 | [Test directory](../tests/README.md) | Automated tests and validation fixture | Does not itself prove live Orchestrate execution |
@@ -41,7 +41,7 @@ This page distinguishes the completed local Civic Shield MVP/demo, the five-agen
 ## GitHub review and change management
 
 - [Issue #5: deployment audit and remediation](https://github.com/nyashachamp/Byte-into-the-future/issues/5).
-- Final documentation target: `recovery-five-agent-2026-11-19`. The default `main` is an older baseline. The final locally demonstrated dashboard enhancement still requires review and synchronization to the recovery branch.
+- Final documentation target: `recovery-five-agent-2026-11-19`. The default `main` is an older baseline. The final locally demonstrated dashboard enhancement is synchronized to the recovery branch in `f613bdb`.
 - Do not merge the recovery branch or rewrite historical test failures until reviewed integration and acceptance.
 - **Historical local validation, Draft Preview output, formal agent evaluation and Live publication are different evidence categories.**
 

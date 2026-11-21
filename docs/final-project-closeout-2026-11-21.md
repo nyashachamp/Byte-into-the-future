@@ -29,7 +29,7 @@
 | Sequential orchestration | [`tools/flow_pkg/civic_shield_pipeline.py`](../tools/flow_pkg/civic_shield_pipeline.py) | Source present. Investigator → analyst → notification gate → response → verifier → aggregation → end. |
 | Invalid-input handoff consistency | Flow aggregate and [verifier package](../tools/verifier_pkg/agents/verifier.py) | Source includes `handoff_required` for `invalid_input/error`, validation-error propagation, and no-action safeguards. **Registered deployed flow version remains separately unverified.** |
 | Local risk pipeline | [`src/source-code/src/pipeline.py`](../src/source-code/src/pipeline.py) | Source present, deterministic synthetic implementation, separate from managed Orchestrate execution. |
-| Local Streamlit application | [`src/source-code/src/dashboard.py`](../src/source-code/src/dashboard.py) | Dark security-operations redesign present in GitHub; later Claude Agent Run enhancement **not yet in GitHub**. Team reports final local version ran correctly. |
+| Local Streamlit application | [`src/source-code/src/dashboard.py`](../src/source-code/src/dashboard.py) | Dark security-operations redesign (`814ce60`) plus the Claude Agent Run enhancement, committed from the Windows workspace in `f613bdb`. Team reports final local version ran correctly. |
 | Optional Orchestrate API bridge | [`src/source-code/src/orchestrate_client.py`](../src/source-code/src/orchestrate_client.py) | Client source present; requires environment variables and credentials. **Connected run not independently verified here.** |
 | Synthetic dataset | [`data/samples/public-service-risk-v1.json`](../data/samples/public-service-risk-v1.json) | All C01–C12 cases preserved. No fixture regeneration required. |
 | Reproducibility and container | [`Dockerfile`](../Dockerfile), [`src/source-code/requirements.txt`](../src/source-code/requirements.txt) | Local and container build inputs present. Presence of a Dockerfile is **not proof of IBM Code Engine deployment**. |
@@ -59,7 +59,7 @@
 | C05 history | Earlier false-positive formal grade lacked required specialist execution evidence; later flow-based traces improved, with test history and limitations retained. |
 | Claude's final local application checks | [UX session handoff](ux-session-handoff-2026-11-21.md) reports syntax/AppTest checks and C01/C03/C07/C12 local runs. The team lead separately reports successful final Streamlit video demonstration. |
 
-**Correct acceptance statement:** *The local synthetic Civic Shield MVP was completed and demonstrated by the team, with substantial reported offline validation and a documented five-agent watsonx Orchestrate architecture. Current post-fix managed-flow cloud acceptance, Live publication, and latest local-to-GitHub dashboard synchronization are not independently established by this repository audit.*
+**Correct acceptance statement:** *The local synthetic Civic Shield MVP was completed and demonstrated by the team, with substantial reported offline validation and a documented five-agent watsonx Orchestrate architecture. Current post-fix managed-flow cloud acceptance and Live publication are not independently established by this repository audit. The local Agent Run dashboard source is synchronized to GitHub in `f613bdb`.*
 
 Do not silently replace previously failed evaluations with later local results, nor classify skipped tests as passing cloud tests.
 
@@ -69,7 +69,7 @@ The working design goal was a navy/turquoise SOC-style operations center with ov
 
 **Demonstration video link supplied on November 21:** [Watch Civic Shield on YouTube](https://youtu.be/-Cnd7L0FpTo). The link was provided directly by the project owner. Automated access to the YouTube video's metadata/playback was unavailable during this check, so its title, duration, privacy/accessibility, exact visual contents and video description were not independently verified. This video is **not a Streamlit-hosted application URL**; the public hosted-app URL remains unverified.
 
-**Version-control discrepancy that remains:** [`docs/ux-session-handoff-2026-11-21.md`](ux-session-handoff-2026-11-21.md) describes Claude's uncommitted `render_agent_run()` enhancement. The GitHub branch's present `dashboard.py` does not yet contain that function. The final reviewed Windows source must be committed separately if the repository is to reproduce the exact recorded application.
+**Version-control status (resolved 2026-11-21):** The `render_agent_run()` enhancement described in [`docs/ux-session-handoff-2026-11-21.md`](ux-session-handoff-2026-11-21.md) was committed in `f613bdb` directly from the reviewed `dashboard.py` in the Windows workspace (130 lines added, 2 changed; no other files) and pushed to `recovery-five-agent-2026-11-19`. The team should confirm this is the same build used for the recorded demonstration.
 
 Local launch instructions, after installing the existing requirements in the virtual environment:
 
@@ -97,7 +97,7 @@ Run from the repository root. Without Orchestrate credentials, the cloud API pat
 
 **Recorded limitations and handoff items, not reasons to rebuild the MVP:**
 
-1. **Synchronize final Claude dashboard file:** Review `git diff --ignore-cr-at-eol -- src/source-code/src/dashboard.py` in the Windows workspace. Commit the *actual reviewed* `dashboard.py` enhancement on the recovery branch; do not reconstruct it from a handoff description or use `git add -A`. Preserve the existing stash, untracked agent exports, rollback files, and tests unless explicitly approved.
+1. **Synchronize final Claude dashboard file:** Done in `f613bdb`. Only the reviewed `dashboard.py` was committed (no `git add -A`); the existing stash, untracked agent exports, rollback files, and tests were preserved.
 2. **Use correct branch for submission:** The public repository default `main` is an older baseline; link directly to `recovery-five-agent-2026-11-19` unless a reviewed integration changes the authoritative branch.
 3. **If reporting watsonx Live success:** Attach actual post-fix, redacted Flow Inspector cases or equivalent independently reviewed runtime evidence. Do not describe GitHub state or local Streamlit demo as fresh 12/12 cloud acceptance.
 4. **Final links/receipt:** Add the accessible demonstration video, final pitch link and IBM submission receipt to the checklist once available/verified. User reports media creation finished, not that the submission portal has issued a receipt.
