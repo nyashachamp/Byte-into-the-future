@@ -128,7 +128,7 @@ The native watsonx agent tools require separately configured IBM access, deploym
 ## Demo and deliverables
 
 - **Dashboard:** Final local Streamlit MVP demonstration reported completed by the team lead; no IBM Code Engine deployment is claimed.
-- **Agent demonstration / walkthrough video:** Team lead reports video recorded and presentation delivered locally; public video URL to be added when provided and verified.
+- **Agent demonstration / walkthrough video:** [Civic Shield video demonstration on YouTube](https://youtu.be/-Cnd7L0FpTo) (URL supplied by the team lead on November 21, 2026). The video page's playback, duration and privacy setting were not independently verified in this audit. This is the **demonstration video**, not the hosted Streamlit application URL.
 - **Final pitch deck:** Team lead reports presentation completed; public/submission-accessible link is not yet recorded in this repository.
 - **Submission:** Confirm only after the official IBM portal receipt is available.
 
