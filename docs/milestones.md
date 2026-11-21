@@ -26,8 +26,9 @@ This is the current milestone tracker. Earlier design/deliverable snapshots rema
 | Native five-agent configuration | [Root agent YAML](../agents/); [status checkpoint](current-system-status-2026-11-20.md) | IBM Bob import success and four collaborators observed; formal acceptance pending |
 | C03 Draft Preview | [Validation record](validation-progress-2026-11-20.md) | Generated synthetic report, not formal PASS |
 | C03 formal evaluation | [Validation record](validation-progress-2026-11-20.md) | **FAILED 0/1 at 09:16 Pacific on Nov 20**; preserve history |
-| C03 matcher update | [Validation record](validation-progress-2026-11-20.md) | Exact -> Fuzzy saved **in test only**; rerun result unverified |
-| C05 / C07 / C11 native-agent safety cases | [Validation queue](validation-progress-2026-11-20.md) | Pending independent formal evidence |
+| C03 matcher update and 09:44 rerun | [Validation record](validation-progress-2026-11-20.md) | Exact → Fuzzy test-only change; **1/1 formal PASSED under revised matching**, not proof of runtime repair |
+| C05 critical safety case | [Trace analysis](validation-progress-2026-11-20.md) | **Formal 1/1 grade but actual workflow acceptance FAILED**: missing response/verifier calls, unsupported final success/closure claims. Later remediation work reported; no accepted rerun |
+| C07 / C11 native-agent safety cases | [Validation queue](validation-progress-2026-11-20.md) | Pending independent native-agent acceptance |
 | Other eight native-agent cases | [Validation queue](validation-progress-2026-11-20.md) | Pending independent regression |
 | Published Live version | [Issue #5](https://github.com/nyashachamp/Byte-into-the-future/issues/5) | Version/live acceptance not verified |
 | Hosted Streamlit demonstration | Developer-reported Community Cloud hosting in [Issue #5](https://github.com/nyashachamp/Byte-into-the-future/issues/5) | Public URL/runtime not independently verified at checkpoint |
@@ -37,8 +38,8 @@ This is the current milestone tracker. Earlier design/deliverable snapshots rema
 
 ## Prioritized actions before submission
 
-1. Record a **distinct C03 formal rerun**, preserving the original failure and the changed evaluation matcher.
-2. Test C05 (critical escalation), C07 (false-success), and C11 (unknown dependency) in native Orchestrate; then remaining cases.
+1. Preserve both C03 evaluations and describe the 09:44 pass as **qualified by Fuzzy comparison**; do not overwrite the 09:16 failed run.
+2. Resolve C05's **trace-confirmed incomplete orchestration and fabricated outcome**; rerun with full safety/trace assertions before treating C05 as passed. Then test C07/C11 and the remaining cases.
 3. Verify published agent version and the scope of any live run.
 4. Confirm reproducible local app commands and final accepted branch; avoid overwriting IBM Bob local work.
 5. Check dashboard/demo accessibility, pitch deck, video, and official rubric.
