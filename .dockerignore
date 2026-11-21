@@ -1,0 +1,17 @@
+# Only data/samples and src/source-code/src are copied; keep the build context small and secret-free.
+.git
+.bob
+.env
+.env.*
+venv
+.venv
+**/__pycache__
+docs
+tests
+tools
+agents
+scripts
+connections
+knowledge-bases
+toolkits
+models
