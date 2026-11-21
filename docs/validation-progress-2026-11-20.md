@@ -319,3 +319,18 @@ When a configuration violation has no mapped public-service dependency, do **not
 - **Scenario behavior:** 10 acceptable within the documented synthetic scope; 2 invalid-input output-integrity defects remain open.
 - **Historical evaluation record:** Do not replace the earlier 09:16 C03 failed formal evaluation, 09:44 qualified Fuzzy pass, or morning C05 false-positive evaluation.
 - **Other outstanding checks:** formal corrected-flow Evaluate tests, source synchronization of the locally tested Python, exact published/Live version, and dashboard→Orchestrate connection remain unverified; the final demo, pitch deck and submission confirmation are not yet established.
+
+## Reported local C09/C10 corrective patch — deployment verification pending
+
+**Status: developer/Bob-reported patch and test output, NOT independently verified against actual changed source or a new cloud Flow Inspector trace.** The previous C09 and C10 current-flow Draft Preview trace failures are preserved above and **remain open** for cloud acceptance.
+
+The user supplied an IBM Bob correction summary claiming:
+- For investigator `assessment="invalid_input"` or `assessment="error"`, Verification now reports `handoff_required=true` consistently with `lifecycle_status="human_handoff_required"`.
+- Investigator schema-validation errors are propagated into the final `errors` array.
+- Invalid/error paths continue `action_taken="none"` and `action_attempts=0`.
+- Local test examples added for C09 and C10, plus existing tests for C03/C05/C07/C11; Bob reported `pytest -q` → `6 passed in 0.42s`. Only a textual summary and illustrative test definitions were supplied, not independently read source diff or the actual captured test output. The displayed dots in the supplied summary are not consistent with a six-test output; verify real terminal output before asserting expanded-suite counts.
+- No proof yet that this patch was imported into the deployed **explicit seven-node Orchestrate flow**, which contains distinct specialist agents and an Aggregate Results script. A local `run_pipeline` function test is not equivalent to Draft Preview execution.
+
+**Release gates to close this defect:** (1) inspect precise file diffs and actual local test output; (2) ensure corrected Invalid/Error logic and final error propagation are applied to the correct Orchestrate Verification agent / Aggregate Results script in the user's IBM environment, without unintended changes; (3) execute **only C09/C10** in corrected Draft Preview; (4) inspect new End-node JSON proving `assessment=invalid_input`, `handoff_required=true`, consistent human handoff lifecycle, nonempty validation errors, `action_attempts=0`, `action_taken=none`, seven nodes complete; (5) update 10/12 acceptance to 12/12 **only if** new traces pass. Keep formal Evaluate, published/Live status, cloud hosting and dashboard integration as separate outstanding checks.
+
+**GitHub source code was not changed by this note;** branch `recovery-five-agent-2026-11-19`; `main` untouched.
