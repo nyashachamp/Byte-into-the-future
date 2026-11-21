@@ -121,6 +121,21 @@ The **four tool calls** in the evaluation correspond to *two collaborator delega
 - The [repository overview](../README.md), [current status](current-system-status-2026-11-20.md), [documentation index](README.md), and [submission checklist](submission-checklist-2026-11-22.md) now distinguish earlier local test evidence from native formal evaluations.
 - This is a **documentation-only cross-check**. It does not change the original 09:16 failed result, the Fuzzy matcher, deployed agents or application code.
 
+## Evening follow-up — remediation-in-progress, verification pending
+
+**2026-11-20 (Pacific, later testing conversation):** A subsequent testing session reported the following outcomes. These are **provisional development-session observations** and have **not** been independently cross-checked here against a fresh exported Orchestrate execution trace, saved formal evaluation, deployed version identifier, or corresponding GitHub source commit.
+
+| Reported step | Reported outcome | Evidence/acceptance boundary |
+|---|---|---|
+| Offline Python regression | **25 passed, 0 failed, 0 skipped**; four non-blocking Pydantic warnings | Record environment, exact test command, branch/commit and test output before treating this as final-release regression proof |
+| Tool update | `civic_shield_pipeline` reported successfully updated in Orchestrate | Does not establish which published agent version or tool assignment is currently active |
+| C05 follow-up after tool update | Earlier `__import__` crash was no longer observed; generated response instead said **`WORKFLOW INCOMPLETE`** with human review required | Improvement in reported output, **not a passing C05 acceptance test**; saved formal rerun and complete trace still required |
+| Orchestrator tool assignment | Earlier CLI inspection reportedly listed `civic_shield_pipeline` and `i__get_flow_status_intrinsic_tool__`; the later UI did not clearly show the expected tools/knowledge | **Configuration discrepancy unresolved**; inspect actual selected environment/agent/version before concluding a tool is absent or connected |
+
+**Unchanged confirmed finding:** the 11:09 C05 draft trace demonstrates missing response and verification calls and unsupported completion claims, even though the saved formal grade showed 100%. Do not overwrite that failed workflow result. No new accepted C05 evaluation or full 12-case native-agent regression is established by the reported evening work.
+
+**Next evidence to capture:** fresh C05 trace and saved evaluation timestamp, exact agent/tool version and assignments, policy authorization/notification/handoff states, and test output proving whether the workflow truly meets security acceptance criteria. Keep unredacted tenant and account metadata off public GitHub.
+
 ## Next record update
 
 Preserve the confirmed 09:44 C03 rerun and 11:09 C05 evaluation/trace finding. Repair the C05 false-completion defect with acceptance tests, then record C07/C11 and all twelve regressions. Record any validated change to code, agent definitions, tool metadata, and its deployment/version separately.
