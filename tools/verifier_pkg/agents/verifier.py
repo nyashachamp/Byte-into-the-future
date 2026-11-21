@@ -51,7 +51,7 @@ def verify_and_prepare_handoff(
     """
     events: list[dict[str, Any]] = list(resp["events"])  # copy; do not mutate resp
     verification = "not_run"
-    handoff = resp["handoff"]
+    handoff: Any | bool = resp["handoff"] or inv["assessment"] in ("invalid_input", "error")
     outcome = resp["outcome"]
     human_work = ["Review evidence and approve final case closure."]
 

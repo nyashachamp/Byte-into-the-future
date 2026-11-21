@@ -182,33 +182,37 @@ class TestReactCoreStyle:
 
 class TestOrchestratorStructure:
 
-    def test_orchestrator_has_four_collaborators(self):
+    def test_orchestrator_has_no_collaborators(self):
+        """Orchestrator must have an empty collaborators list.
+
+        The four specialist agents are invoked exclusively by the
+        civic_shield_pipeline flow engine.  Listing them as collaborators
+        gives the LLM a direct bypass route that overrides the flow — the
+        bypass was confirmed in live C09/C10 traces and is the root cause of
+        the stage-skipping defect.  Removing collaborators closes that route
+        architecturally.
+        """
         spec = _load(_ORCHESTRATOR_FILE)
         collaborators = spec.get("collaborators", [])
-        assert len(collaborators) == 4, (
-            f"Orchestrator must have exactly 4 collaborators, found {len(collaborators)}: "
-            f"{collaborators}"
+        assert collaborators == [] or collaborators is None, (
+            f"Orchestrator must have no collaborators (flow engine handles "
+            f"all inter-agent calls); found: {collaborators}"
         )
 
-    def test_orchestrator_has_no_tools(self):
-        spec = _load(_ORCHESTRATOR_FILE)
-        tools = spec.get("tools", [])
-        assert tools == [] or tools is None, (
-            f"Orchestrator must have no tools; found: {tools}"
-        )
+    def test_orchestrator_has_pipeline_tools(self):
+        """Orchestrator must declare civic_shield_pipeline and its status tool.
 
-    def test_orchestrator_collaborator_order(self):
-        """Collaborators must be listed in the correct delegation sequence."""
+        The orchestrator invokes specialists via the flow rather than by
+        direct collaborator delegation, requiring both the pipeline tool and
+        the flow-status polling tool to be present.
+        """
         spec = _load(_ORCHESTRATOR_FILE)
-        expected_order = [
-            "security_investigator",
-            "risk_analyst",
-            "response_agent",
-            "verification_handoff_agent",
-        ]
-        assert spec.get("collaborators") == expected_order, (
-            f"Orchestrator collaborators must be in delegation order "
-            f"{expected_order}, got {spec.get('collaborators')}"
+        tools = spec.get("tools") or []
+        assert "civic_shield_pipeline" in tools, (
+            f"Orchestrator must list civic_shield_pipeline in tools; found: {tools}"
+        )
+        assert "i__get_flow_status_intrinsic_tool__" in tools, (
+            f"Orchestrator must list i__get_flow_status_intrinsic_tool__ in tools; found: {tools}"
         )
 
 
@@ -245,25 +249,20 @@ class TestSpecialistStructure:
 
 class TestCollaboratorGraphConsistency:
 
-    def test_orchestrator_collaborator_names_match_agent_names(self):
-        """Every name in orchestrator_agent.collaborators must match the 'name'
-        field of exactly one specialist YAML in agents/."""
+    def test_orchestrator_has_empty_collaborator_list(self):
+        """orchestrator_agent.collaborators must be empty.
+
+        Specialist agent names are intentionally NOT listed as collaborators.
+        They are invoked only by the civic_shield_pipeline flow engine.
+        This test guards against accidental re-introduction of the collaborator
+        bypass that caused the C09/C10 stage-skipping regression.
+        """
         orch_spec = _load(_ORCHESTRATOR_FILE)
         collaborators = orch_spec.get("collaborators", [])
-
-        # Build a map of agent-file name → declared name field
-        declared_names: dict[str, str] = {}
-        for agent_key, path in _SPECIALIST_FILES.items():
-            spec = _load(path)
-            declared_names[agent_key] = spec["name"]
-
-        for collab in collaborators:
-            matched = any(v == collab for v in declared_names.values())
-            assert matched, (
-                f"Orchestrator references collaborator '{collab}' but no specialist "
-                f"YAML in agents/ declares name: {collab!r}. "
-                f"Declared specialist names: {sorted(declared_names.values())}"
-            )
+        assert not collaborators, (
+            f"orchestrator_agent must have no collaborators — found: {collaborators}. "
+            f"Specialist agents must only be reachable via civic_shield_pipeline."
+        )
 
 
 # ===========================================================================
