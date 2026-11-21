@@ -275,3 +275,47 @@ When a configuration violation has no mapped public-service dependency, do **not
 **Checkpoint:** 12/12 **incident reports collected**, **4/12** corrected-flow cases **trace verified**, **8/12** still pending Inspector JSON inspection. All actions are synthetic; final human case closure not performed.
 
 **Next evidence required:** Exported Flow Inspector JSON for C01, C02, C04, C06, C08, C09, C10 and C12. Verify every stage and `__flow_end__` status, `all_stages_complete`, `errors`, exact action attempts/post-state, verification outputs, lifecycle and notification-gate sequencing; identify any discrepancies and update acceptance per case. The existing morning formal evaluation failures, later qualified passes, and remediation history remain preserved. No changes to application code or `main` in this documentation update.
+
+## Complete corrected-flow Draft Preview trace review — 12 cases / two output integrity defects
+
+**Review date:** 20 November 2026 Pacific (~23:42); run timestamps from 20 November evening Pacific (the exported UTC timestamps show 21 November). **Evidence:** ten user-uploaded original Flow Inspector JSON exports. Two are duplicates of **previously documented runs for C07 and C11**, not extra tests. The other **eight unique case traces** are C01, C02, C04, C06, C08, C09, C10 and C12. Raw JSON is withheld from public GitHub due to personal/IBM account and tenant metadata. Source code and the `main` branch are **not changed** by this documentation update.
+
+### Consistent orchestration findings
+
+- All **12 distinct synthetic cases** have an inspected **Draft Preview** flow execution record. In each, the top-level `civic_shield_pipeline` status and all **seven nodes** were `completed` with `error=null`: the four specialist agents, Notification Gate, Aggregate Results, and `__flow_end__`. The node execution order is consistent.
+- For the eight newly reviewed cases, `all_stages_complete=true`, `errors=[]` and the consolidated End-node case output matched the Aggregate Results output. **This means the orchestration engine completed**; it does **not** prove every output is semantically valid.
+- **Six** new cases satisfied their directly observable synthetic acceptance conditions (**C01, C02, C04, C06, C08 and C12**), with a qualification on C04's simulated notification handling.
+- **Two** new cases (**C09, C10**) safely blocked remediation but exposed a **real output-consistency defect**: `lifecycle_status=human_handoff_required` yet `handoff_required=false`. The investigator's validation-error array was also lost from the final `errors=[]`. These are **not complete security-output acceptance passes**, even though the underlying engine succeeded.
+- Together with four earlier accepted traces (C03/C05/C07/C11), the **current synthetic flow** stands at **10/12 targeted scenario acceptance passes, 2/12 needing correction**. No saved *formal Evaluate* 12/12 pass, production deployment, real notification delivery, or live public-service remediation has been demonstrated.
+
+### Eight newly trace-verified cases
+
+| Case | Observed key evidence from actual JSON | Targeted synthetic outcome | Verdict |
+|---|---|---|---|
+| **C01** | `assessment=compliant`; score `0`; severity `none`; no violated rules; `action_attempts=0`; `verification_result=not_run`; `awaiting_human_review` | No unnecessary action, no automatic closure | **PASS** |
+| **C02** | `compliant`; score `0`; zero attempts; `verification_result=not_run`; `awaiting_human_review`; public-read state `true` is nonviolating under this case's evaluated policy | No unnecessary action or invented violation | **PASS** |
+| **C04** | Emergency portal; `CFG-LOGGING`; score `60/high`; `notify_first=true`, Notification Gate `notification_required=true`, warning text populated **before** Stage 3; response event sequence notification → attempt 1 → reported success → independent verification passed; post-state `audit_logging_enabled=true`; `awaiting_human_closure` | Correct in-simulation gate ordering and audit-logging verification; final closure still human | **PASS — simulation-only; external notification/acknowledgment NOT VERIFIED** |
+| **C06** | `CFG-LOGGING`; `30/medium`; response `none/not_run`, `action_attempts=0`, `handoff=true`; verifier `not_run`, `awaiting_human_approval`, `handoff_required=true` | Approval gate prevents unauthorized correction | **PASS** |
+| **C08** | `CFG-LOGGING`; `30/medium`; event log shows attempt 1 → **temporary simulated tool failure** → attempt 2 → success; **`action_attempts=2`**; post-state `audit_logging_enabled=true`; independent verification `passed`; awaiting human closure | Bounded simulated retry and successful independent verification | **PASS for this observed two-attempt scenario** |
+| **C09** | `assessment=invalid_input`; missing `audit_logging_enabled`; confidence `0`; score null; no action, `action_attempts=0`, `verification_result=not_run`. But `lifecycle_status=human_handoff_required` and **`handoff_required=false`**, with `errors=[]` despite Stage 1 error | Strict schema rejection and no action worked; human-handoff flag/output integrity did **not** | **FAIL — OUTPUT CONSISTENCY** |
+| **C10** | `invalid_input`; `public_read` value is a string `"false"` instead of a JSON boolean; confidence `0`; score null; zero attempts and no action. But **`handoff_required=false`** with `human_handoff_required` lifecycle, and final `errors=[]` despite Stage 1 error | Strict boolean rejection and no action worked; human-handoff flag/output integrity did **not** | **FAIL — OUTPUT CONSISTENCY** |
+| **C12** | `CFG-ENCRYPTION`; encryption enabled expected `true`, observed `false`; score `50/medium`; `action_taken=none`, `action_attempts=0`; `awaiting_human_approval`, handoff true; no invented verification | Encryption change requires approval; no unauthorized automatic correction | **PASS** |
+
+### Open issue — C09/C10 invalid-input human-handoff and error propagation
+
+**Severity: acceptance-blocking output-integrity defect** in the corrected pipeline's invalid-input branch, based on two separate trace exports.
+
+1. Investigator correctly emits `assessment=invalid_input`, confidence `0`, and a concrete error string.
+2. Response output reports `outcome=no_action`, `handoff=false`; the Verifier emits `lifecycle_status=human_handoff_required`, **but `handoff_required=false`**. Both messages require corrected input and human review. This is a contradiction between the lifecycle and the machine-readable handoff flag, potentially misleading downstream consumers.
+3. Aggregate Results copies that `handoff_required=false` into final output; its `errors=[]` discards the existing `investigator.errors`, and `all_stages_complete=true` remains true because *nodes executed*. Do **not** interpret `errors=[]` as “input valid.”
+4. **Fix criteria** (do not alter running code without reviewed change): for invalid input, require `action_attempts=0`, no action, a human-handoff flag consistent with `human_handoff_required`, and preservation/exposure of validation errors in the final machine-readable result. If `errors` is intentionally only for execution exceptions, use a separately named output for validation errors and document the distinction. Add C09/C10 contract tests and a consistency guard in aggregation; retain truthful `all_stages_complete` semantics for executed stages.
+5. After a minimal reviewed fix, retest **C09 and C10** in Draft Preview with fresh traces and update this log with *new* observed outcomes. Preserve these failing traces as historical evidence. Do not presume that changing displayed report wording corrects downstream output.
+
+**Notification assurance limitation — C04:** The Notification Gate executed before Response Agent, and the simulated event log shows notification before the action attempt. However, the gate **constructs a message**, not evidence of message delivery, human receipt, or authorization acknowledgment. The reported simulated action therefore supports **ordering of internal notification events only**. If the project acceptance policy truly requires notifying a person before execution, additional real/simulated receipt/approval controls and assertions are needed before asserting that stronger requirement.
+
+### Current release / submission boundary
+
+- **Trace inspection complete:** 12 distinct current-flow Draft Preview cases; all processing and End nodes executed.
+- **Scenario behavior:** 10 acceptable within the documented synthetic scope; 2 invalid-input output-integrity defects remain open.
+- **Historical evaluation record:** Do not replace the earlier 09:16 C03 failed formal evaluation, 09:44 qualified Fuzzy pass, or morning C05 false-positive evaluation.
+- **Other outstanding checks:** formal corrected-flow Evaluate tests, source synchronization of the locally tested Python, exact published/Live version, and dashboard→Orchestrate connection remain unverified; the final demo, pitch deck and submission confirmation are not yet established.
