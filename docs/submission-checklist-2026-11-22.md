@@ -20,8 +20,10 @@
 - [x] Team-lead import/configuration observations documented.
 - [x] C03 first formal **FAILED** evaluation preserved with metrics.
 - [x] Exact-to-Fuzzy matcher adjustment recorded as a test-only change.
-- [ ] Verify a distinct post-adjustment C03 formal evaluation and document its actual result.
-- [ ] Independently record native multi-agent C05, C07, C11 behavior.
+- [x] Preserve C03's **09:44 Pacific 1/1** formal rerun, **qualified by the Fuzzy test matcher**; it is not evidence of a runtime repair.
+- [x] Preserve C05's **11:09 Pacific formal 1/1 grade** and the exported trace showing missing response and verifier calls and unsupported reported success.
+- [ ] Remediate and formally retest **C05 security/workflow acceptance** using collaborator/tool assertions and safe escalation/handoff evidence (the apparent formal pass is **not** acceptance).
+- [ ] Independently record native multi-agent C07 and C11 behavior.
 - [ ] Complete remaining synthetic cases or explicitly record incomplete coverage.
 - [ ] Verify Orchestrate Live publishing/version and test it if available.
 - [ ] Identify and document implementation limitations without implying unverified dashboard-to-Orchestrate integration.
