@@ -77,10 +77,13 @@ The preserved `src/source-code/` Python pipeline and Streamlit dashboard provide
 | C03 Draft Preview | Generated a coherent **simulated** case report and human-closure state |
 | **First C03 formal evaluation** | **FAILED** at 09:16 Pacific (0/1; tool-call precision/recall 0.88; routing F1 1.00) |
 | Saved C03 test adjustment | `investigator_result` matcher changed **Exact → Fuzzy**; this changed test criteria, **not** runtime behavior |
-| C03 evaluation rerun / C05 / C07 / C11 / remaining cases | Results not yet independently confirmed in this checkpoint |
+| **C03 formal rerun (09:44 Pacific)** | **PASSED 1/1 under the revised Fuzzy matcher**, 8 tool calls, precision/recall/routing/journey 1.00; this does **not** prove exact JSON matching or a runtime code fix |
+| **C05 formal grade (11:09 Pacific)** | **1/1 / 100% reported by evaluation, but workflow acceptance FAILED.** Exported trace showed investigator and analyst calls only; no response or verification specialist calls. The narrative's remediation/verification/completion assertions were unsupported |
+| C05 later remediation testing | Evening testing conversation reported continuing C05 work and a `WORKFLOW INCOMPLETE` response; this is a **provisional update**, not an accepted pass or a verified new trace |
+| C07 / C11 / remaining native-agent cases | Pending independent formal validation |
 | Published Live agent and dashboard integration | Not independently verified |
 
-The formal failure is preserved and explained in the [validation log](docs/validation-progress-2026-11-20.md). Do not conflate a local 12-case pass with acceptance of the newer five-agent Orchestrate workflow.
+The original C03 failure, qualified later pass, and **C05 false-positive formal grade** are preserved and explained in the [validation log](docs/validation-progress-2026-11-20.md). Do not conflate a local 12-case pass with acceptance of the newer five-agent Orchestrate workflow.
 
 ## Repository map (recovery branch)
 
