@@ -13,6 +13,7 @@ import io
 import hmac
 import json
 import os
+import time
 import streamlit as st
 
 try:
@@ -126,6 +127,11 @@ div[data-testid="stButton"] button[kind="primary"] { background: #007f92; color:
 
 
 def render_live(case_id: str) -> None:
+    if orchestrate_client.missing_settings():
+        # No Orchestrate credentials on this machine: run the local four-specialist
+        # pipeline instead, clearly labelled as local synthetic output.
+        render_agent_run(case_id)
+        return
     st.markdown("#### Run a case in watsonx Orchestrate")
     st.caption("Live mode calls the existing orchestrator. This screen alone does not prove that all four specialist stages completed.")
     st.caption(
@@ -188,6 +194,123 @@ def render_live(case_id: str) -> None:
         with st.expander("Technical API response (review before recording)"):
             st.json(outcome.raw)
     st.caption("Agent replies require matching Orchestrate execution traces before claiming four-stage acceptance.")
+
+
+_RUN_CSS = """<style>
+.cs-run-banner { display:flex; align-items:center; gap:.6rem; margin:.2rem 0 1rem;
+  padding:.7rem 1rem; border:1px solid #206070; border-radius:10px; background:#0d2233;
+  color:#9fdcde; font-size:.78rem; font-weight:700; letter-spacing:.08em; }
+.cs-run-dot { width:9px; height:9px; border-radius:50%; background:#42eddf;
+  box-shadow:0 0 10px #42eddf; display:inline-block; }
+.cs-run-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:1rem 0 1.2rem; }
+.cs-run-card { border:1px solid #223b52; background:#101f33; border-radius:14px; padding:1rem 1.1rem; min-height:210px; }
+.cs-run-card.done { border-color:#23cec7; box-shadow:0 0 0 1px rgba(35,206,199,.18) inset; }
+.cs-run-card.handoff { border-color:#f2b84b; box-shadow:0 0 0 1px rgba(242,184,75,.18) inset; }
+.cs-run-card.waiting { opacity:.45; }
+.cs-run-step { color:#5fe0de; font-size:.7rem; font-weight:800; letter-spacing:.14em; }
+.cs-run-card.handoff .cs-run-step { color:#f2b84b; }
+.cs-run-name { color:#f0fbff; font-weight:750; margin:.35rem 0 .7rem; }
+.cs-run-kv { color:#81a6ba; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; margin-top:.55rem; }
+.cs-run-v { color:#d8ecf5; font-size:.86rem; line-height:1.35; overflow-wrap:anywhere; }
+.cs-run-status { float:right; font-size:.68rem; font-weight:800; letter-spacing:.1em; color:#42eddf; }
+.cs-run-card.handoff .cs-run-status { color:#f2b84b; }
+.cs-run-card.waiting .cs-run-status { color:#6d8aa0; }
+.cs-run-outcome { border:1px solid #223b52; background:#101f33; border-radius:14px; padding:1.1rem 1.3rem; margin-bottom:1rem; }
+.cs-run-outcome.handoff { border-color:#f2b84b; }
+.cs-run-outcome h4 { margin:0 0 .4rem; }
+.cs-run-outcome li { color:#cfdfeb; }
+@media (max-width:900px) { .cs-run-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+</style>"""
+
+
+def _pretty(value: object) -> str:
+    return _escape(str(value).replace("_", " ").strip() or "none")
+
+
+def _run_stages(r, upto: int) -> str:
+    rules = ", ".join(r.finding_rule_ids) or "none"
+    score = "unknown" if r.score is None else r.score
+    stages = [
+        ("01 / INVESTIGATE", "Security Investigator", [
+            ("Assessment", _pretty(r.assessment).title()),
+            ("Finding", _escape(r.finding)),
+            ("Evidence", f"{len(r.evidence)} items · rules: {_escape(rules)}"),
+        ], False),
+        ("02 / ASSESS", "Risk Analyst", [
+            ("Severity", _escape(r.severity.upper())),
+            ("Priority score", _escape(score)),
+            ("Public service", _escape(r.affected_public_service)),
+        ], False),
+        ("03 / AUTHORIZE", "Response Agent", [
+            ("Action", _pretty(r.action_taken)),
+            ("Attempts", _escape(r.action_attempts)),
+            ("Tool result", _escape(r.action_result)),
+        ], False),
+        ("04 / VERIFY", "Verification &amp; Handoff", [
+            ("Verification", _pretty(r.verification_result).title()),
+            ("Outcome", _pretty(r.outcome)),
+            ("Human handoff", "Required" if r.handoff_required else "Closure approval only"),
+        ], bool(r.handoff_required)),
+    ]
+    cards = []
+    for i, (step, name, rows, handoff) in enumerate(stages):
+        if i > upto:
+            cls, status = "waiting", "QUEUED"
+        elif handoff:
+            cls, status = "handoff", "HANDOFF"
+        else:
+            cls, status = "done", "COMPLETE"
+        body = "".join(f'<div class="cs-run-kv">{k}</div><div class="cs-run-v">{v}</div>' for k, v in rows)
+        cards.append(
+            f'<div class="cs-run-card {cls}"><span class="cs-run-status">{status}</span>'
+            f'<div class="cs-run-step">{step}</div><div class="cs-run-name">{name}</div>{body}</div>'
+        )
+    return '<div class="cs-run-grid">' + "".join(cards) + "</div>"
+
+
+def render_agent_run(case_id: str) -> None:
+    st.markdown(_RUN_CSS, unsafe_allow_html=True)
+    st.markdown(
+        '<div class="cs-run-banner"><span class="cs-run-dot"></span>'
+        'LOCAL AGENT RUN &nbsp;·&nbsp; SYNTHETIC DATASET &nbsp;·&nbsp; '
+        'NOT A WATSONX ORCHESTRATE EXECUTION</div>',
+        unsafe_allow_html=True,
+    )
+    runs = st.session_state.setdefault("local_runs", {})
+    if st.button(f"Run {case_id} through the four specialist agents", type="primary", key=f"run_local_{case_id}"):
+        result = analyze(DATASET, [case_id])[0]
+        board = st.empty()
+        # Results are computed instantly; stages are revealed in order for readability.
+        for stage in range(4):
+            board.markdown(_run_stages(result, stage), unsafe_allow_html=True)
+            time.sleep(0.45)
+        board.empty()
+        runs[case_id] = result
+
+    result = runs.get(case_id)
+    if result is None:
+        st.markdown(_run_stages(analyze(DATASET, [case_id])[0], -1), unsafe_allow_html=True)
+        st.caption("Press Run to send this synthetic case through the investigator, analyst, response and verification agents.")
+        return
+
+    st.markdown(_run_stages(result, 3), unsafe_allow_html=True)
+    handoff = bool(result.handoff_required)
+    items = result.human_intervention or result.outstanding_human_work
+    bullets = "".join(f"<li>{_escape(item)}</li>" for item in items) or "<li>No additional human actions recorded.</li>"
+    title = "Human handoff required" if handoff else "Verified, awaiting human closure"
+    st.markdown(
+        f'<div class="cs-run-outcome{" handoff" if handoff else ""}"><h4>{title}</h4>'
+        f'<div class="cs-run-v">{_escape(result.case_id)}: {_escape(result.title)}</div>'
+        f'<ul>{bullets}</ul></div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown('<div class="cs-section">Ordered execution events</div>', unsafe_allow_html=True)
+    st.dataframe(result.events, width="stretch", hide_index=True)
+    st.download_button(
+        "Download run result (JSON)", json.dumps(result.to_dict(), indent=2),
+        file_name=f"civic-shield-local-run-{result.case_id}.json", mime="application/json",
+        key=f"save_local_{result.case_id}",
+    )
 
 
 def render_local(selected) -> None:
@@ -402,7 +525,7 @@ def main() -> None:
             "Overview": "◫  Overview",
             "Case Investigator": "◇  Case Investigator",
             "Audit Log": "▤  Audit Log",
-            "Live Agent": "◎  Live Agent",
+            "Live Agent": "◎  Agent Run",
         }[value],
         label_visibility="collapsed",
     )
@@ -466,7 +589,12 @@ def main() -> None:
         )
 
     else:
-        _section_header("Live Agent", "Connect to the team's watsonx Orchestrate workflow")
+        _section_header(
+            "Agent Run",
+            "Run a synthetic case through the four specialist agents"
+            if orchestrate_client.missing_settings()
+            else "Run a case on the team's watsonx Orchestrate workflow",
+        )
         _workflow_strip()
         selected_id = st.selectbox(
             "Case to investigate", [item.case_id for item in results],
