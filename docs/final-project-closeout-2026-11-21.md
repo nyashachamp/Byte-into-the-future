@@ -67,6 +67,8 @@ Do not silently replace previously failed evaluations with later local results, 
 
 The working design goal was a navy/turquoise SOC-style operations center with overview metrics, charts, severity visualization, audit records, sidebar navigation, case investigation, and agent execution/handoff presentation. The team lead confirms the final application worked during video capture.
 
+**Demonstration video link supplied on November 21:** [Watch Civic Shield on YouTube](https://youtu.be/-Cnd7L0FpTo). The link was provided directly by the project owner. Automated access to the YouTube video's metadata/playback was unavailable during this check, so its title, duration, privacy/accessibility, exact visual contents and video description were not independently verified. This video is **not a Streamlit-hosted application URL**; the public hosted-app URL remains unverified.
+
 **Version-control discrepancy that remains:** [`docs/ux-session-handoff-2026-11-21.md`](ux-session-handoff-2026-11-21.md) describes Claude's uncommitted `render_agent_run()` enhancement. The GitHub branch's present `dashboard.py` does not yet contain that function. The final reviewed Windows source must be committed separately if the repository is to reproduce the exact recorded application.
 
 Local launch instructions, after installing the existing requirements in the virtual environment:
