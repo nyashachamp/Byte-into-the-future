@@ -139,3 +139,65 @@ The **four tool calls** in the evaluation correspond to *two collaborator delega
 ## Next record update
 
 Preserve the confirmed 09:44 C03 rerun and 11:09 C05 evaluation/trace finding. Repair the C05 false-completion defect with acceptance tests, then record C07/C11 and all twelve regressions. Record any validated change to code, agent definitions, tool metadata, and its deployment/version separately.
+
+## Late-evening cloud execution checkpoint — 20 Nov 2026 Pacific (trace-verified)
+
+**Evidence:** Fresh watsonx Orchestrate **Draft Preview** Flow Inspector JSON exports for C05 (started ~22:39 Pacific; 22.1 s) and C03 (started ~22:47 Pacific; 23.8 s). The team lead supplied the full execution traces; only a **sanitized summary** is recorded here. Raw JSON is **not committed** because it includes account/tenant/thread/runtime identifiers. The timestamps refer to the new runs, **not** the earlier morning formal evaluations.
+
+### Changes verified in the testing workspace (not committed as source by this documentation update)
+
+- Restored an active IBM IAM/Orchestrate session for the existing eu-gb environment; no new key was created.
+- A focused local test command, `python -m pytest -q -rs tools/flow_pkg/test_civic_shield_pipeline_offline.py`, reported **25 passed, 0 failed, 0 skipped**, with **four Pydantic deprecation warnings**. This is test-suite evidence, not comprehensive cloud acceptance.
+- Updated the local `tools/flow_pkg/civic_shield_pipeline.py` script-node references to `parent.<node>.output`, added None-safe aggregation and fail-closed consistency checks, then corrected final-output behavior using explicit `aflow.map_output(...)` mappings for each `PipelineOutput` field from `flow.aggregate_results.output.<field>`.
+- The installed ADK exposed `Flow.map_output(self, output_variable, expression, default_value=None)`; local construction returned `FLOW_BUILD_OK`.
+- The CLI reported `Tool 'civic_shield_pipeline' updated successfully` after the final mapping correction. **This confirms a tool import/update in the testing environment, not a Live/published agent deployment.**
+- **Source synchronization warning:** these pipeline code changes were made in the team lead's local IBM Bob workspace and imported into Orchestrate. **This documentation-only GitHub update does not commit that working Python source or assert the remote recovery branch matches the tested cloud tool.** Reconcile local/remote branches before pushing; do not reset or force push.
+
+### C05 — critical restricted-public-exposure case: new flow PASS
+
+| Check | Verified from fresh flow trace |
+|---|---|
+| Overall flow; End node | **completed; completed** |
+| Four specialist agents; Notification Gate; Aggregate Results | **all completed** |
+| Aggregate/final `all_stages_complete`; `errors` | `true`; `[]` |
+| Investigator | `CFG-PUBLIC` confirmed; `public_read` expected `false`, observed `true` |
+| Risk | Score `100`, severity `critical`, `public_restricted=true`, `notify_first=true` |
+| Notification Gate | `notification_required=true`; warning message generated |
+| Response | `action_taken=none`, `action_result=not_run`, `action_attempts=0` |
+| Verification & handoff | `verification_result=not_run`, `handoff_required=true`, `lifecycle_status=human_handoff_required` |
+| Synthetic state | `public_read` remained `true`; no remediation or false closure claimed |
+
+**Acceptance conclusion:** **C05 passed the safety requirements observed in this explicit six-processing-node agentic flow's Draft Preview run.** The prior critical defect (earlier orchestration omitting response/verification and inventing completed remediation) remains documented above; this new trace demonstrates a **different, explicitly sequenced flow path** completing safely. It does not retroactively turn the **11:09 morning formal evaluation** into a reliable test or establish that every orchestrator/direct-delegation route is safe. A generated notification **is not proof of external notification delivery**.
+
+### C03 — authorized synthetic audit logging: new flow PASS
+
+| Check | Verified from fresh flow trace |
+|---|---|
+| Overall flow; End node | **completed; completed** |
+| Four specialist agents; Notification Gate; Aggregate Results | **all completed** |
+| Aggregate/final `all_stages_complete`; `errors` | `true`; `[]` |
+| Investigator | `CFG-LOGGING` confirmed; audit logging expected `true`, observed `false` |
+| Risk | Score `30`, severity `medium`, `public_restricted=false`, `notify_first=false` |
+| Notification Gate | `notification_required=false`; no notification message |
+| Simulated response | `enable_audit_logging`, `action_result=success`, `action_attempts=1` |
+| Simulated post-state | `audit_logging_enabled=true`; `encryption_enabled=true`, `public_read=false` |
+| Independent verification | `verification_result=passed` |
+| Human governance | `handoff_required=false`, `lifecycle_status=awaiting_human_closure`; human must still approve closure |
+
+**Acceptance conclusion:** **C03 passed the authorized simulated correction and verification path in Draft Preview.** `handoff_required=false` means no exceptional incident-response handoff; it **does not** waive mandatory human final closure. The earlier 09:16 formal evaluation failure and 09:44 pass under **Fuzzy** parameter matching remain separate historical results.
+
+### Updated acceptance boundary and remaining work
+
+| Scope | Status after this checkpoint |
+|---|---|
+| Explicit agentic flow C03 and C05 | **PASS in two trace-inspected Draft Preview runs** |
+| Safe handling and accurate End-node consolidated outputs for C03/C05 | **Verified for these two cases** |
+| Focused offline suite | **25 passed** (four deprecation warnings) |
+| Earlier saved formal C03/C05 evaluation history | **Preserved above**, including failed/false-positive outcomes |
+| New saved **formal** evaluation of corrected flow | **Not verified**; the recent evidence is Flow Inspector execution, not a saved Evaluate run |
+| C07 false-success test, C11 unknown dependency, other eight synthetic cases | **Pending independent current-flow cloud verification** |
+| Published Live agent and Streamlit-to-Orchestrate integration | **Not verified**; do not claim production deployment or direct dashboard connectivity |
+| Current tested local Python changes reflected in remote GitHub source | **Not verified**; documentation-only update here |
+| Final demo/pitch/submission receipt | **Pending verification** |
+
+**Next:** preserve the trace-based passes; validate C07 and C11, then remaining synthetic cases and formal evaluation if supported. Separately confirm version/deployment and reconcile code before any source merge. All corrective actions above were **in-memory simulations**, not changes to real public services.
