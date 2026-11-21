@@ -13,7 +13,9 @@
 - [x] Team lead confirms the final three-minute demonstration and presentation production are complete.
 - [x] Twelve synthetic cases and five-agent source architecture remain versioned and intact in the recovery branch.
 - [ ] Synchronize the actual finished Claude `Agent Run` dashboard changes from the local workspace to GitHub after checking the targeted diff. This does **not** undo the completed local demo.
-- [ ] Add the accessible final video URL and pitch-deck link to GitHub once those exact resources are available.
+- [x] Record the team-lead-supplied demonstration URL: [YouTube — Civic Shield demo](https://youtu.be/-Cnd7L0FpTo) (November 21, 2026).
+- [ ] Independently confirm video playback, viewer permissions and duration; metadata could not be inspected at closeout.
+- [ ] Add the accessible final pitch-deck URL when available.
 - [ ] Record official IBM project submission acknowledgment/receipt once submitted.
 
 **Evidence labels:** The first two checked items reflect **team-lead completion statements** and the recorded local demonstration, not an independently reviewed video attachment. GitHub source presence does not establish current authenticated watsonx Orchestrate Live runtime or post-fix cloud acceptance. The historical 20 Nov failures remain in the validation log.
