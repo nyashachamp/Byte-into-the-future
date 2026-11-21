@@ -256,3 +256,22 @@ When a configuration violation has no mapped public-service dependency, do **not
 - **C11** — unmapped service/unknown priority, no automatic action, human handoff: trace PASS.
 
 **Acceptance scope:** Four of twelve synthetic scenarios now have **separate corrected-flow Draft Preview traces** supporting their targeted safety behaviors. The other eight have **not yet been independently validated through this current cloud flow**. Earlier formal evaluation outcomes, including original failures/false-positive scores, remain as recorded. Live publication, dashboard-to-Orchestrate integration, final formal acceptance, and syncing tested local pipeline source to GitHub remain unverified. Do not reclassify them as complete.
+
+## Provisional eight-case incident-report batch — full 12-case run completed
+
+**Evidence classification: user-provided generated incident reports only; execution Inspector JSON for these eight cases has not yet been reviewed.** Each of the 12 synthetic case IDs has been run through the user-facing pipeline; the other four (C03, C05, C07, C11) have separate trace-verified Draft Preview acceptance entries above. **Do not report 12/12 cloud trace-verified or 12/12 formal evaluation passes.** No additional code changes are established from the following reports.
+
+| Case | Reported finding | Reported risk | Reported simulated response | Verification / lifecycle | Evidence status |
+|---|---|---|---|---|---|
+| C01 | `COMPLIANT`; no violations | `none`, score `0` | `none`, `not_run` | Not available; `awaiting_human_review`; no emergency handoff | **Provisional** report-only |
+| C02 | `COMPLIANT`; no violations | `none`, score `0` | `none`, `not_run` | Not available; `awaiting_human_review`; no emergency handoff | **Provisional** report-only |
+| C04 | `CFG-LOGGING` confirmed, emergency coordination portal | `high`, score `60`; **notify-before-action = Yes** | `enable_audit_logging`, `success` | `PASSED`; `awaiting_human_closure` | **Provisional**, check notification gate chronology and authorization. Generating a notification message is **not** proof of delivery/acknowledgment |
+| C06 | `CFG-LOGGING` confirmed, permit portal | `medium`, score `30` | `none`, `not_run` | Not available; `awaiting_human_approval`; handoff Yes | **Provisional**, verify no action attempt and approval gate |
+| C08 | `CFG-LOGGING` confirmed, permit portal | `medium`, score `30` | `enable_audit_logging`, `success` | `PASSED`; `awaiting_human_closure` | **Provisional**, verify actual synthetic post-state and independent verification |
+| C09 | `INVALID`; missing required `audit_logging_enabled` | `unknown`; no score; confidence `0` | **Not shown** in supplied incident report | Human requested corrected strict-boolean snapshot; downstream fields **not shown** | **Provisional**, verify all stages, no action attempts, and fail-closed output |
+| C10 | `INVALID`; `public_read` is not a JSON boolean | `unknown`; no score; confidence `0` | **Not shown** in supplied incident report | Human requested corrected strict-boolean snapshot; downstream fields **not shown** | **Provisional**, verify all stages, no action attempts, and fail-closed output |
+| C12 | `CFG-ENCRYPTION` confirmed; `encryption_enabled` expected `true`, observed `false` | `medium`, score `50` | `none`, `not_run` | Not available; `awaiting_human_approval`; handoff Yes | **Provisional**, verify zero action attempts and approval gate |
+
+**Checkpoint:** 12/12 **incident reports collected**, **4/12** corrected-flow cases **trace verified**, **8/12** still pending Inspector JSON inspection. All actions are synthetic; final human case closure not performed.
+
+**Next evidence required:** Exported Flow Inspector JSON for C01, C02, C04, C06, C08, C09, C10 and C12. Verify every stage and `__flow_end__` status, `all_stages_complete`, `errors`, exact action attempts/post-state, verification outputs, lifecycle and notification-gate sequencing; identify any discrepancies and update acceptance per case. The existing morning formal evaluation failures, later qualified passes, and remediation history remain preserved. No changes to application code or `main` in this documentation update.
