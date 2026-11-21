@@ -28,8 +28,10 @@
 | C03 Draft Preview | Synthetic report showed permitted audit-logging action, verification PASSED, human closure outstanding | **Generated preview**, not formal evaluation |
 | C03 first formal evaluation | 2026-11-20 09:16 Pacific: **FAILED 0/1**, 8 calls, tool precision/recall 0.88, routing F1 1.00, journey 0.88 | **Verified failure — preserve** |
 | C03 Exact -> Fuzzy matcher | Saved test's `investigator_result` comparison changed | **Test-criteria change** only; no runtime fix established |
-| C03 formal rerun | No distinct later evaluation result verified at this checkpoint | **Pending confirmation** |
-| C05 / C07 / C11 and other cases in native five-agent flow | No independently verified formal outcomes at checkpoint | **Pending** |
+| C03 formal rerun | 2026-11-20 **09:44 Pacific: PASSED 1/1 (100%)** with Fuzzy `investigator_result` criterion; 8 tool calls and 1.00 precision/recall/routing/journey | **Passed under relaxed criteria only**; no exact-argument runtime repair established |
+| C05 formal evaluation and execution-trace audit | 2026-11-20 **11:09 Pacific: formal grade 1/1 (100%)**, but trace showed only investigator + analyst stages, **not** response or verifier/handoff calls; generated completion claims lacked evidence | **Security/workflow acceptance FAILED — HIGH severity open**; not evidence of an actual unauthorized action |
+| C05 ongoing evening remediation testing | Testing conversation subsequently reported 25 offline regression passes, an updated `civic_shield_pipeline` Orchestrate tool, and a C05 result `WORKFLOW INCOMPLETE` instead of a false success; independent trace/version evidence not attached here | **Reported, provisional; C05 still not accepted** |
+| C07 / C11 / other cases in native five-agent flow | No independently verified formal outcomes at this checkpoint | **Pending** |
 | Orchestrate Live publication | No verified publication/version/live test | **Unverified** |
 | Dashboard direct calls to Orchestrate | Prior technical audit describes independent dashboard pipeline; no verified direct connector | **Not established** |
 | Streamlit Community Cloud hosting | Developer-reported in earlier technical audit; running application URL not independently verified here | **Reported, not independently verified in this checkpoint** |
@@ -43,16 +45,16 @@ The project uses synthetic records only. Permitted simulated actions must pass p
 
 ## Known engineering/documentation caveats
 
-1. C03 formal evaluation failed on an `investigator_result` tool-argument comparison. Fuzzy matching changes acceptance criteria; precise runtime cause is not confirmed.
+1. C03 initial evaluation failed on an `investigator_result` mismatch. The 09:44 rerun passed only after an Exact-to-Fuzzy test matcher change; the precise runtime cause and exact-match repair are not confirmed.
 2. GitHub source contains `tools/analyst_pkg/analyse_impact.py` (British spelling). Some earlier notes also wrote `analyze_impact.py`; confirm deployed tool metadata before attributing an error to spelling.
 3. Several specialist packages carry synchronized copies of pipeline/data; changing the canonical implementation requires deliberate synchronization and regression testing, not a documentation-only edit.
 4. `main` is an older baseline. Review and test before integrating any recovery code.
-5. Final demo, pitch-deck link, submission confirmation, and complete formal multi-agent regression have not been verified in this checkpoint.
+5. C05 formal evaluation produced a false-positive grade: the execution trace lacked response and verification calls, yet the report asserted success and completion. Later reported remediation still has no acceptance pass. Final demo, pitch-deck link, submission confirmation, and full formal multi-agent regression remain unverified.
 
 ## Next validation and submission steps
 
-1. Confirm whether a newer C03 evaluation exists after 09:16; record actual timestamp, status, metrics, tool traces.
-2. Run and document C05, C07 and C11 against the native agent workflow, then the other eight scenarios.
+1. Preserve both C03 outcomes: original 09:16 failure and 09:44 qualified pass under Fuzzy matcher.
+2. Resolve and re-evaluate C05 using full collaborator/tool traces and safety assertions. Do not accept a generic 100% grade or a `WORKFLOW INCOMPLETE` result as passing the expected escalation/handoff criteria. Then test C07/C11 and the remaining cases.
 3. Confirm published agent version/status and whether a Live test is possible.
 4. Verify demo and pitch links and accurately describe how Streamlit and Orchestrate relate.
 5. Review recovery branch changes and decide the authoritative submission branch without overwriting local work.
