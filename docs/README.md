@@ -16,6 +16,10 @@ This page distinguishes the completed local Civic Shield MVP/demo, the five-agen
 5. [Claude UX/UI session handoff](ux-session-handoff-2026-11-21.md) — later local Agent Run UI changes, tests and source-synchronization distinction.
 6. [Submission checklist](submission-checklist-2026-11-22.md) — remaining evidence and delivery references.
 
+## IBM watsonx agent implementation and launch
+
+[Agent launch and execution record](watsonx-agent-launch-and-execution.md) — distinguishes imported/configured agents, Draft Preview execution, reported offline regression checks, and unverified Live publication. The five-agent configuration and corrected-flow source are preserved in this repository.
+
 ## Technical implementation and testing
 
 | Resource | Purpose | Evidence scope |
