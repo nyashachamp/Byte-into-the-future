@@ -60,6 +60,12 @@ Read-only verification should establish:
 
 **Do not put API keys, tokens, unredacted tenant identifiers, or confidential trace exports in this public repository.**
 
+## Resource limits and cross-tool completion
+
+The team lead reported exhausting the practical IBM Bob credit/token budget and encountering related watsonx resource limitations before completing all intended final launch work. To finish the project deliverables, the team continued **local implementation and UX/UI work with Claude**, producing a finished Streamlit operations dashboard and recorded MVP demonstration. This was a **development tool transition**, not a claim that Claude published the IBM-hosted agents or validated Live deployment.
+
+The five-agent Orchestrate architecture, imports, and Draft Preview testing remain part of the IBM-phase evidence. The final production/Live agent launch and complete post-fix managed-cloud acceptance are **not independently established**. The exact credit usage and limits are team-reported rather than verified against IBM billing logs.
+
 ## Evidence and known limitations
 
 - [Chronological watsonx validation and flow-trace analysis](validation-progress-2026-11-20.md) — includes the original C03 failure, C05 false-positive formal grade, corrected-flow trace inspection and C09/C10 cloud output-integrity findings.
