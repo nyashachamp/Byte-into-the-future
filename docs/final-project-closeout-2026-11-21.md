@@ -17,6 +17,16 @@
 
 **Submission:** The team lead reports the presentation and video production completed. **No public presentation/video URL or official IBM submission receipt was independently verified in this GitHub audit.** Do not mark the portal submission as confirmed without its receipt.
 
+## Post-closeout clarification — resource limits and development handoff
+
+During final development, the team lead reported that available **IBM Bob credits (“Bobcoins”) and watsonx-related resources** had become insufficient to continue the remaining work comfortably. The team therefore transitioned the **final local application implementation and UX/UI refinement to Claude**, rather than abandon the prototype. Claude-assisted work included the Streamlit security-operations interface, charts, alerts, navigation, and Agent Run presentation; the reviewed dashboard enhancement was committed as `f613bdb`.
+
+**Outcome:** The team reports completing and demonstrating the **local Civic Shield MVP, including its UX/UI design**, and preparing the presentation/video. Earlier IBM watsonx Orchestrate work still included five-agent configuration, tool imports, and Draft Preview workflow execution. **The resource constraint interrupted progress toward final Live publication/full managed-cloud acceptance; neither Live publication nor direct dashboard-to-Orchestrate connectivity is independently confirmed.** The completed local application should not be confused with a fully launched production multi-agent service.
+
+This is a **team-reported project constraint and handoff rationale**, not independently verified IBM billing or quota telemetry. The record does not establish the exact credit balance, the exact resource that blocked each step, or that the resource limit was the sole reason Live publication was not completed.
+
+**Repository status clarification:** The Claude dashboard enhancement was subsequently synchronized to GitHub (`f613bdb`) and the recovery implementation was merged into default `main` through [PR #6](https://github.com/nyashachamp/Byte-into-the-future/pull/6). Earlier statements in this dated closeout about `main` being an older baseline are historical snapshots, not current branch status.
+
 ## 1. System architecture and code inventory — verified in GitHub
 
 | Component | Versioned artifact | Status |
