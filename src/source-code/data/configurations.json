@@ -1,0 +1,11 @@
+[
+  {"asset_id":"asset-002","observed_settings":{"public_read_access":true,"encryption_enabled":true,"logging_enabled":true},"observed_at":"2026-10-19T10:00:00Z"},
+  {"asset_id":"asset-003","observed_settings":{"mfa_required_for_privileged_accounts":false,"logging_enabled":true},"observed_at":"2026-10-19T10:05:00Z"},
+  {"asset_id":"asset-004","observed_settings":{"allowed_external_ports":[80,443,8080],"admin_api_public":true,"logging_enabled":true},"observed_at":"2026-10-19T10:10:00Z"},
+  {"asset_id":"asset-005","observed_settings":{"security_patches_current":false,"host_firewall_enabled":true,"logging_enabled":true},"observed_at":"2026-10-19T10:15:00Z"},
+  {"asset_id":"asset-006","observed_settings":{"least_privilege_enabled":false,"encryption_enabled":true,"logging_enabled":true},"observed_at":"2026-10-19T10:20:00Z"},
+  {"asset_id":"asset-007","observed_settings":{"logging_enabled":false,"admin_console_public":false},"observed_at":"2026-10-19T10:25:00Z"},
+  {"asset_id":"asset-008","observed_settings":{"encryption_enabled":true,"logging_enabled":true},"observed_at":"2026-10-19T10:30:00Z"},
+  {"asset_id":"asset-009","observed_settings":{"encryption_enabled":true,"mfa_required_for_admins":true,"logging_enabled":true},"observed_at":"2026-10-19T10:35:00Z"},
+  {"asset_id":"asset-010","observed_settings":{"public_read_access":false,"logging_enabled":true},"observed_at":"2026-10-19T10:40:00Z"}
+]

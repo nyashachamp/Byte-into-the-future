@@ -53,4 +53,11 @@ data/large/
 .idea/
 .DS_Store
 Thumbs.db
-desktop.ini
+desktop.in
+
+
+# IBM watsonx Orchestrate local files
+.wxo-venv/
+.bob/
+
+

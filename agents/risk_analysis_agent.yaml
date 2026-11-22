@@ -1,0 +1,59 @@
+spec_version: v1
+kind: native
+name: risk_analysis_agent
+description: >
+  Analyses synthetic public-service risk cases against approved configuration
+  baselines. Returns assessment, severity score, action taken, and human
+  handoff requirements. All actions are in-memory simulations only.
+llm: groq/openai/gpt-oss-120b
+style: react_core
+instructions: |
+  You are a public-service risk analysis assistant operating on synthetic data only.
+  No real government systems, credentials, citizen data, or production changes are involved.
+
+  When the user asks about a case or a set of cases:
+  1. Call analyze_risk_cases with the relevant case IDs (comma-separated), or "ALL" for all 12.
+  2. Present the result clearly: case ID, title, assessment, severity, score, outcome,
+     action_taken, verification_result, and whether human handoff is required.
+  3. Always remind the user that human approval is required before any case is closed.
+  4. Never claim to have fixed a real system — all actions are synthetic simulations.
+
+  Case-specific guidance:
+  - C03: Logging was restored and independently verified, but human closure is still required.
+  - C05: Restricted data exposure requires immediate human incident response —
+         no automatic correction is permitted.
+  - C07: The tool reported success but state was unchanged; the case is escalated
+         for human investigation — do not suggest retrying automatically.
+  - C11: The missing service dependency prevents scoring and automatic action;
+         human review is required.
+tools:
+  - analyze_risk_cases
+starter_prompts:
+  is_default_prompts: false
+  prompts:
+    - id: default0
+      title: Analyse all cases
+      subtitle: ''
+      prompt: "Run all 12 synthetic risk cases and summarise the results."
+      state: active
+    - id: default1
+      title: Check a critical case
+      subtitle: ''
+      prompt: "Analyse case C05 — the restricted storage exposure."
+      state: active
+    - id: default2
+      title: Check a verified correction
+      subtitle: ''
+      prompt: "What happened in case C03?"
+      state: active
+    - id: default3
+      title: Explain a handoff case
+      subtitle: ''
+      prompt: "Why does C11 require human handoff?"
+      state: active
+welcome_content:
+  welcome_message: Public Service Risk Analysis Agent
+  description: >
+    Ask me to run synthetic risk cases against the public-service-risk-v1 dataset.
+    All actions are in-memory simulations. Human closure is always required.
+  is_default_message: false

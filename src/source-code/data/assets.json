@@ -1,0 +1,12 @@
+[
+  {"asset_id":"asset-001","name":"County Benefits Application","type":"web_application","criticality":"high","owner":"County Benefits IT","public_service":"Online Benefits Enrollment"},
+  {"asset_id":"asset-002","name":"Benefits Document Storage","type":"cloud_storage","criticality":"high","owner":"County Benefits IT","public_service":"Online Benefits Enrollment"},
+  {"asset_id":"asset-003","name":"Employee Identity Service","type":"identity_provider","criticality":"high","owner":"County IT Security","public_service":"County Employee Portal"},
+  {"asset_id":"asset-004","name":"Emergency Dispatch API","type":"api_gateway","criticality":"high","owner":"County Emergency Services","public_service":"Emergency Dispatch"},
+  {"asset_id":"asset-005","name":"Public Works Scheduling Server","type":"virtual_machine","criticality":"medium","owner":"Public Works IT","public_service":"Road Maintenance Scheduling"},
+  {"asset_id":"asset-006","name":"County Records Database","type":"database","criticality":"high","owner":"County Records IT","public_service":"Public Records Requests"},
+  {"asset_id":"asset-007","name":"Library Portal","type":"web_application","criticality":"medium","owner":"County Library IT","public_service":"Library Account Portal"},
+  {"asset_id":"asset-008","name":"Emergency Notification Service","type":"messaging_service","criticality":"high","owner":"County Emergency Services","public_service":"Emergency Alerts"},
+  {"asset_id":"asset-009","name":"Transit Payment Service","type":"payment_api","criticality":"high","owner":"County Transit IT","public_service":"Transit Fare Payments"},
+  {"asset_id":"asset-010","name":"Development Sandbox","type":"virtual_machine","criticality":"low","owner":"County Engineering","public_service":"Internal Development"}
+]

@@ -1,0 +1,5 @@
+[
+  {"incident_id":"INC-001","scenario":"Public cloud storage access","asset_id":"asset-002","expected_status":"human_review_required","expected_escalation":true,"reason":"Possible sensitive-data exposure"},
+  {"incident_id":"INC-002","scenario":"Privileged account without MFA","asset_id":"asset-003","expected_status":"security_review","expected_escalation":false,"reason":"High-risk configuration deviation"},
+  {"incident_id":"INC-003","scenario":"Emergency API exposed administrative port","asset_id":"asset-004","expected_status":"human_review_required","expected_escalation":true,"reason":"Potential disruption to emergency dispatch"}
+]

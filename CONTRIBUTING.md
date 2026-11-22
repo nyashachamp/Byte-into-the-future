@@ -1,3 +1,5 @@
+> **Current contribution note (2026-11-20):** The onboarding procedure below was prepared for an earlier phase of the team project. This repository is **already public**, `main` is an older baseline, and the current documented working branch is `recovery-five-agent-2026-11-19`. Review local-versus-remote divergence before any push; the recovery branch has documentation commits made directly on GitHub. Do not force-push, reset, merge, or publish code without an explicit review. Follow [current status](docs/current-system-status-2026-11-20.md) and [documentation guide](docs/README.md) for current project context.
+
 # Contributing Guide
 
 ## For Ghazal: adding the VS Code project
@@ -67,4 +69,4 @@ Update the **Installation** section of `README.md` with how to install dependenc
 1. Never commit `.env`, API keys, IBM Cloud credentials, tokens, or passwords.
 2. If a secret is ever committed by mistake, tell the team right away and **rotate the key in IBM Cloud immediately**. Deleting the file afterward does not remove it from Git history.
 3. Use only synthetic or authorized data. No personal or citizen information.
-4. Keep the repository private until it has been checked for secrets before the final presentation.
+4. The repository is now **public**. Review every proposed commit, screenshot, log, and Git history for leaked credentials, tokens, contact information, or other sensitive data. If exposed secrets are found, rotate/revoke them; removing a file does not erase repository history.

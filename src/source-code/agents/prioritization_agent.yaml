@@ -1,0 +1,34 @@
+# SUPERSEDED — canonical implementation: agents/risk_analyst_agent.yaml
+#
+# This file was an early design stub describing the prioritization/scoring role.
+# It is preserved here as a design artefact only.  It is NOT imported into
+# watsonx Orchestrate.  The deployable native agent spec is:
+#
+#   agents/risk_analyst_agent.yaml   (name: risk_analyst)
+#
+# That agent uses the analyse_impact @tool from tools/analyst_pkg/
+# and contains the full ADK-compliant YAML required for WXO import.
+#
+# --- original stub below (read-only reference) ---
+
+name: prioritization_agent
+purpose: Produce a transparent preliminary risk score.
+inputs:
+  - configuration_deviations
+  - affected_public_service
+scoring:
+  factors:
+    exposure: 1_to_3
+    asset_criticality: 1_to_3
+    service_impact: 1_to_3
+    confidence: 1_to_3
+  thresholds:
+    low: 4
+    medium: 7
+    high: 10
+    critical: 12
+permissions:
+  - calculate_score
+  - explain_score
+forbidden_actions:
+  - declare_final_incident_status

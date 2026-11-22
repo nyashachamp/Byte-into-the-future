@@ -1,0 +1,27 @@
+# SUPERSEDED — canonical implementation: agents/security_investigator_agent.yaml
+#
+# This file was an early design stub describing the configuration-comparison role.
+# It is preserved here as a design artefact only.  It is NOT imported into
+# watsonx Orchestrate.  The deployable native agent spec is:
+#
+#   agents/security_investigator_agent.yaml   (name: security_investigator)
+#
+# That agent uses the investigate_case @tool from tools/investigator_pkg/
+# and contains the full ADK-compliant YAML required for WXO import.
+#
+# --- original stub below (read-only reference) ---
+
+name: configuration_agent
+purpose: Compare observed synthetic settings with the approved baseline.
+inputs:
+  - data/assets.json
+  - data/baselines.json
+  - data/configurations.json
+outputs:
+  - configuration_deviations
+permissions:
+  - read_synthetic_files
+  - produce_evidence
+forbidden_actions:
+  - modify_systems
+  - use_real_credentials

@@ -1,0 +1,422 @@
+{
+  "dataset_id": "public-service-risk-v1",
+  "schema_version": "1.0.0",
+  "synthetic": true,
+  "created_date": "2026-10-21",
+  "simulation_clock": "2026-10-20T12:00:00Z",
+  "provenance": "Manually constructed fictional fixtures by Codex at Nyasha's request. No external or production data used.",
+  "services": [
+    {
+      "id": "SVC-PERMIT",
+      "name": "Fictional county permit portal",
+      "criticality": 2,
+      "impact": "Delays routine permit applications"
+    },
+    {
+      "id": "SVC-AID",
+      "name": "Fictional county assistance portal",
+      "criticality": 4,
+      "impact": "Disrupts access to essential assistance"
+    },
+    {
+      "id": "SVC-EMERGENCY",
+      "name": "Fictional emergency coordination portal",
+      "criticality": 5,
+      "impact": "May disrupt time-sensitive coordination; simulation only"
+    }
+  ],
+  "assets": [
+    {
+      "id": "AST-PERMIT",
+      "type": "object_storage",
+      "classification": "internal",
+      "owner": "SIM-IT-PERMITS",
+      "service_ids": [
+        "SVC-PERMIT"
+      ]
+    },
+    {
+      "id": "AST-AID",
+      "type": "object_storage",
+      "classification": "restricted_synthetic",
+      "owner": "SIM-IT-AID",
+      "service_ids": [
+        "SVC-AID"
+      ]
+    },
+    {
+      "id": "AST-EMERGENCY",
+      "type": "object_storage",
+      "classification": "internal",
+      "owner": "SIM-IT-EMERGENCY",
+      "service_ids": [
+        "SVC-EMERGENCY"
+      ]
+    },
+    {
+      "id": "AST-PUBLIC",
+      "type": "object_storage",
+      "classification": "public",
+      "owner": "SIM-COMMS",
+      "service_ids": [
+        "SVC-PERMIT"
+      ]
+    },
+    {
+      "id": "AST-UNKNOWN",
+      "type": "object_storage",
+      "classification": "internal",
+      "owner": "SIM-UNASSIGNED",
+      "service_ids": []
+    }
+  ],
+  "baselines": [
+    {
+      "id": "BASE-STORAGE-V1",
+      "scope": "object_storage",
+      "required_fields": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": true
+      },
+      "rules": [
+        {
+          "id": "CFG-PUBLIC",
+          "field": "public_read",
+          "expected": false,
+          "weight": 60
+        },
+        {
+          "id": "CFG-ENCRYPTION",
+          "field": "encryption_enabled",
+          "expected": true,
+          "weight": 30
+        },
+        {
+          "id": "CFG-LOGGING",
+          "field": "audit_logging_enabled",
+          "expected": true,
+          "weight": 10
+        }
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "EX-PUBLIC",
+      "asset_id": "AST-PUBLIC",
+      "rule_id": "CFG-PUBLIC",
+      "approved_value": true,
+      "expires_at": "2026-12-31T23:59:59Z",
+      "reason": "Fictional approved publication of non-sensitive public information"
+    }
+  ],
+  "policy": {
+    "version": "demo-policy-v1",
+    "status": "proposed_test_policy_not_agency_standard",
+    "score_formula": "min(100, max(finding rule weights) + 10 * max(linked service criticality)); no findings => 0; invalid input or no service mapping => null",
+    "priority_bands": {
+      "critical": [
+        80,
+        100
+      ],
+      "high": [
+        60,
+        79
+      ],
+      "medium": [
+        30,
+        59
+      ],
+      "low": [
+        1,
+        29
+      ],
+      "none": [
+        0,
+        0
+      ]
+    },
+    "immediate_notification": "Any CFG-PUBLIC finding on restricted_synthetic data, or score >= 60; before action, without waiting for incident classification",
+    "allowlisted_simulated_actions": [
+      "enable_audit_logging"
+    ],
+    "approval": "Only execute if action is explicitly authorized, sandbox_only is true, authorization is valid at simulation_clock, and input/service mapping is valid; all other corrections require human approval.",
+    "verification": "Read post-action snapshot independently; a tool success message is insufficient. No retry after success_without_change; hand off. Retry transient failure at most once. Humans approve closure."
+  },
+  "cases": [
+    {
+      "id": "C01",
+      "title": "Compliant private storage",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": true
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C02",
+      "title": "Approved public information",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PUBLIC",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": true,
+        "encryption_enabled": true,
+        "audit_logging_enabled": true
+      },
+      "exception_ids": [
+        "EX-PUBLIC"
+      ],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C03",
+      "title": "Restore logging successfully",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": false
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [
+          "enable_audit_logging"
+        ],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "success",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C04",
+      "title": "Same logging failure on critical service",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-EMERGENCY",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": false
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [
+          "enable_audit_logging"
+        ],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "success",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C05",
+      "title": "Restricted storage exposed",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-AID",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": true,
+        "encryption_enabled": true,
+        "audit_logging_enabled": true
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C06",
+      "title": "Correction not authorized",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": false
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C07",
+      "title": "Action returns success but state unchanged",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": false
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [
+          "enable_audit_logging"
+        ],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "success_without_change",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C08",
+      "title": "Transient failure then recovery",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": false
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [
+          "enable_audit_logging"
+        ],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "transient_then_success",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C09",
+      "title": "Missing required logging field",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C10",
+      "title": "Wrong type for public access",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": "false",
+        "encryption_enabled": true,
+        "audit_logging_enabled": true
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C11",
+      "title": "Missing service dependency",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-UNKNOWN",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": true,
+        "audit_logging_enabled": false
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    },
+    {
+      "id": "C12",
+      "title": "Unencrypted storage",
+      "observed_at": "2026-10-20T12:00:00Z",
+      "asset_id": "AST-PERMIT",
+      "baseline_id": "BASE-STORAGE-V1",
+      "snapshot": {
+        "public_read": false,
+        "encryption_enabled": false,
+        "audit_logging_enabled": true
+      },
+      "exception_ids": [],
+      "authorization": {
+        "sandbox_only": true,
+        "allowed_actions": [],
+        "expires_at": "2026-10-21T00:00:00Z"
+      },
+      "simulation": {
+        "tool_behavior": "not_called",
+        "max_attempts": 2
+      }
+    }
+  ]
+}

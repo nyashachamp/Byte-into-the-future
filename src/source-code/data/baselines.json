@@ -1,0 +1,11 @@
+[
+  {"asset_id":"asset-002","required_settings":{"public_read_access":false,"encryption_enabled":true,"logging_enabled":true}},
+  {"asset_id":"asset-003","required_settings":{"mfa_required_for_privileged_accounts":true,"logging_enabled":true}},
+  {"asset_id":"asset-004","required_settings":{"allowed_external_ports":[443],"admin_api_public":false,"logging_enabled":true}},
+  {"asset_id":"asset-005","required_settings":{"security_patches_current":true,"host_firewall_enabled":true,"logging_enabled":true}},
+  {"asset_id":"asset-006","required_settings":{"least_privilege_enabled":true,"encryption_enabled":true,"logging_enabled":true}},
+  {"asset_id":"asset-007","required_settings":{"logging_enabled":true,"admin_console_public":false}},
+  {"asset_id":"asset-008","required_settings":{"encryption_enabled":true,"logging_enabled":true}},
+  {"asset_id":"asset-009","required_settings":{"encryption_enabled":true,"mfa_required_for_admins":true,"logging_enabled":true}},
+  {"asset_id":"asset-010","required_settings":{"public_read_access":false,"logging_enabled":true}}
+]
