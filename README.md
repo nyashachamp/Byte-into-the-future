@@ -76,6 +76,14 @@ The integrated repository contains native YAML definitions for **one supervisor 
 
 The preserved `src/source-code/` Python pipeline and Streamlit dashboard provide a **separate deterministic implementation** of the risk-analysis lifecycle. Earlier reported dashboard hosting used Streamlit Community Cloud; the live application URL and availability are not independently verified in this checkpoint. There is no verified Code Engine deployment.
 
+## Development resource constraints and completion strategy
+
+During final development, the team lead reported that available **IBM Bob credits (“Bobcoins”) and watsonx-related resources** had become insufficient to continue the remaining work comfortably. The team therefore transitioned the **final local application implementation and UX/UI refinement to Claude**, rather than abandon the prototype. Claude-assisted work included the Streamlit security-operations interface, charts, alerts, navigation, and Agent Run presentation; the reviewed dashboard enhancement was committed as `f613bdb`.
+
+**Outcome:** The team reports completing and demonstrating the **local Civic Shield MVP, including its UX/UI design**, and preparing the presentation/video. Earlier IBM watsonx Orchestrate work still included five-agent configuration, tool imports, and Draft Preview workflow execution. **The resource constraint interrupted progress toward final Live publication/full managed-cloud acceptance; neither Live publication nor direct dashboard-to-Orchestrate connectivity is independently confirmed.** The completed local application should not be confused with a fully launched production multi-agent service.
+
+This is a **team-reported project constraint and handoff rationale**, not independently verified IBM billing or quota telemetry. The record does not establish the exact credit balance, the exact resource that blocked each step, or that the resource limit was the sole reason Live publication was not completed.
+
 ## Test and verification snapshot
 
 The table below is the **historical 20 November checkpoint**, retained to preserve earlier failures and how they were found. Later deterministic-flow fixes and reported validation are documented in the [21 November closeout](docs/final-project-closeout-2026-11-21.md). The team reports a successful final local Streamlit demonstration; do not confuse that with new accepted cloud traces.
