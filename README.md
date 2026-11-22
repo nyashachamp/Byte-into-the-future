@@ -1,5 +1,7 @@
 # 🐝 Civic Shield — Public Service Risk Dashboard
 
+![Byte into the Future! team banner](assets/byte-into-the-future-banner.svg)
+
 **[Meet Byte into the Future! — Team & Mission](TEAM.md)**
 
 **Team Byte into the Future** · **IBM SkillsBuild AI Experiential Learning Lab** · **Track #4: Government & Public Services**
