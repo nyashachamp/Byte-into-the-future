@@ -1,4 +1,6 @@
-# Public Service Risk Dashboard (Civic Shield)
+# 🐝 Civic Shield — Public Service Risk Dashboard
+
+**[Meet Byte into the Future! — Team & Mission](TEAM.md)**
 
 **Team Byte into the Future** · **IBM SkillsBuild AI Experiential Learning Lab** · **Track #4: Government & Public Services**
 
@@ -7,9 +9,9 @@ A synthetic cybersecurity proof of concept that helps analysts identify security
 > **Safety principle:** AI-assisted analysis and simulated actions do **not** replace human approval for critical actions or final case closure. No real government infrastructure or citizen records are used.
 
 **Project closeout checkpoint:** 21 November 2026 · **Submission target:** 22 November 2026  
-**Current application and agent source branch:** `recovery-five-agent-2026-11-19` — [browse the recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19).  
+**Integrated implementation:** The final application, five-agent source, and testing records are now on **`main`**, merged from [the recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19) in [PR #6](https://github.com/nyashachamp/Byte-into-the-future/pull/6).  
 **Local demo:** The team lead reports the final Streamlit MVP and presentation video are complete. [Read the final closeout](docs/final-project-closeout-2026-11-21.md) for what is versioned, what was demonstrated locally, and which cloud/runtime claims remain unverified.  
-**Branch note:** Default `main` is an earlier baseline, **not** the latest five-agent implementation. The Claude Agent Run interface is included on the recovery branch as of commit `f613bdb`.
+**Branch note:** `main` now contains the final five-agent implementation and Claude Agent Run interface (original source commit `f613bdb`). The recovery branch remains preserved for historical comparison.
 
 ## Start here
 
@@ -89,7 +91,7 @@ The table below is the **historical 20 November checkpoint**, retained to preser
 
 The original C03 failure, qualified later pass, and **C05 false-positive formal grade** are preserved and explained in the [validation log](docs/validation-progress-2026-11-20.md). Do not conflate a local 12-case pass with acceptance of the newer five-agent Orchestrate workflow.
 
-## Repository map (recovery branch)
+## Repository map
 
 ```text
 agents/                 Native agent configurations, including the preserved original agent
