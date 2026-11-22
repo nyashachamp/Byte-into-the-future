@@ -41,8 +41,8 @@ This page distinguishes the completed local Civic Shield MVP/demo, the five-agen
 ## GitHub review and change management
 
 - [Issue #5: deployment audit and remediation](https://github.com/nyashachamp/Byte-into-the-future/issues/5).
-- Final documentation target: `recovery-five-agent-2026-11-19`. The default `main` is an older baseline. The final locally demonstrated dashboard enhancement is synchronized to the recovery branch in `f613bdb`.
-- Do not merge the recovery branch or rewrite historical test failures until reviewed integration and acceptance.
+- Final source and documentation have been integrated into default `main` from `recovery-five-agent-2026-11-19` in [PR #6](https://github.com/nyashachamp/Byte-into-the-future/pull/6). The recovery branch remains preserved. The final Agent Run dashboard enhancement was originally committed as `f613bdb`.
+- The source branch has been integrated into `main`. Do not rewrite historical test failures or misstate unverified cloud outcomes.
 - **Historical local validation, Draft Preview output, formal agent evaluation and Live publication are different evidence categories.**
 
 ## Security and disclosure
