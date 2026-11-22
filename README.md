@@ -19,6 +19,7 @@ A synthetic cybersecurity proof of concept that helps analysts identify security
 
 | Want to understand… | Follow this link |
 |---|---|
+| **IBM watsonx agent launch, imports, Draft Preview execution** | **[Agent launch and execution record](docs/watsonx-agent-launch-and-execution.md)** |
 | **Final build/demo closeout and GitHub audit (Nov 21)** | **[Final project closeout](docs/final-project-closeout-2026-11-21.md)** |
 | Earlier implementation and validation checkpoint (Nov 20) | [Prior system status](docs/current-system-status-2026-11-20.md) |
 | Architecture, implementation and evidence navigation | [Documentation guide](docs/README.md) |
@@ -67,7 +68,9 @@ Government cybersecurity and IT teams contend with alert overload, configuration
         Synthetic Python tools / data
 ```
 
-The recovery branch contains native YAML definitions for **one supervisor and four specialists**, each specialist with a dedicated Python tool package. The finalized source routes the supervisor through the deterministic `civic_shield_pipeline` tool (with `collaborators: []` to close the direct-delegation bypass); Bob reported the import and subsequent verification of the installed configuration.
+The integrated repository contains native YAML definitions for **one supervisor and four specialists**, each specialist with a dedicated Python tool package. The finalized source routes the supervisor through the deterministic `civic_shield_pipeline` tool (with `collaborators: []` to close the direct-delegation bypass); Bob reported the import and subsequent verification of the installed configuration.
+
+**IBM watsonx development launch:** Agents were imported/configured in the team's Orchestrate environment and synthetic cases were executed in Draft Preview. See the [agent launch and execution record](docs/watsonx-agent-launch-and-execution.md) for the stage-by-stage evidence, toolchain, and limitations.
 
 **Evidence boundary:** imported/configured agents and verified GitHub source are **not** independent proof of a fresh post-fix 12/12 cloud run, published Live version, or verified dashboard-to-Orchestrate connectivity. See the [Nov 21 closeout](docs/final-project-closeout-2026-11-21.md).
 
