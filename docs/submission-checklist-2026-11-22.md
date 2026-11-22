@@ -26,7 +26,7 @@
 - [x] A 12-case synthetic dataset and evaluator fixture are available.
 - [x] Earlier local Python/Streamlit functional testing and 54 screenshots are documented.
 - [x] Recovery branch contains a configured five-agent topology and specialist tools.
-- [x] Identify the authoritative source branch: `recovery-five-agent-2026-11-19` (default `main` remains an older baseline); final local dashboard source synchronized in `f613bdb`.
+- [x] Identify the authoritative source branch: `main` following merge PR #6; the recovery branch is preserved for provenance. Final dashboard source was first synchronized in `f613bdb`.
 - [ ] Verify a clean reproduction of the intended submission version and include exact launch instructions.
 - [ ] Inspect published files/screenshots for accidentally exposed credentials or personal data and complete any required key rotation.
 
@@ -52,8 +52,8 @@
 - [x] Team lead reports the final pitch presentation completed.
 - [ ] Record its accessible final link and permissions.
 - [ ] Cross-check official IBM lab requirements and distinguish required from optional technologies.
-- [ ] Confirm the submitted repository URL points readers to the authoritative code and evidence.
-- [ ] Record date/time and confirmation of final IBM submission.
+- [x] Repository homepage and `main` point readers to the final source and evidence.
+- [ ] Attach the official IBM portal submission receipt and time to the public evidence record (team has reported submission completed).
 
 ## Completion principle
 
