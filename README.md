@@ -1,5 +1,7 @@
 # Public Service Risk Dashboard
 
+🐝 **[Meet Byte into the Future! — Our Team & Mission](TEAM.md)**
+
 **Team Byte into the Future** | IBM SkillsBuild AI Experiential Learning Lab | Track #4: Government & Public Services
 
 A proposed multi-agent AI system designed to help government IT and cybersecurity teams detect security misconfigurations, understand how affected systems connect to essential public services, prioritize risks by citizen impact, and hand unresolved work to human responders with a complete, evidence-based case packet.
