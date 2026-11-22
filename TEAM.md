@@ -1,5 +1,7 @@
 # 🐝 Byte into the Future!
 
+![Byte into the Future! team banner](assets/byte-into-the-future-banner.svg)
+
 **Building intelligent, responsible technology for the communities of tomorrow.**
 
 Welcome to the team behind **Civic Shield**, an AI-assisted public-service risk assessment and decision-support project developed through the **IBM SkillsBuild AI Experiential Learning Lab**.
