@@ -1,142 +1,41 @@
-# Public Service Risk Dashboard
+# Civic Shield — Public Service Risk Dashboard
 
 🐝 **[Meet Byte into the Future! — Our Team & Mission](TEAM.md)**
 
-**Team Byte into the Future** | IBM SkillsBuild AI Experiential Learning Lab | Track #4: Government & Public Services
+**IBM SkillsBuild AI Experiential Learning Lab · Government & Public Services**
 
-A proposed multi-agent AI system designed to help government IT and cybersecurity teams detect security misconfigurations, understand how affected systems connect to essential public services, prioritize risks by citizen impact, and hand unresolved work to human responders with a complete, evidence-based case packet.
+**Civic Shield** is a completed **local synthetic-data MVP and recorded demonstration**, as reported by the team on **November 21, 2026**. The project explores how a security-operations dashboard and specialized AI-agent workflows can help analysts identify misconfigurations, assess their potential effects on public services, prioritize risk, and prepare evidence-backed human handoffs.
 
-> **Design principle:** the AI handles permitted, low-risk analysis and documentation. Humans keep authority over critical actions, incident classification, recovery approval, and closure.
+> **Important repository distinction:** The default `main` branch is an **earlier development baseline**. The more recent five-agent architecture, current Streamlit application, tests, and closeout records are on **[`recovery-five-agent-2026-11-19`](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19)**. The code has **not been merged into `main`**. Do not treat this branch's historical implementation status as the final project status.
+
+## Final implementation — start here
+
+| Resource | Current reference |
+|---|---|
+| **Current code and architecture** | [Recovery branch](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19) |
+| **Engineering and project closeout, Nov. 21** | [Final closeout report](https://github.com/nyashachamp/Byte-into-the-future/blob/recovery-five-agent-2026-11-19/docs/final-project-closeout-2026-11-21.md) |
+| **Current implementation README** | [Recovery branch README](https://github.com/nyashachamp/Byte-into-the-future/blob/recovery-five-agent-2026-11-19/README.md) |
+| **Streamlit dashboard source** | [Dashboard](https://github.com/nyashachamp/Byte-into-the-future/blob/recovery-five-agent-2026-11-19/src/source-code/src/dashboard.py) |
+| **Agent definitions** | [Five-agent system](https://github.com/nyashachamp/Byte-into-the-future/tree/recovery-five-agent-2026-11-19/agents) |
+| **Orchestration workflow** | [Sequential flow](https://github.com/nyashachamp/Byte-into-the-future/blob/recovery-five-agent-2026-11-19/tools/flow_pkg/civic_shield_pipeline.py) |
+| **Demonstration video** | [Civic Shield on YouTube](https://youtu.be/-Cnd7L0FpTo) |
+| **Our team** | [Byte into the Future!](TEAM.md) |
+
+## Implemented project scope
+
+The preserved source includes **one supervisor/orchestrator and four specialist agents**: Security Investigator, Risk & Dependency Analyst, Response Agent, and Verification & Handoff. The system uses a deterministic sequential flow, synthetic Python tools and fixtures, policy/authorization gates, and a Streamlit dashboard with risk visualizations and case-inspection features.
+
+The project uses **12 synthetic cases (C01–C12)** covering configuration findings, exceptions, authorized simulation, verification failure, unknown data, and human handoff. The local prototype and demonstration were reported complete; earlier local 12-case behavior and extensive offline testing are documented in the recovery branch.
+
+## Verification boundaries
+
+- **Local MVP:** Team-reported complete and demonstrated, with versioned source and substantial offline test evidence.
+- **IBM watsonx Orchestrate:** Five-agent configurations and flow source are documented. This repository does **not independently establish fresh post-fix 12/12 managed-cloud acceptance, Live publication, or a connected dashboard-to-Orchestrate run**.
+- **Cloud hosting:** No verified IBM Code Engine deployment is claimed.
+- **Safety:** All scenarios use synthetic data. Actions are simulated and gated; final critical decisions and closure remain with humans.
+
+See the [final closeout report](https://github.com/nyashachamp/Byte-into-the-future/blob/recovery-five-agent-2026-11-19/docs/final-project-closeout-2026-11-21.md) for precise evidence, test results, known limitations, and release notes.
 
 ---
 
-## The problem
-
-Government security teams face alert overload, fragmented tools, hidden misconfigurations, and incomplete context when work changes hands. Our guiding question:
-
-*How might we use agentic AI to help government agencies proactively identify security misconfigurations, assess vulnerabilities and incidents, understand technical dependencies, prioritize threats to essential public services, and complete authorized response work before handing unresolved tasks to human cybersecurity professionals?*
-
-**Primary users:** government SOC analysts, IT operations staff, incident responders, and security managers.
-**Example setting:** a simulated county government running public-facing applications, internal identity services, and emergency-related systems.
-
-## Proposed agent architecture
-
-| Agent / module | Responsibility | Key decision |
-|---|---|---|
-| Orchestrator | Tracks case state, plans tasks, routes work, preserves audit history | What should happen next? |
-| Security Investigator | Validates configuration findings against approved baselines | Is this a confirmed finding? |
-| Risk & Dependency Analyst | Maps affected assets to public services and estimates impact | What needs attention first? |
-| Response Agent | Proposes or executes only explicitly authorized sandbox actions | Is this action permitted and safe? |
-| Verification & Handoff | Independently checks results and prepares the analyst handoff | Resolved, retry safely, or escalate? |
-
-### Data flow
-
-```
-Input / Perception      Synthetic alerts, configuration snapshots, asset inventory, service-dependency map
-        ↓
-Orchestrator / Planning Assigns agents, tracks workflow state, enforces authorization gates
-        ↓
-Memory / Knowledge      Approved baselines, response procedures, validated prior cases, audit trail
-        ↓
-Tools / Interfaces      Python validation functions, simulated APIs, SQL records, optional model service
-        ↓
-Execution               Read-only investigation, prioritization, authorized sandbox actions, handoff creation
-        ↓
-Verification / Feedback Deterministic tests; results and analyst corrections recorded for future cases
-```
-
-## Workflow
-
-1. Receive a simulated alert or configuration finding and create a case record.
-2. Validate evidence and compare the configuration with an approved baseline.
-3. Assess severity, dependencies, and likely impact on public-service continuity.
-4. Choose next action: gather evidence, recommend remediation, perform an authorized sandbox step, or escalate.
-5. Check authorization and safety before any action. **Critical findings trigger immediate human notification.**
-6. Execute the permitted action and independently verify the result.
-7. If verification fails, retry only within bounded rules; otherwise stop and escalate with evidence.
-8. Record outcome, analyst feedback, remaining tasks, and case status.
-
-## Technologies
-
-These are proposed tools, not a verified inventory of implemented integrations. IBM Bob use still needs supporting evidence.
-
-| Tool | Purpose |
-|---|---|
-| IBM Bob | Required IBM development workflow |
-| IBM watsonx Orchestrate (optional) | Potential workflow orchestration; access and adoption to be confirmed |
-| IBM watsonx.ai / Granite (candidate) | Language reasoning, summarization, planning support |
-| IBM Cloud (candidate) | Hosting and IBM service access; availability to be confirmed |
-| Python | Baseline comparisons, simulated actions, validation, scoring |
-| Synthetic JSON / CSV | Alerts, configurations, assets, service dependencies |
-| SQLite | Case status, event logs, audit trail |
-| Dashboard | Risk ranking, evidence, approval requests, handoffs |
-| VS Code + GitHub | Development and team collaboration |
-
-## MVP demonstration
-
-Detect a misconfigured government cloud-storage resource in synthetic data, identify the affected public service, prioritize the finding, recommend or simulate an authorized correction, verify the state, and generate a structured human handoff when unresolved.
-
-| Priority | Acceptance check |
-|---|---|
-| 1. Detect & validate | A known misconfiguration is flagged with evidence and a baseline reference |
-| 2. Prioritize by service impact | The dashboard explains why the affected public service changes priority |
-| 3. Verify & hand off | A successful sandbox action is verified; a failed or unsafe action produces a complete handoff |
-
-## Development status
-
-| Area | Repository evidence / remaining work |
-|---|---|
-| Project concept and agent design | Drafts included in `docs/`; team review and validation remain |
-| Initial agents and dashboard prototype | Original prototype files are on the [`gazal-initial-code`](https://github.com/nyashachamp/Byte-into-the-future/tree/gazal-initial-code/src/gazal-project) branch, not merged into `main`; integration and team review remain pending |
-| Initial system test without dataset | Reported by the development workstream; reproducible test output and team sign-off are pending |
-| Synthetic dataset | [12-case v1 fixture](data/samples/README.md) included; consistency validator passed; team review pending |
-| Dataset-based testing and validation | Test plan, evaluator answers, and fixture validator included; dashboard integration and actual results pending |
-| IBM Bob use | Required by the documented project brief; usage evidence missing |
-| Video | No three-minute YouTube video link included |
-
-See [Milestones and progress](docs/milestones.md) for the detailed evidence checklist.
-
-## Repository structure
-
-```
-├── README.md            You are here
-├── CONTRIBUTING.md      Team workflow and how to add code safely
-├── .gitignore           Keeps keys, credentials, and large files out
-├── .env.example         Template for local secrets (copy to .env, never commit .env)
-├── docs/
-│   ├── project-concept.md      Full integrated project concept
-│   ├── week-4-deliverables.md  Architecture, workflow, tools (guide slides 17–19)
-│   ├── milestones.md           Deliverables and progress tracker
-│   └── original/               Original Word documents
-├── src/                 Team source area; unmerged prototype on gazal-initial-code branch
-├── data/
-│   ├── samples/         12-case synthetic dataset and integration guide
-│   ├── results/         Planned: test outputs (not yet present)
-│   └── README.md        Data rules and documentation
-└── tests/               Test plan, evaluator fixtures, and consistency validator
-```
-
-## Installation
-
-_The initial prototype is staged on the separate `gazal-initial-code` branch. The team has not verified final installation, dependencies, IBM integration, or end-to-end dataset tests. Those items belong in the proposed refinement branch and must be reviewed before a merge to `main`._
-
-## Data and safety rules
-
-- Synthetic or properly authorized public data only. No real citizen data, personal information, or live government systems.
-- No real credentials in the repo. API keys and IBM Cloud credentials live in a local `.env` file, which Git ignores.
-- No live production changes. All actions run in a sandbox and are logged.
-
-## Team
-
-**Byte into the Future is a collaborative team project.** The prototype is a work in progress and no individual implementation is described here as the final team product. Contributions are reviewed through Git history, pull requests, and the team milestone checklist. Technical review and approval remain shared responsibilities.
-
-## Documentation
-
-- [Consolidated security baselines and agent test catalog](docs/baseline-test-catalog.md)
-
-- [Project concept](docs/project-concept.md)
-- [Week 4 deliverables: architecture, workflow, tools](docs/week-4-deliverables.md)
-- [Milestones and progress](docs/milestones.md)
-- [Contributing guide](CONTRIBUTING.md)
-
-The Markdown files are the maintained project documentation. Word documents in `docs/original/` are historical source copies and may contain earlier names or designs.
+**Project phase:** Local MVP and demonstration completed and submitted as reported by the team. The recovery branch is the maintained implementation reference; the default branch is retained as a historical baseline pending a reviewed merge.
