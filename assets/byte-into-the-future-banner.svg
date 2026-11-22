@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-labelledby="title desc">
+<title id="title">Byte into the Future! — team banner</title>
+<desc id="desc">A friendly futuristic robotic bee flies toward a glowing digital city, with cloud, artificial intelligence and cybersecurity emblems.</desc>
+<defs>
+ <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#04112e"/><stop offset=".58" stop-color="#092b67"/><stop offset="1" stop-color="#085ca5"/></linearGradient>
+ <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#ffe279"/><stop offset=".55" stop-color="#ffad16"/><stop offset="1" stop-color="#e87418"/></linearGradient>
+ <linearGradient id="wing" x1="0" x2="1"><stop stop-color="#d5ffff" stop-opacity=".95"/><stop offset="1" stop-color="#13b8f1" stop-opacity=".48"/></linearGradient>
+ <linearGradient id="road" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#42e8ff" stop-opacity=".6"/><stop offset="1" stop-color="#123b92" stop-opacity="0"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#4adfff" opacity=".25"/></pattern>
+</defs>
+<rect width="1600" height="520" fill="url(#sky)"/><rect width="1600" height="520" fill="url(#dots)"/>
+<path d="M0 120Q550 -80 1200 84T1600 55" fill="none" stroke="#18bbff" stroke-width="2" opacity=".28"/>
+<path d="M570 360 Q1100 -5 1620 350" fill="none" stroke="#3cdcff" stroke-width="3" opacity=".4"/>
+<g opacity=".8" stroke="#26d7ff" stroke-width="2" fill="none">
+ <path d="M750 84L812 45L874 84L874 155L812 194L750 155Z"/><path d="M1003 84L1065 45L1127 84L1127 155L1065 194L1003 155Z"/><path d="M1250 84L1312 45L1374 84L1374 155L1312 194L1250 155Z"/>
+</g>
+<g font-family="Arial,sans-serif" font-weight="bold" fill="#b6f6ff" text-anchor="middle"><text x="812" y="133" font-size="52">☁</text><text x="1065" y="131" font-size="40">AI</text><text x="1312" y="130" font-size="48">◇</text></g>
+<g transform="translate(55 70)">
+ <path d="M168 156C-42 44 54 -50 210 74L245 153Z" fill="url(#wing)" stroke="#7df4ff" stroke-width="7" opacity=".87"/>
+ <path d="M191 182C-33 205 67 43 255 156Z" fill="url(#wing)" stroke="#72edff" stroke-width="6" opacity=".82"/>
+ <g stroke="#77fbff" stroke-width="3" opacity=".8"><path d="M65 67L220 145M99 123L200 83M83 185L221 164M145 83L147 156"/></g>
+ <path d="M155 195Q102 232 18 275" stroke="#20efff" stroke-width="10" opacity=".7" fill="none" filter="url(#glow)"/>
+ <ellipse cx="290" cy="207" rx="143" ry="87" fill="#ffbb27" stroke="#fff29e" stroke-width="7"/>
+ <path d="M240 132Q218 207 248 278M306 122Q289 213 328 290" stroke="#07152f" stroke-width="34" fill="none"/>
+ <path d="M367 169Q450 145 463 199" fill="none" stroke="#ffbf29" stroke-width="32" stroke-linecap="round"/>
+ <ellipse cx="307" cy="139" rx="107" ry="100" fill="url(#gold)" stroke="#ffec8f" stroke-width="8"/>
+ <path d="M255 48Q228 -5 203 -3M341 46Q357 -4 395 2" stroke="#101d3e" stroke-width="13" fill="none" stroke-linecap="round"/>
+ <circle cx="201" cy="-3" r="16" fill="#fff3a7"/><circle cx="395" cy="2" r="16" fill="#fff3a7"/>
+ <rect x="228" y="79" width="159" height="111" rx="48" fill="#061731" stroke="#1168a8" stroke-width="9"/>
+ <path d="M257 127q18 -29 36 0M321 127q18 -29 36 0" fill="none" stroke="#56f5ff" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+ <path d="M284 153q32 35 65 0" fill="none" stroke="#5df7ff" stroke-width="9" stroke-linecap="round"/>
+ <circle cx="210" cy="138" r="25" fill="#117ca8" stroke="#60efff" stroke-width="8"/><circle cx="398" cy="138" r="25" fill="#117ca8" stroke="#60efff" stroke-width="8"/>
+ <rect x="275" y="228" width="65" height="54" rx="10" fill="#062a49" stroke="#42dcff" stroke-width="5"/><text x="307" y="264" text-anchor="middle" font-size="33" fill="#ffd54c">✦</text>
+</g>
+<g fill="#113a72" stroke="#32d7ff" stroke-width="2" opacity=".85">
+ <path d="M0 435v-110h65v110M66 435V278h63v157M130 435V328h75v107M207 435V304h65v131M273 435V362h48v73M320 435V296h48v139"/>
+ <path d="M1040 435V340h66v95M1109 435V297h50v138M1165 435V350h81v85M1250 435V258h75v177M1330 435V305h63v130M1395 435V355h72v80M1467 435V273h80v162M1547 435V340h53v95"/>
+</g>
+<path d="M500 515L775 365L1050 515Z" fill="url(#road)" opacity=".5"/><path d="M0 450H1600" stroke="#13caff" stroke-width="3" opacity=".6"/>
+<text x="800" y="270" font-family="Arial, Helvetica, sans-serif" font-size="84" font-style="italic" font-weight="900" text-anchor="middle" fill="#f2fcff" stroke="#133b80" stroke-width="2">Byte into the</text>
+<text x="1050" y="369" font-family="Arial, Helvetica, sans-serif" font-size="106" font-style="italic" font-weight="900" text-anchor="middle" fill="url(#gold)" stroke="#fff4aa" stroke-width="2" filter="url(#glow)">Future!</text>
+<path d="M560 394Q1065 475 1532 372" fill="none" stroke="#ffc944" stroke-width="8" opacity=".8"/>
+<text x="1040" y="477" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" letter-spacing="3" fill="#aeedff">AI  •  CYBERSECURITY  •  PUBLIC SERVICE</text>
+</svg>
